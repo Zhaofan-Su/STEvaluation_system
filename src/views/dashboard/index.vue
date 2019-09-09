@@ -11,8 +11,11 @@ import editorDashboard from './editor'
 
 export default {
   name: 'Dashboard',
-  components: { adminDashboard, editorDashboard },
-  data() {
+  components: {
+    // adminDashboard,
+    editorDashboard
+  },
+  data () {
     return {
       currentRole: 'adminDashboard'
     }
@@ -22,7 +25,7 @@ export default {
       'roles'
     ])
   },
-  created() {
+  created () {
     if (!this.roles.includes('admin')) {
       this.currentRole = 'editorDashboard'
     }

@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-editor-container">
+  <!-- <div class="dashboard-editor-container">
     <github-corner class="github-corner" />
 
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
@@ -37,86 +37,146 @@
         <box-card />
       </el-col>
     </el-row>
+  </div>-->
+  <div class="dashboard-admin-container">
+    <div class="filter-container">
+      <el-input v-model="listQuery.projectName" placeholder="项目名称" />
+      <el-select v-model="listQuery.type" placeholder="建筑类型">
+        <el-option label="居住建筑" value="living" />
+        <el-option label="公共建筑" value="public" />
+        <el-option label="厂房" value="factory" />
+      </el-select>
+      <el-button
+        v-waves
+        class="filter-item"
+        type="primary"
+        icon="el-icon-search"
+        @click="onSearch"
+      >搜索</el-button>
+    </div>
+    <el-table
+      :key="tableKey"
+      v-loading="listLoading"
+      :data="list"
+      border
+      fit
+      highlight-current-row
+      style="width:100%"
+    >
+      <el-table-column label="ID" prop="id" align="center" width="80">
+        <template slot-scope="scope">
+          <span>{{ scope.row.id }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="项目名称" width="150px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.projectName }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="项目类型" width="110px">
+        <template slot-scope="scope">
+          <span>{{ scope.row.type }}</span>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
 <script>
-import GithubCorner from '@/components/GithubCorner'
-import PanelGroup from './components/PanelGroup'
-import LineChart from './components/LineChart'
-import RaddarChart from './components/RaddarChart'
-import PieChart from './components/PieChart'
-import BarChart from './components/BarChart'
-import TransactionTable from './components/TransactionTable'
-import TodoList from './components/TodoList'
-import BoxCard from './components/BoxCard'
+// import GithubCorner from '@/components/GithubCorner'
+// import PanelGroup from './components/PanelGroup'
+// import LineChart from './components/LineChart'
+// import RaddarChart from './components/RaddarChart'
+// import PieChart from './components/PieChart'
+// import BarChart from './components/BarChart'
+// import TransactionTable from './components/TransactionTable'
+// import TodoList from './components/TodoList'
+// import BoxCard from './components/BoxCard'
 
-const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
-  },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
-  },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
-  },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
-  }
-}
+// const lineChartData = {
+//   newVisitis: {
+//     expectedData: [100, 120, 161, 134, 105, 160, 165],
+//     actualData: [120, 82, 91, 154, 162, 140, 145]
+//   },
+//   messages: {
+//     expectedData: [200, 192, 120, 144, 160, 130, 140],
+//     actualData: [180, 160, 151, 106, 145, 150, 130]
+//   },
+//   purchases: {
+//     expectedData: [80, 100, 121, 104, 105, 90, 100],
+//     actualData: [120, 90, 100, 138, 142, 130, 130]
+//   },
+//   shoppings: {
+//     expectedData: [130, 140, 141, 142, 145, 150, 160],
+//     actualData: [120, 82, 91, 154, 162, 140, 130]
+//   }
+// }
 
 export default {
   name: 'DashboardAdmin',
-  components: {
-    GithubCorner,
-    PanelGroup,
-    LineChart,
-    RaddarChart,
-    PieChart,
-    BarChart,
-    TransactionTable,
-    TodoList,
-    BoxCard
-  },
-  data() {
+  // components: {
+  //   GithubCorner,
+  //   PanelGroup,
+  //   LineChart,
+  //   RaddarChart,
+  //   PieChart,
+  //   BarChart,
+  //   TransactionTable,
+  //   TodoList,
+  //   BoxCard
+  // },
+  data () {
     return {
-      lineChartData: lineChartData.newVisitis
+      // lineChartData: lineChartData.newVisitis,
+      tabelKey: 0,
+      list: null,
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        page: 1,
+        limit: 20,
+        projectName: undefined,
+        type: undefined
+      }
+
     }
   },
   methods: {
-    handleSetLineChartData(type) {
-      this.lineChartData = lineChartData[type]
+    // handleSetLineChartData (type) {
+    //   this.lineChartData = lineChartData[type]
+    // },
+    onSearch () {
+
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.dashboard-editor-container {
-  padding: 32px;
+.dashboard-admin-container {
   background-color: rgb(240, 242, 245);
-  position: relative;
-
-  .github-corner {
-    position: absolute;
-    top: 0px;
-    border: 0;
-    right: 0;
-  }
-
-  .chart-wrapper {
-    background: #fff;
-    padding: 16px 16px 0;
-    margin-bottom: 32px;
-  }
+  padding: 32px;
 }
+// .dashboard-editor-container {
+//   padding: 32px;
+//   background-color: rgb(240, 242, 245);
+//   position: relative;
 
-@media (max-width:1024px) {
+//   .github-corner {
+//     position: absolute;
+//     top: 0px;
+//     border: 0;
+//     right: 0;
+//   }
+
+//   .chart-wrapper {
+//     background: #fff;
+//     padding: 16px 16px 0;
+//     margin-bottom: 32px;
+//   }
+// }
+
+@media (max-width: 1024px) {
   .chart-wrapper {
     padding: 8px;
   }
