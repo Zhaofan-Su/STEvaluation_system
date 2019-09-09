@@ -102,7 +102,7 @@
 import Sticky from '@/components/Sticky'
 
 export default {
-  name: 'StickyDemo',
+  name: 'InterRenovation',
   components: { Sticky },
   data() {
     return {

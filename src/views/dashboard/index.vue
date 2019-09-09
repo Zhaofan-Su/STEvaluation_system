@@ -17,7 +17,7 @@ export default {
     editorDashboard,
     innerDashboard
   },
-  data() {
+  data () {
     return {
       currentRole: "adminDashboard"
     };
@@ -25,12 +25,12 @@ export default {
   computed: {
     ...mapGetters(["roles"])
   },
-  created() {
+  created () {
     if (!this.roles.includes("admin")) {
       if (!this.roles.includes("inner")) {
-        this.currentRole = "editorDashboard";
+        this.currentRole = "editorDashboard"
       } else {
-        this.currentRole = "innerDashboard";
+        this.currentRole = "innerDashboard"
       }
     }
   }

@@ -8,10 +8,10 @@
 import SwitchRoles from './components/SwitchRoles'
 
 export default {
-  name: 'PagePermission',
+  name: 'Standard',
   components: { SwitchRoles },
   methods: {
-    handleRolesChange() {
+    handleRolesChange () {
       this.$router.push({ path: '/permission/index?' + +new Date() })
     }
   }

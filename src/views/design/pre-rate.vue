@@ -72,7 +72,7 @@ import checkPermission from '@/utils/permission' // 权限判断函数
 import SwitchRoles from './components/SwitchRoles'
 
 export default {
-  name: 'DirectivePermission',
+  name: 'PreRate',
   components: { SwitchRoles },
   directives: { permission },
   data() {

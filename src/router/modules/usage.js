@@ -2,55 +2,55 @@
 
 import Layout from '@/layout'
 
-const chartsRouter = {
-  path: '/charts',
+const usageRouter = {
+  path: '/usage',
   component: Layout,
   redirect: 'noRedirect',
-  name: 'Charts',
+  name: 'UsagePhase',
   meta: {
     title: '使用阶段',
     icon: 'chart'
   },
   children: [{
-      path: 'keyboard',
-      component: () => import('@/views/charts/keyboard'),
-      name: 'KeyboardChart',
+      path: 'aircondition',
+      component: () => import('@/views/usage/aircondition'),
+      name: 'Aircondition',
       meta: {
         title: '供暖、通风与空调',
         noCache: true
       }
     },
     {
-      path: 'line',
-      component: () => import('@/views/charts/line'),
-      name: 'LineChart',
+      path: 'automation',
+      component: () => import('@/views/usage/automation'),
+      name: 'Automation',
       meta: {
         title: '电气及自动化',
         noCache: true
       }
     },
     {
-      path: 'mix-chart',
-      component: () => import('@/views/charts/mix-chart'),
-      name: 'MixChart',
+      path: 'drainage',
+      component: () => import('@/views/usage/drainage'),
+      name: 'Drainage',
       meta: {
         title: '给排水',
         noCache: true
       }
     },
     {
-      path: 'mix-chart',
-      component: () => import('@/views/charts/mix-chart'),
-      name: 'MixChart',
+      path: 'material-select',
+      component: () => import('@/views/usage/material-select'),
+      name: 'MaterialSelect',
       meta: {
         title: '建筑材料的选用',
         noCache: true
       }
     },
     {
-      path: 'mix-chart',
-      component: () => import('@/views/charts/mix-chart'),
-      name: 'MixChart',
+      path: 'recycle',
+      component: () => import('@/views/usage/recycle'),
+      name: 'Recycle',
       meta: {
         title: '建筑的回收再利用率',
         noCache: true
@@ -59,4 +59,4 @@ const chartsRouter = {
   ]
 }
 
-export default chartsRouter
+export default usageRouter
