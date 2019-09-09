@@ -5,30 +5,34 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import adminDashboard from './admin'
-import editorDashboard from './editor'
+import { mapGetters } from "vuex";
+import adminDashboard from "./admin";
+import editorDashboard from "./editor";
+import innerDashboard from "./inner";
 
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
   components: {
-    // adminDashboard,
-    editorDashboard
+    adminDashboard,
+    editorDashboard,
+    innerDashboard
   },
-  data () {
+  data() {
     return {
-      currentRole: 'adminDashboard'
-    }
+      currentRole: "adminDashboard"
+    };
   },
   computed: {
-    ...mapGetters([
-      'roles'
-    ])
+    ...mapGetters(["roles"])
   },
-  created () {
-    if (!this.roles.includes('admin')) {
-      this.currentRole = 'editorDashboard'
+  created() {
+    if (!this.roles.includes("admin")) {
+      if (!this.roles.includes("inner")) {
+        this.currentRole = "editorDashboard";
+      } else {
+        this.currentRole = "innerDashboard";
+      }
     }
   }
-}
+};
 </script>

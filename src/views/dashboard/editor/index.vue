@@ -19,12 +19,12 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="项目建筑面积">
-        <el-input v-model="form.area">
+        <el-input v-model="form.area" style="width: 200px">
           <template slot="suffix">m^2</template>
         </el-input>
       </el-form-item>
       <el-form-item label="建筑主题高度">
-        <el-input v-model="form.height" type="text">
+        <el-input v-model="form.height" type="text" style="width: 200px">
           <template slot="suffix">m</template>
         </el-input>
       </el-form-item>
@@ -51,23 +51,22 @@
 // import { mapGetters } from 'vuex'
 
 export default {
-  name: 'DashboardEditor',
-  data () {
+  name: "DashboardEditor",
+  data() {
     return {
       // emptyGif: 'https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3',
       form: {
-        projectName: '',
-        province: '',
-        type: '',
-        area: '',
-        height: '',
-        construct: '',
-        design: '',
-        build: '',
-        structType: ''
+        projectName: "",
+        province: "",
+        type: "",
+        area: "",
+        height: "",
+        construct: "",
+        design: "",
+        build: "",
+        structType: ""
       }
-
-    }
+    };
   },
   computed: {
     // ...mapGetters([
@@ -77,11 +76,11 @@ export default {
     // ])
   },
   methods: {
-    onSave () {
+    onSave() {
       // 用户所填信息先保存到网页
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

@@ -74,43 +74,43 @@ export const constantRoutes = [{
     children: [{
       path: 'dashboard',
       component: () => import('@/views/dashboard/index'),
-      name: 'Dashboard',
       meta: {
+        name: 'Dashboard',
         title: '建筑总信息',
         icon: 'documentation',
-        affix: true
+        affix: true,
       }
     }]
   },
-  {
-    path: '/documentation',
-    component: Layout,
-    children: [{
-      path: 'index',
-      component: () => import('@/views/documentation/index'),
-      name: 'Documentation',
-      meta: {
-        title: 'Documentation',
-        icon: 'documentation',
-        affix: true
-      }
-    }]
-  },
-  {
-    path: '/guide',
-    component: Layout,
-    redirect: '/guide/index',
-    children: [{
-      path: 'index',
-      component: () => import('@/views/guide/index'),
-      name: 'Guide',
-      meta: {
-        title: 'Guide',
-        icon: 'guide',
-        noCache: true
-      }
-    }]
-  },
+  // {
+  //   path: '/documentation',
+  //   component: Layout,
+  //   children: [{
+  //     path: 'index',
+  //     component: () => import('@/views/documentation/index'),
+  //     name: 'Documentation',
+  //     meta: {
+  //       title: 'Documentation',
+  //       icon: 'documentation',
+  //       affix: true
+  //     }
+  //   }]
+  // },
+  // {
+  //   path: '/guide',
+  //   component: Layout,
+  //   redirect: '/guide/index',
+  //   children: [{
+  //     path: 'index',
+  //     component: () => import('@/views/guide/index'),
+  //     name: 'Guide',
+  //     meta: {
+  //       title: 'Guide',
+  //       icon: 'guide',
+  //       noCache: true
+  //     }
+  //   }]
+  // },
   {
     path: '/profile',
     component: Layout,
@@ -134,6 +134,37 @@ export const constantRoutes = [{
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [{
+    path: '/users',
+    component: Layout,
+    redirect: '/users/index',
+    children: [{
+      path: 'index',
+      component: () => import('@/views/users/index'),
+      meta: {
+        name: 'Users',
+        title: '系统用户',
+        icon: 'peoples',
+        roles: ['admin'],
+        noCache: true
+      }
+    }]
+  },
+  {
+    path: '/projects',
+    component: Layout,
+    children: [{
+      path: 'index',
+      component: () => import('@/views/projects/index'),
+      meta: {
+        name: 'Projects',
+        title: '全部项目',
+        icon: 'list',
+        roles: ['admin', 'inner'],
+        noCache: true
+      }
+    }]
+  },
+  {
     path: '/permission',
     component: Layout,
     redirect: '/permission/page',
@@ -141,8 +172,7 @@ export const asyncRoutes = [{
     name: 'Permission',
     meta: {
       title: '设计阶段',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      icon: 'edit',
     },
     children: [{
         path: 'page',
@@ -150,7 +180,6 @@ export const asyncRoutes = [{
         name: 'PagePermission',
         meta: {
           title: '标准化设计',
-          roles: ['admin'] // or you can only set roles in sub nav
         }
       },
       {
@@ -159,7 +188,6 @@ export const asyncRoutes = [{
         name: 'DirectivePermission',
         meta: {
           title: '钢结构建筑构件预制率'
-          // if do not set roles, means: this page does not require permission
         }
       },
       {
@@ -168,7 +196,6 @@ export const asyncRoutes = [{
         name: 'RolePermission',
         meta: {
           title: '主体结构构件标准化',
-          roles: ['admin']
         }
       },
       {
@@ -177,7 +204,6 @@ export const asyncRoutes = [{
         name: 'RolePermission',
         meta: {
           title: '装配率',
-          roles: ['admin']
         }
       },
       {
@@ -186,7 +212,6 @@ export const asyncRoutes = [{
         name: 'RolePermission',
         meta: {
           title: '建筑集成技术设计评分',
-          roles: ['admin']
         }
       },
       {
@@ -195,7 +220,6 @@ export const asyncRoutes = [{
         name: 'RolePermission',
         meta: {
           title: '设计深度相关',
-          roles: ['admin']
         }
       },
       {
@@ -204,7 +228,6 @@ export const asyncRoutes = [{
         name: 'RolePermission',
         meta: {
           title: '一体化装修设计',
-          roles: ['admin']
         }
       },
       {
@@ -213,7 +236,6 @@ export const asyncRoutes = [{
         name: 'RolePermission',
         meta: {
           title: '信息化技术应用设计',
-          roles: ['admin']
         }
       },
       {
@@ -222,12 +244,10 @@ export const asyncRoutes = [{
         name: 'RolePermission',
         meta: {
           title: '结构安全设计评估',
-          roles: ['admin']
         }
       }
     ]
   },
-
   {
     path: '/icon',
     component: Layout,

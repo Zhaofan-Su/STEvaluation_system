@@ -1,21 +1,37 @@
 import Mock from 'mockjs'
-import { deepClone } from '../../src/utils/index.js'
-import { asyncRoutes, constantRoutes } from './routes.js'
+import {
+  deepClone
+} from '../../src/utils/index.js'
+import {
+  asyncRoutes,
+  constantRoutes
+} from './routes.js'
 
 const routes = deepClone([...constantRoutes, ...asyncRoutes])
 
-const roles = [
-  {
+const roles = [{
     key: 'admin',
     name: 'admin',
     description: 'Super Administrator. Have access to view all pages.',
     routes: routes
   },
   {
+    key: 'inner',
+    name: 'inner',
+    description: 'Inner worker. Can see all the projects and download them.',
+    routes: routes.filter(i => i.path !== '/permission')
+  },
+  {
+    key: 'outer',
+    name: 'outer',
+    description: 'Outer user. Can see all the edition pages.',
+    routes: routes.filter(i => i.path !== '/permission' || i.path !== '/projects')
+  },
+  {
     key: 'editor',
     name: 'editor',
     description: 'Normal Editor. Can see all pages except permission page',
-    routes: routes.filter(i => i.path !== '/permission')// just a mock
+    routes: routes.filter(i => i.path !== '/permission') // just a mock
   },
   {
     key: 'visitor',
@@ -24,13 +40,14 @@ const roles = [
     routes: [{
       path: '',
       redirect: 'dashboard',
-      children: [
-        {
-          path: 'dashboard',
-          name: 'Dashboard',
-          meta: { title: 'dashboard', icon: 'dashboard' }
+      children: [{
+        path: 'dashboard',
+        name: 'Dashboard',
+        meta: {
+          title: 'dashboard',
+          icon: 'dashboard'
         }
-      ]
+      }]
     }]
   }
 ]

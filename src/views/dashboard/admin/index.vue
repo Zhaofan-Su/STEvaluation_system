@@ -40,7 +40,7 @@
   </div>-->
   <div class="dashboard-admin-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.projectName" placeholder="项目名称" />
+      <el-input v-model="listQuery.projectName" placeholder="项目名称" style="width: 200px" />
       <el-select v-model="listQuery.type" placeholder="建筑类型">
         <el-option label="居住建筑" value="living" />
         <el-option label="公共建筑" value="public" />
@@ -68,21 +68,82 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="项目名称" width="150px" align="center">
+      <el-table-column label="项目名称" prop="projectName" width="120px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.projectName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="项目类型" width="110px">
+      <el-table-column label="所在省份" prop="province" width="100px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.province }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="所在城市" prop="city" width="100px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.city }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="建筑类型" prop="type" width="110px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.type }}</span>
         </template>
       </el-table-column>
+
+      <el-table-column label="项目建筑面积/m^2" prop="area" width="110px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.area }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="建筑主体高度/m" prop="height" width="110px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.height }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="相关单位" width="360px" align="center">
+        <el-table-column label="建设单位" prop="construct" width="120px">
+          <template slot-scope="scope">
+            <span>{{ scope.row.construt }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="设计单位" prop="design" width="120px">
+          <template slot-scope="scope">
+            <span>{{ scope.row.design }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="施工单位" prop="build" width="120px">
+          <template slot-scope="scope">
+            <span>{{ scope.row.build }}</span>
+          </template>
+        </el-table-column>
+      </el-table-column>
+
+      <el-table-column label="结构形式" width="170px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.structType }}</span>
+        </template>
+      </el-table-column>
     </el-table>
+
+    <paginaton
+      v-show="total>0"
+      :total="total"
+      :page.sync="listQuery.page"
+      :limit.sync="listQuery.limit"
+      @pagination="getList"
+    />
   </div>
 </template>
 
+
 <script>
+import { fetchList } from "@/api/article";
+import waves from "@/directive/waves";
+import Pagination from "@/components/Pagination";
+import { setTimeout } from "timers";
+import { format } from "path";
 // import GithubCorner from '@/components/GithubCorner'
 // import PanelGroup from './components/PanelGroup'
 // import LineChart from './components/LineChart'
@@ -113,7 +174,11 @@
 // }
 
 export default {
-  name: 'DashboardAdmin',
+  name: "DashboardAdmin",
+  components: {
+    Pagination
+  },
+  directives: { waves },
   // components: {
   //   GithubCorner,
   //   PanelGroup,
@@ -125,36 +190,74 @@ export default {
   //   TodoList,
   //   BoxCard
   // },
-  data () {
+  data() {
     return {
       // lineChartData: lineChartData.newVisitis,
       tabelKey: 0,
-      list: null,
+      list: [
+        {
+          id: 1,
+          projectName: "case1",
+          province: "北京市",
+          city: "北京市",
+          type: "居住建筑",
+          area: "120",
+          height: "",
+          construct: "",
+          design: "",
+          build: "",
+          structType: ""
+        },
+        {
+          id: 2,
+          projectName: "case2",
+          province: "上海市",
+          city: "上海市",
+          type: "厂房",
+          area: "120",
+          height: "",
+          construct: "",
+          design: "",
+          build: "",
+          structType: ""
+        }
+      ],
       total: 0,
-      listLoading: true,
+      // listLoading: true,
+      listLoading: false,
       listQuery: {
         page: 1,
         limit: 20,
         projectName: undefined,
         type: undefined
       }
-
-    }
+    };
+  },
+  created() {
+    // this.getList()
   },
   methods: {
     // handleSetLineChartData (type) {
     //   this.lineChartData = lineChartData[type]
     // },
-    onSearch () {
+    getList() {
+      this.listLoading = true;
+      fetchList(this.listQuery).then(response => {
+        this.list = response.data.items;
+        this.total = response.data.total;
 
-    }
+        setTimeout(() => {
+          this.listLoading = false;
+        }, 1500);
+      });
+    },
+    onSearch() {}
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .dashboard-admin-container {
-  background-color: rgb(240, 242, 245);
   padding: 32px;
 }
 // .dashboard-editor-container {
