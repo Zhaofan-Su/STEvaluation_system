@@ -1,10 +1,10 @@
 <template>
-  <div></div>
+  <div />
 </template>
 
 <script>
 export default {
-  name: 'IntergrateDecoration',
+  name: 'StructSafe',
   data () {
     return {
 

@@ -1,13 +1,13 @@
 <template>
-  <div></div>
+  <div />
 </template>
 
 <script>
 export default {
-  name: 'AssembleRate',
-  data () {
-    return {
-
+  name:'DesignDepth',
+  data(){
+    return{
+      
     }
   }
 }

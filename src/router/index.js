@@ -135,30 +135,32 @@ export const asyncRoutes = [{
       }
     }]
   },
-  {
-    path: '/design',
-    component: Layout,
-    name: 'DesignPhase',
-    meta: {
-      title: '设计阶段',
-      icon: 'edit'
-    },
-    children: [{
-      path: 'basic',
-      component: () => import('@/views/design/basic'),
-      name: 'DesignBasic',
-      meta: {
-        title: '基本项目'
-      }
-    }, {
-      path: 'evaluation',
-      component: () => import('@/views/design/evaluation'),
-      name: 'DesignEvaluation',
-      meta: {
-        title: '评分项目'
-      }
-    }]
-  },
+  // {
+  //   path: '/design',
+  //   component: Layout,
+  //   name: 'DesignPhase',
+  //   meta: {
+  //     title: '设计阶段',
+  //     icon: 'edit'
+  //   },
+  //   children: [{
+  //     path: 'basic',
+  //     component: () => import('@/views/design/basic'),
+  //     name: 'DesignBasic',
+  //     meta: {
+  //       title: '基本项目'
+  //     }
+  //   }, {
+  //     path: 'evaluation',
+  //     component: () => import('@/views/design/evaluation'),
+  //     name: 'DesignEvaluation',
+  //     meta: {
+  //       title: '评分项目'
+  //     }
+  //   }]
+  // },
+
+  designRouter,
   {
     path: '/construct',
     component: Layout,
@@ -175,8 +177,8 @@ export const asyncRoutes = [{
         title: '基本项目'
       }
     }, {
-      path: 'evaluation',
-      component: () => import('@/views/construct/evaluation'),
+      path: '/evaluate/evaluation',
+      component: () => import('@/views/construct/evaluate/evaluation'),
       name: 'ConstructEvaluation',
       meta: {
         title: '评分项目'
@@ -207,7 +209,6 @@ export const asyncRoutes = [{
       }
     }]
   },
-  // designRouter,
   // constructRouter,
   // usageRouter,
   additionRouter,
