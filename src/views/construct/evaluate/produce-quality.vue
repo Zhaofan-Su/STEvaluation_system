@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h2>2.2.7&nbsp;一体化装修设计</h2>
+    <h2>3.2.1&nbsp;预制构件生产制作及质量控制</h2>
     <el-card v-for="item in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="number">{{ item.id }}.&nbsp;{{ item.title }}</span>
@@ -84,14 +84,14 @@
 
 <script>
 export default {
-  name: "IntergrateDecoration",
+  name: "ProduceQuality",
   data() {
     return {
       items: [
         {
           id: 1,
-          title: "设计深度",
-          aspect: "具有完整的室内装饰装修设计方案，设计深度满足施工要求",
+          title: "",
+          aspect: "构件生产企业具备相应的生产工艺设备和完善的质量管理体系",
           satisfy: true,
           max_score: "4",
           score: "0",
@@ -103,9 +103,21 @@ export default {
         },
         {
           id: 2,
-          title: "协同设计",
-          aspect:
-            "装修设计与主体结构、机电设备设计紧密结合，并建立协同工作机制",
+          title: "",
+          aspect: "构件生产过程具有相应的技术标准、工艺流程和作业指导要求",
+          satisfy: true,
+          max_score: "4",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 3,
+          title: "",
+          aspect: "参评项目监理方驻厂监督构件生产过程，有完整的质量验收记录",
           satisfy: true,
           max_score: "3",
           score: "0",
@@ -116,12 +128,39 @@ export default {
           popOverShow: false
         },
         {
-          id: 3,
-          title: "设计方法",
+          id: 4,
+          title: "",
           aspect:
-            "装修设计采用标准化、模数化设计；各构件、部品与主体结构之间的尺寸匹配、协调，提前预留、预埋接口，易于装修工程的装配化施工；墙、地面块材铺装基本保证现场无二次加工",
+            "工厂生产构件标注构件编号、制作日期、合格状态、生产单位信息等",
           satisfy: true,
           max_score: "3",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 5,
+          title: "",
+          aspect:
+            "构件各项性能指标符合设计要求，具有出厂检验报告、进场验收记录",
+          satisfy: true,
+          max_score: "2",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 6,
+          title: "",
+          aspect: "构件质量符合国家现行有关标准要求",
+          satisfy: true,
+          max_score: "2",
           score: "0",
           description: "",
           evaluation_index: "",

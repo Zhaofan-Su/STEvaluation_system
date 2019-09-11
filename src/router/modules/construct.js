@@ -13,117 +13,105 @@ const constructRouter = {
     icon: 'component'
   },
   children: [{
-      path: 'produce-quality',
-      component: () => import('@/views/construct/produce-quality'),
-      name: 'ProduceQuality',
+      path: 'basic',
+      component: () => import('@/views/construct/basic'),
+      name: 'ConstructBasic',
       meta: {
-        title: '预制构件生产制作及质量控制'
+        title: '基础项目'
       }
     },
     {
-      path: 'transport',
-      component: () => import('@/views/construct/transport'),
-      name: 'Transport',
+      path: 'evaluate',
+      component: () => import('@/views/construct/evaluate/index'),
+      name: 'ConstructEvaluate',
+      redirect: '/evaluate/index',
       meta: {
-        title: '预制构件运输管理'
-      }
+        title: '评分项目'
+      },
+      children: [{
+          path: 'concept',
+          component: () => import('@/views/construct/evaluate/concept-evaluate'),
+          name: 'ConstructConcept',
+          meta: {
+            title: '概念评分项目'
+          }
+        },
+        {
+          path: 'produce-quality',
+          component: () => import('@/views/construct/evaluate/produce-quality'),
+          name: 'ProduceQuality',
+          meta: {
+            title: '预制构件生产制作及质量控制'
+          }
+        }, {
+          path: 'transport',
+          component: () => import('@/views/construct/evaluate/transport'),
+          name: 'Transport',
+          meta: {
+            title: '预制构件运输管理'
+          }
+        }, {
+          path: 'org-manage',
+          component: () => import('@/views/construct/evaluate/org-manage'),
+          name: 'OrgManage',
+          meta: {
+            title: '装配化施工组织与管理'
+          }
+        }, {
+          path: 'construct-tech',
+          component: () => import('@/views/construct/evaluate/construct-tech'),
+          name: 'ConstructTech',
+          meta: {
+            title: '装配化施工技术与工艺'
+          }
+        }, {
+          path: 'construct-quality',
+          component: () => import('@/views/construct/evaluate/construct-quality'),
+          name: 'ConstrutQuality',
+          meta: {
+            title: '装配化施工质量'
+          }
+        }, {
+          path: 'intergrate-tech',
+          component: () => import('@/views/construct/evaluate/intergrate-tech'),
+          name: 'IntergrateTech',
+          meta: {
+            title: '一体化装修技术与施工工艺'
+          }
+        }, {
+          path: 'inter-renovation',
+          component: () => import('@/views/construct/evaluate/inter-renovation'),
+          name: 'InterRenovation',
+          meta: {
+            title: '室内装修工程'
+          }
+        }, {
+          path: 'infor-manage',
+          component: () => import('@/views/construct/evaluate/infor-manage'),
+          name: 'InformationManage',
+          meta: {
+            title: '信息化管理'
+          }
+        }, {
+          path: 'save-protection',
+          component: () => import('@/views/construct/evaluate/save-protection'),
+          name: 'SaveProtection',
+          meta: {
+            title: '资源节约与环保效果'
+          }
+        }, {
+          path: 'workers',
+          component: () => import('@/views/construct/evaluate/workers'),
+          name: 'Workers',
+          meta: {
+            title: '现场施工人工用量'
+          }
+        },
+
+      ]
     },
-    {
-      path: 'org-manage',
-      component: () => import('@/views/construct/org-manage'),
-      name: 'OrgManage',
-      meta: {
-        title: '装配化施工组织与管理'
-      }
-    },
-    {
-      path: 'construct-tech',
-      component: () => import('@/views/construct/construct-tech'),
-      name: 'ConstructTech',
-      meta: {
-        title: '装配化施工技术与工艺'
-      }
-    },
-    {
-      path: 'construct-quality',
-      component: () => import('@/views/construct/construct-quality'),
-      name: 'ConstrutQuality',
-      meta: {
-        title: '装配化施工质量'
-      }
-    },
-    {
-      path: 'intergrate-tech',
-      component: () => import('@/views/construct/intergrate-tech'),
-      name: 'IntergrateTech',
-      meta: {
-        title: '一体化装修技术与施工工艺'
-      }
-    },
-    {
-      path: 'inter-renovation',
-      component: () => import('@/views/construct/inter-renovation'),
-      name: 'InterRenovation',
-      meta: {
-        title: '室内装修工程'
-      }
-    },
-    {
-      path: 'infor-manage',
-      component: () => import('@/views/construct/infor-manage'),
-      name: 'InformationManage',
-      meta: {
-        title: '信息化管理'
-      }
-    },
-    {
-      path: 'save-protection',
-      component: () => import('@/views/construct/save-protection'),
-      name: 'SaveProtection',
-      meta: {
-        title: '资源节约与环保效果'
-      }
-    },
-    {
-      path: 'workers',
-      component: () => import('@/views/construct/workers'),
-      name: 'Workers',
-      meta: {
-        title: '现场施工人工用量'
-      }
-    },
-    // {
-    //   path: 'drag-dialog',
-    //   component: () => import('@/views/components-demo/drag-dialog'),
-    //   name: 'DragDialogDemo',
-    //   meta: {
-    //     title: 'Drag Dialog'
-    //   }
-    // },
-    // {
-    //   path: 'drag-select',
-    //   component: () => import('@/views/components-demo/drag-select'),
-    //   name: 'DragSelectDemo',
-    //   meta: {
-    //     title: 'Drag Select'
-    //   }
-    // },
-    // {
-    //   path: 'dnd-list',
-    //   component: () => import('@/views/components-demo/dnd-list'),
-    //   name: 'DndListDemo',
-    //   meta: {
-    //     title: 'Dnd List'
-    //   }
-    // },
-    // {
-    //   path: 'drag-kanban',
-    //   component: () => import('@/views/components-demo/drag-kanban'),
-    //   name: 'DragKanbanDemo',
-    //   meta: {
-    //     title: 'Drag Kanban'
-    //   }
-    // }
+
+
   ]
 }
 

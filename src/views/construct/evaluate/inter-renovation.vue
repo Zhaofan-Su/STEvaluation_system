@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h2>2.2.7&nbsp;一体化装修设计</h2>
+    <h2>3.2.7&nbsp;室内装修工程</h2>
     <el-card v-for="item in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="number">{{ item.id }}.&nbsp;{{ item.title }}</span>
@@ -84,16 +84,16 @@
 
 <script>
 export default {
-  name: "IntergrateDecoration",
+  name: "IntergrateTech",
   data() {
     return {
       items: [
         {
           id: 1,
-          title: "设计深度",
-          aspect: "具有完整的室内装饰装修设计方案，设计深度满足施工要求",
+          title: "",
+          aspect: "非承重内隔墙采用装配施工技术，现场无湿作业和二次施工",
           satisfy: true,
-          max_score: "4",
+          max_score: "2",
           score: "0",
           description: "",
           evaluation_index: "",
@@ -103,11 +103,10 @@ export default {
         },
         {
           id: 2,
-          title: "协同设计",
-          aspect:
-            "装修设计与主体结构、机电设备设计紧密结合，并建立协同工作机制",
+          title: "",
+          aspect: "墙和地面瓷砖、石材等装修材料工厂加工编号，无现场切割",
           satisfy: true,
-          max_score: "3",
+          max_score: "2",
           score: "0",
           description: "",
           evaluation_index: "",
@@ -117,11 +116,36 @@ export default {
         },
         {
           id: 3,
-          title: "设计方法",
-          aspect:
-            "装修设计采用标准化、模数化设计；各构件、部品与主体结构之间的尺寸匹配、协调，提前预留、预埋接口，易于装修工程的装配化施工；墙、地面块材铺装基本保证现场无二次加工",
+          title: "",
+          aspect: "各种柜体、内门等木制品和木装饰采用工厂定制，无现场切割",
           satisfy: true,
-          max_score: "3",
+          max_score: "2",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 4,
+          title: "",
+          aspect: "各种设备管线，连接部位提前预留接口、孔洞，无现场剔凿",
+          satisfy: true,
+          max_score: "2",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 5,
+          title: "",
+          aspect: "采用预拌砂浆、预拌混凝土或其他工业化产品",
+          satisfy: true,
+          max_score: "2",
           score: "0",
           description: "",
           evaluation_index: "",

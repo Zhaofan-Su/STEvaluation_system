@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h2>2.2.7&nbsp;一体化装修设计</h2>
+    <h2>4.2.3&nbsp;给排水（此页前几项的评分标准好像没有给）</h2>
     <el-card v-for="item in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="number">{{ item.id }}.&nbsp;{{ item.title }}</span>
@@ -67,14 +67,30 @@
           <div>{{ item.aspect }}.（{{ item.max_score }}分）</div>
         </div>
         <el-form ref="form" :model="item" label-width="100px">
-          <el-form-item label="是否满足">
-            <el-radio-group v-model="item.satisfy">
-              <el-radio :label="true" :disabled="item.locked">是</el-radio>
-              <el-radio :label="false" :disabled="item.locked">否</el-radio>
+          <el-form-item v-if="item.id==1" label>
+            <el-radio-group v-model="item.score">
+              <el-radio :label="5" :disabled="item.locked">用水效率等级达到3级</el-radio>
+              <el-radio :label="10" :disabled="item.locked">用水效率等级达到2级</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="!item.satisfy" label="不满足简述">
-            <el-input v-model="item.description" label="不满足简述" type="textarea" />
+          <el-form-item v-else-if="item.id==2" label>
+            <el-radio-group v-model="item.score">
+              <el-radio :label="7">采用节水灌溉体系（后面还有附加选项）</el-radio>
+              <el-radio :label="10">种植无需永久灌溉植物</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item v-else-if="item.id==3" label>
+            <el-radio-group v-model="item.score">
+              <el-radio :label="6">循环冷却水系统设置水处理措施；采取加大集水盘、设置平衡t或平衡水箱的方式，避免冷却水泵停泵时冷却水溢出</el-radio>
+              <el-radio :label="10">运行时，冷却塔的蒸发耗水量占冷却水补水量的比例不低于80%</el-radio>
+              <el-radio :label="10">采用无蒸发耗水量的冷却技术</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item v-else-if="item.id==4" label>
+            <el-radio-group v-model="item.score">
+              <el-radio :label="3">50%≤其他用水中采用节水技术或措施的比例&lt;80%</el-radio>
+              <el-radio :label="5">其他用水中采用节水技术或措施的比例≥80%</el-radio>
+            </el-radio-group>
           </el-form-item>
         </el-form>
       </el-card>
@@ -84,16 +100,15 @@
 
 <script>
 export default {
-  name: "IntergrateDecoration",
+  name: "Drainage",
   data() {
     return {
       items: [
         {
           id: 1,
-          title: "设计深度",
-          aspect: "具有完整的室内装饰装修设计方案，设计深度满足施工要求",
-          satisfy: true,
-          max_score: "4",
+          title: "",
+          aspect: "使用较高用水效率等级的卫生器具",
+          max_score: "10",
           score: "0",
           description: "",
           evaluation_index: "",
@@ -103,11 +118,9 @@ export default {
         },
         {
           id: 2,
-          title: "协同设计",
-          aspect:
-            "装修设计与主体结构、机电设备设计紧密结合，并建立协同工作机制",
-          satisfy: true,
-          max_score: "3",
+          title: "",
+          aspect: "绿化灌溉采用节水灌溉方式",
+          max_score: "10",
           score: "0",
           description: "",
           evaluation_index: "",
@@ -117,17 +130,28 @@ export default {
         },
         {
           id: 3,
-          title: "设计方法",
-          aspect:
-            "装修设计采用标准化、模数化设计；各构件、部品与主体结构之间的尺寸匹配、协调，提前预留、预埋接口，易于装修工程的装配化施工；墙、地面块材铺装基本保证现场无二次加工",
-          satisfy: true,
-          max_score: "3",
+          title: "",
+          aspect: "空调设备或系统采用节水冷却技术",
+          max_score: "10",
           score: "0",
           description: "",
           evaluation_index: "",
           locked: false,
           dialogVisible: false,
           popOverShow: false
+        },
+        {
+          id: 4,
+          title: "",
+          aspect: "除卫生器具、绿化灌溉和冷却塔外的其他用水采用节水技术或措施",
+          max_score: "5",
+          score: "0",
+          dialogVisible: false,
+          evaluation_index: "",
+          description: "",
+          locked: false,
+          popOverShow: false,
+          checklist: []
         }
       ]
     };

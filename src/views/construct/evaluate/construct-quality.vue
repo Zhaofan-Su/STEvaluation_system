@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h2>2.2.7&nbsp;一体化装修设计</h2>
+    <h2>3.2.5&nbsp;装配化施工质量</h2>
     <el-card v-for="item in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="number">{{ item.id }}.&nbsp;{{ item.title }}</span>
@@ -84,14 +84,15 @@
 
 <script>
 export default {
-  name: "IntergrateDecoration",
+  name: "ConstructQuality",
   data() {
     return {
       items: [
         {
           id: 1,
-          title: "设计深度",
-          aspect: "具有完整的室内装饰装修设计方案，设计深度满足施工要求",
+          title: "",
+          aspect:
+            "全部主控项目的构件连接部位均进行实体抽样检测，检测结果符合设计要求",
           satisfy: true,
           max_score: "4",
           score: "0",
@@ -103,9 +104,9 @@ export default {
         },
         {
           id: 2,
-          title: "协同设计",
+          title: "",
           aspect:
-            "装修设计与主体结构、机电设备设计紧密结合，并建立协同工作机制",
+            "按国家现行有关标准的规定进行了工程质量验收，并且达到国家现行有关装配式结构工程验收标准的合格要求",
           satisfy: true,
           max_score: "3",
           score: "0",
@@ -117,11 +118,52 @@ export default {
         },
         {
           id: 3,
-          title: "设计方法",
+          title: "",
           aspect:
-            "装修设计采用标准化、模数化设计；各构件、部品与主体结构之间的尺寸匹配、协调，提前预留、预埋接口，易于装修工程的装配化施工；墙、地面块材铺装基本保证现场无二次加工",
+            "构件、灌浆料强度检测报告、主要材料及配件的质量证明文件、进场验收记录，资料齐全、详实、可靠",
           satisfy: true,
-          max_score: "3",
+          max_score: "2",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 4,
+          title: "",
+          aspect:
+            "构件安装施工记录、钢筋连接施工检验记录、钢结构建筑的主体结构连接螺栓或焊接节点检验记录，资料齐全、详实、可靠",
+          satisfy: true,
+          max_score: "2",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 5,
+          title: "",
+          aspect:
+            "后浇混凝土部位、后装封闭构件施工前的隐蔽工程检查验收文件，资料齐全、详实、可靠",
+          satisfy: true,
+          max_score: "2",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 6,
+          title: "",
+          aspect: "装配式结构分项工程质量验收文件，资料齐全、详实、可靠",
+          satisfy: true,
+          max_score: "2",
           score: "0",
           description: "",
           evaluation_index: "",

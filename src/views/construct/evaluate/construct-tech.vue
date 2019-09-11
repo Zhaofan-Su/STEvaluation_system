@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h2>2.2.7&nbsp;一体化装修设计</h2>
+    <h2>3.2.4&nbsp;装配化施工技术与工艺</h2>
     <el-card v-for="item in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="number">{{ item.id }}.&nbsp;{{ item.title }}</span>
@@ -84,16 +84,17 @@
 
 <script>
 export default {
-  name: "IntergrateDecoration",
+  name: "OrgManage",
   data() {
     return {
       items: [
         {
           id: 1,
-          title: "设计深度",
-          aspect: "具有完整的室内装饰装修设计方案，设计深度满足施工要求",
+          title: "",
+          aspect:
+            "参评项目具备构建安装专项技术方案，内容包括构件成品保护、存放、翻转、起吊、定位、稳固、连接等技术措施和质量、安全控制措施",
           satisfy: true,
-          max_score: "4",
+          max_score: "3",
           score: "0",
           description: "",
           evaluation_index: "",
@@ -103,9 +104,9 @@ export default {
         },
         {
           id: 2,
-          title: "协同设计",
+          title: "",
           aspect:
-            "装修设计与主体结构、机电设备设计紧密结合，并建立协同工作机制",
+            "构件连接技术施工方便、安全可靠，连接技术系统性强、经济适用，符合国家现行有关标准规定",
           satisfy: true,
           max_score: "3",
           score: "0",
@@ -117,11 +118,75 @@ export default {
         },
         {
           id: 3,
-          title: "设计方法",
-          aspect:
-            "装修设计采用标准化、模数化设计；各构件、部品与主体结构之间的尺寸匹配、协调，提前预留、预埋接口，易于装修工程的装配化施工；墙、地面块材铺装基本保证现场无二次加工",
+          title: "",
+          aspect: "外墙、内墙、顶棚基本实现无抹灰",
           satisfy: true,
           max_score: "3",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 4,
+          title: "",
+          aspect: "外墙减少外脚手架施工，室内采用工具式、定型化安全支撑措施",
+          satisfy: true,
+          max_score: "3",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 5,
+          title: "",
+          aspect: "采用工具式、定型化模板及支撑系统，可重复使用30次以上",
+          satisfy: true,
+          max_score: "2",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 6,
+          title: "",
+          aspect: "采用吊车满足100mm以下微动性的要求，有分配梁或分配桁架的吊具",
+          satisfy: true,
+          max_score: "2",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 7,
+          title: "",
+          aspect: "项目所用成型钢筋、钢筋网片、钢筋桁架等由工厂加工制作",
+          satisfy: true,
+          max_score: "2",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 8,
+          title: "",
+          aspect: "各机电设备管线预埋到位、采用机械连接方式",
+          satisfy: true,
+          max_score: "2",
           score: "0",
           description: "",
           evaluation_index: "",

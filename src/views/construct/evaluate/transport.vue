@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h2>2.2.7&nbsp;一体化装修设计</h2>
+    <h2>3.2.2&nbsp;预制构件运输管理</h2>
     <el-card v-for="item in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="number">{{ item.id }}.&nbsp;{{ item.title }}</span>
@@ -84,16 +84,17 @@
 
 <script>
 export default {
-  name: "IntergrateDecoration",
+  name: "Transport",
   data() {
     return {
       items: [
         {
           id: 1,
-          title: "设计深度",
-          aspect: "具有完整的室内装饰装修设计方案，设计深度满足施工要求",
+          title: "",
+          aspect:
+            "参评项目具备合理运输管理组织方案，内容包括运输时间、次序、运输路线、固定要求、堆放支垫及成品保护措施，且减少二次倒运和现场堆放",
           satisfy: true,
-          max_score: "4",
+          max_score: "3",
           score: "0",
           description: "",
           evaluation_index: "",
@@ -103,11 +104,11 @@ export default {
         },
         {
           id: 2,
-          title: "协同设计",
+          title: "",
           aspect:
-            "装修设计与主体结构、机电设备设计紧密结合，并建立协同工作机制",
+            "构建运输和临时存放过程中具有专门的质量安全保证措施，对尺寸较大、形状特殊的大型预制构件的运输和存放措施具体、明确",
           satisfy: true,
-          max_score: "3",
+          max_score: "2",
           score: "0",
           description: "",
           evaluation_index: "",
@@ -117,11 +118,10 @@ export default {
         },
         {
           id: 3,
-          title: "设计方法",
-          aspect:
-            "装修设计采用标准化、模数化设计；各构件、部品与主体结构之间的尺寸匹配、协调，提前预留、预埋接口，易于装修工程的装配化施工；墙、地面块材铺装基本保证现场无二次加工",
+          title: "",
+          aspect: "构建运输进场具有交接验收记录",
           satisfy: true,
-          max_score: "3",
+          max_score: "2",
           score: "0",
           description: "",
           evaluation_index: "",

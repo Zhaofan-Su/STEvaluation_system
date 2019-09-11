@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h2>2.2.7&nbsp;一体化装修设计</h2>
+    <h2>3.2.10&nbsp;现场施工人工用量</h2>
     <el-card v-for="item in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="number">{{ item.id }}.&nbsp;{{ item.title }}</span>
@@ -67,13 +67,26 @@
           <div>{{ item.aspect }}.（{{ item.max_score }}分）</div>
         </div>
         <el-form ref="form" :model="item" label-width="100px">
-          <el-form-item label="是否满足">
-            <el-radio-group v-model="item.satisfy">
-              <el-radio :label="true" :disabled="item.locked">是</el-radio>
-              <el-radio :label="false" :disabled="item.locked">否</el-radio>
-            </el-radio-group>
+          <el-form-item label="工人减少比例">
+            <el-input v-model="item.indicator" style="width:40%" placeholder="请输入工人减少比例" />
           </el-form-item>
-          <el-form-item v-if="!item.satisfy" label="不满足简述">
+          <el-form-item v-if="item.id<=3" label="得分">
+            <!-- <el-radio-group v-model="i.score">
+              <el-radio :label="10" :disabled="item.locked">预制率≥80%</el-radio>
+              <el-radio :label="8" :disabled="item.locked">65%≤预制率&lt;80%</el-radio>
+              <el-radio :label="5" :disabled="item.locked">50%≤预制率&lt;65%</el-radio>
+            </el-radio-group>-->
+            <span v-if="item.indicator>=0.5">{{ item.max_score }}&nbsp;&nbsp;分</span>
+            <span v-else-if="item.indicator>=0.4">{{ item.second_score }}&nbsp;&nbsp;分</span>
+            <span v-else-if="item.indicator>=0.2">{{ item.third_score }}&nbsp;&nbsp;分</span>
+            <span v-else-if="item.indicator>=0.1">{{ item.forth_score }}&nbsp;&nbsp;分</span>
+            <span v-else>0&nbsp;&nbsp;分</span>
+          </el-form-item>
+          <el-form-item v-else label="得分">
+            <span v-if="item.indicator>=0.5">{{ item.max_score }}&nbsp;&nbsp;分</span>
+            <span v-else>0&nbsp;&nbsp;分</span>
+          </el-form-item>
+          <el-form-item label="不满足简述">
             <el-input v-model="item.description" label="不满足简述" type="textarea" />
           </el-form-item>
         </el-form>
@@ -84,45 +97,20 @@
 
 <script>
 export default {
-  name: "IntergrateDecoration",
+  name: "Workers",
   data() {
     return {
       items: [
         {
           id: 1,
-          title: "设计深度",
-          aspect: "具有完整的室内装饰装修设计方案，设计深度满足施工要求",
-          satisfy: true,
-          max_score: "4",
-          score: "0",
-          description: "",
-          evaluation_index: "",
-          locked: false,
-          dialogVisible: false,
-          popOverShow: false
-        },
-        {
-          id: 2,
-          title: "协同设计",
-          aspect:
-            "装修设计与主体结构、机电设备设计紧密结合，并建立协同工作机制",
-          satisfy: true,
-          max_score: "3",
-          score: "0",
-          description: "",
-          evaluation_index: "",
-          locked: false,
-          dialogVisible: false,
-          popOverShow: false
-        },
-        {
-          id: 3,
-          title: "设计方法",
-          aspect:
-            "装修设计采用标准化、模数化设计；各构件、部品与主体结构之间的尺寸匹配、协调，提前预留、预埋接口，易于装修工程的装配化施工；墙、地面块材铺装基本保证现场无二次加工",
-          satisfy: true,
-          max_score: "3",
-          score: "0",
+          title: "",
+          aspect: "单位建筑面积人工用量减少比例",
+          indicator: null,
+          max_score: "10",
+          second_score: "8",
+          third_score: "5",
+          forth_score: "3",
+          score: 0,
           description: "",
           evaluation_index: "",
           locked: false,
@@ -132,8 +120,9 @@ export default {
       ]
     };
   },
+  computed() {},
+  // 最后提交的时候再计算每一个选项的得分
   methods: {
-    // 计算分数的时候，第一项可能要先获取项目资料
     handleClose() {
       this.$confirm("确认关闭?")
         .then(_ => {

@@ -135,82 +135,9 @@ export const asyncRoutes = [{
       }
     }]
   },
-  // {
-  //   path: '/design',
-  //   component: Layout,
-  //   name: 'DesignPhase',
-  //   meta: {
-  //     title: '设计阶段',
-  //     icon: 'edit'
-  //   },
-  //   children: [{
-  //     path: 'basic',
-  //     component: () => import('@/views/design/basic'),
-  //     name: 'DesignBasic',
-  //     meta: {
-  //       title: '基本项目'
-  //     }
-  //   }, {
-  //     path: 'evaluation',
-  //     component: () => import('@/views/design/evaluation'),
-  //     name: 'DesignEvaluation',
-  //     meta: {
-  //       title: '评分项目'
-  //     }
-  //   }]
-  // },
-
   designRouter,
-  {
-    path: '/construct',
-    component: Layout,
-    name: 'ConstructPhase',
-    meta: {
-      title: '建造阶段',
-      icon: 'component'
-    },
-    children: [{
-      path: 'basic',
-      component: () => import('@/views/construct/basic'),
-      name: 'ConstructBasic',
-      meta: {
-        title: '基本项目'
-      }
-    }, {
-      path: '/evaluate/evaluation',
-      component: () => import('@/views/construct/evaluate/evaluation'),
-      name: 'ConstructEvaluation',
-      meta: {
-        title: '评分项目'
-      }
-    }]
-  },
-  {
-    path: '/usage',
-    component: Layout,
-    name: 'ConstructPhase',
-    meta: {
-      title: '使用阶段',
-      icon: 'chart'
-    },
-    children: [{
-      path: 'basic',
-      component: () => import('@/views/usage/basic'),
-      name: 'UsageBasic',
-      meta: {
-        title: '基本项目'
-      }
-    }, {
-      path: 'evaluation',
-      component: () => import('@/views/usage/evaluation'),
-      name: 'UsageEvaluation',
-      meta: {
-        title: '评分项目'
-      }
-    }]
-  },
-  // constructRouter,
-  // usageRouter,
+  constructRouter,
+  usageRouter,
   additionRouter,
   calculateRouter
 ]

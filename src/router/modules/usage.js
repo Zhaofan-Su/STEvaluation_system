@@ -12,50 +12,62 @@ const usageRouter = {
     icon: 'chart'
   },
   children: [{
-      path: 'aircondition',
-      component: () => import('@/views/usage/aircondition'),
-      name: 'Aircondition',
+      path: 'basic',
+      component: () => import('@/views/usage/basic'),
+      name: 'UsageBasic',
       meta: {
-        title: '供暖、通风与空调',
-        noCache: true
+        title: '基础项目'
       }
-    },
-    {
-      path: 'automation',
-      component: () => import('@/views/usage/automation'),
-      name: 'Automation',
+    }, {
+      path: 'evaluate',
+      component: () => import('@/views/usage/evaluate/index'),
+      name: 'UsageEvaluate',
       meta: {
-        title: '电气及自动化',
-        noCache: true
-      }
-    },
-    {
-      path: 'drainage',
-      component: () => import('@/views/usage/drainage'),
-      name: 'Drainage',
-      meta: {
-        title: '给排水',
-        noCache: true
-      }
-    },
-    {
-      path: 'material-select',
-      component: () => import('@/views/usage/material-select'),
-      name: 'MaterialSelect',
-      meta: {
-        title: '建筑材料的选用',
-        noCache: true
-      }
-    },
-    {
-      path: 'recycle',
-      component: () => import('@/views/usage/recycle'),
-      name: 'Recycle',
-      meta: {
-        title: '建筑的回收再利用率',
-        noCache: true
-      }
+        title: '评分项目'
+      },
+      children: [{
+        path: '/evaluate/aircondition',
+        component: () => import('@/views/usage/evaluate/aircondition'),
+        name: 'Aircondition',
+        meta: {
+          title: '供暖、通风与空调',
+          noCache: true
+        }
+      }, {
+        path: '/evaluate/automation',
+        component: () => import('@/views/usage/evaluate/automation'),
+        name: 'Automation',
+        meta: {
+          title: '电气及自动化',
+          noCache: true
+        }
+      }, {
+        path: '/evaluate/drainage',
+        component: () => import('@/views/usage/evaluate/drainage'),
+        name: 'Drainage',
+        meta: {
+          title: '给排水',
+          noCache: true
+        }
+      }, {
+        path: '/evaluate/material-select',
+        component: () => import('@/views/usage/evaluate/material-select'),
+        name: 'MaterialSelect',
+        meta: {
+          title: '建筑材料的选用',
+          noCache: true
+        }
+      }, {
+        path: '/evaluate/recycle',
+        component: () => import('@/views/usage/evaluate/recycle'),
+        name: 'Recycle',
+        meta: {
+          title: '建筑的回收再利用率',
+          noCache: true
+        }
+      }]
     }
+
   ]
 }
 

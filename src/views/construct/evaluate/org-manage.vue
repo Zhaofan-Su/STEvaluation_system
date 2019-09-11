@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h2>2.2.7&nbsp;一体化装修设计</h2>
+    <h2>3.2.3&nbsp;装配化施工组织与管理</h2>
     <el-card v-for="item in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="number">{{ item.id }}.&nbsp;{{ item.title }}</span>
@@ -84,14 +84,14 @@
 
 <script>
 export default {
-  name: "IntergrateDecoration",
+  name: "OrgManage",
   data() {
     return {
       items: [
         {
           id: 1,
-          title: "设计深度",
-          aspect: "具有完整的室内装饰装修设计方案，设计深度满足施工要求",
+          title: "",
+          aspect: "参评项目具有工程总承包管理模式和专业化的施工队伍",
           satisfy: true,
           max_score: "4",
           score: "0",
@@ -103,11 +103,11 @@ export default {
         },
         {
           id: 2,
-          title: "协同设计",
+          title: "",
           aspect:
-            "装修设计与主体结构、机电设备设计紧密结合，并建立协同工作机制",
+            "参评项目具备完整的施工组织方案，内容包括构件安装工程进场、场地、材料、人员、机械的组织，以及相应的质量、环境、安全管理措施",
           satisfy: true,
-          max_score: "3",
+          max_score: "4",
           score: "0",
           description: "",
           evaluation_index: "",
@@ -117,9 +117,21 @@ export default {
         },
         {
           id: 3,
-          title: "设计方法",
-          aspect:
-            "装修设计采用标准化、模数化设计；各构件、部品与主体结构之间的尺寸匹配、协调，提前预留、预埋接口，易于装修工程的装配化施工；墙、地面块材铺装基本保证现场无二次加工",
+          title: "",
+          aspect: "参评项目具备完整的装配化施工工法或技术标准",
+          satisfy: true,
+          max_score: "4",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 4,
+          title: "",
+          aspect: "参评项目采用机械化施工，减少人力成本，并明显提高效率",
           satisfy: true,
           max_score: "3",
           score: "0",

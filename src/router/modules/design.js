@@ -15,13 +15,13 @@ const designRouter = {
       component: () => import('@/views/design/basic'),
       name: 'DesignBasic',
       meta: {
-        title: '基本项目',
+        title: '基础项目',
       }
     },
     {
       path: 'evaluate',
       component: () => import('@/views/design/evaluate/index'),
-      name: 'Evaluate',
+      name: 'DesignEvaluate',
       meta: {
         title: '评分项目'
       },

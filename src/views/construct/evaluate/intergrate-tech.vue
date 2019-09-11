@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h2>2.2.7&nbsp;一体化装修设计</h2>
+    <h2>3.2.6&nbsp;一体化装修技术与施工工艺</h2>
     <el-card v-for="item in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="number">{{ item.id }}.&nbsp;{{ item.title }}</span>
@@ -84,14 +84,15 @@
 
 <script>
 export default {
-  name: "IntergrateDecoration",
+  name: "IntergrateTech",
   data() {
     return {
       items: [
         {
           id: 1,
-          title: "设计深度",
-          aspect: "具有完整的室内装饰装修设计方案，设计深度满足施工要求",
+          title: "",
+          aspect:
+            "具备装修施工组织设计，体现部品的工厂生产与现场施工工序、部品的生产工艺与施工安装工艺的协调配合",
           satisfy: true,
           max_score: "4",
           score: "0",
@@ -103,9 +104,22 @@ export default {
         },
         {
           id: 2,
-          title: "协同设计",
+          title: "",
           aspect:
-            "装修设计与主体结构、机电设备设计紧密结合，并建立协同工作机制",
+            "各部件与部品之间、部品与主体结构之间采用装配化施工工艺，各工序偏差控制在设计要求范围内",
+          satisfy: true,
+          max_score: "4",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 3,
+          title: "",
+          aspect: "采用工厂生产的集成式厨房、卫生间，一次安装到位",
           satisfy: true,
           max_score: "3",
           score: "0",
@@ -116,12 +130,25 @@ export default {
           popOverShow: false
         },
         {
-          id: 3,
-          title: "设计方法",
-          aspect:
-            "装修设计采用标准化、模数化设计；各构件、部品与主体结构之间的尺寸匹配、协调，提前预留、预埋接口，易于装修工程的装配化施工；墙、地面块材铺装基本保证现场无二次加工",
+          id: 4,
+          title: "",
+          aspect: "采用内隔墙板系统，与主体结构连接可靠，易于安装拆卸",
           satisfy: true,
-          max_score: "3",
+          max_score: "2",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 5,
+          title: "",
+          aspect:
+            "水、暖、电气等设备系统与主体结构的构件生产、装配施工协调配合",
+          satisfy: true,
+          max_score: "2",
           score: "0",
           description: "",
           evaluation_index: "",

@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h2>2.2.7&nbsp;一体化装修设计</h2>
+    <h2>4.2.4&nbsp;建筑材料的选用（此页前几项的评分标准好像没有给）</h2>
     <el-card v-for="item in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="number">{{ item.id }}.&nbsp;{{ item.title }}</span>
@@ -67,14 +67,27 @@
           <div>{{ item.aspect }}.（{{ item.max_score }}分）</div>
         </div>
         <el-form ref="form" :model="item" label-width="100px">
-          <el-form-item label="是否满足">
-            <el-radio-group v-model="item.satisfy">
-              <el-radio :label="true" :disabled="item.locked">是</el-radio>
-              <el-radio :label="false" :disabled="item.locked">否</el-radio>
+          <el-form-item v-if="item.id==1" label>
+            <el-radio-group v-model="item.score">
+              <el-radio :label="0">满足</el-radio>
+              <el-radio :label="10">不满足</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="!item.satisfy" label="不满足简述">
-            <el-input v-model="item.description" label="不满足简述" type="textarea" />
+          <el-form-item v-else-if="item.id==2" label>
+            <el-radio-group v-model="item.score">
+              <el-radio :label="6" :disabled="item.locked">住宅建筑土建与装修一体化设计的户数比例达到30%</el-radio>
+              <el-radio :label="10" :disabled="item.locked">住宅建筑土建与装修一体化设计的户数比例达到100%</el-radio>
+              <el-radio :label="6" :disabled="item.locked">公共建筑公共部位土建与装修一体化设计</el-radio>
+              <el-radio :label="10" :disabled="item.locked">所有部位均土建与装修一体化设计</el-radio>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item v-else-if="item.id==3" label>
+            <el-checkbox-group v-model="item.checklist">
+              <el-checkbox :label="2">合理采用清水混凝土</el-checkbox>
+              <el-checkbox :label="2">采用耐久性好、易维护的外立面材料%</el-checkbox>
+              <el-checkbox :label="1">采用耐久性好、易维护的室内装饰装修材料</el-checkbox>
+            </el-checkbox-group>
           </el-form-item>
         </el-form>
       </el-card>
@@ -84,16 +97,15 @@
 
 <script>
 export default {
-  name: "IntergrateDecoration",
+  name: "MaterialSelect",
   data() {
     return {
       items: [
         {
           id: 1,
-          title: "设计深度",
-          aspect: "具有完整的室内装饰装修设计方案，设计深度满足施工要求",
-          satisfy: true,
-          max_score: "4",
+          title: "",
+          aspect: "对地基基础、结构体系、结构构件进行优化设计，达到节材效果",
+          max_score: "5",
           score: "0",
           description: "",
           evaluation_index: "",
@@ -103,11 +115,9 @@ export default {
         },
         {
           id: 2,
-          title: "协同设计",
-          aspect:
-            "装修设计与主体结构、机电设备设计紧密结合，并建立协同工作机制",
-          satisfy: true,
-          max_score: "3",
+          title: "",
+          aspect: "土建工程与装修工程一体化设计",
+          max_score: "10",
           score: "0",
           description: "",
           evaluation_index: "",
@@ -117,17 +127,16 @@ export default {
         },
         {
           id: 3,
-          title: "设计方法",
-          aspect:
-            "装修设计采用标准化、模数化设计；各构件、部品与主体结构之间的尺寸匹配、协调，提前预留、预埋接口，易于装修工程的装配化施工；墙、地面块材铺装基本保证现场无二次加工",
-          satisfy: true,
-          max_score: "3",
+          title: "",
+          aspect: "合理采用耐久性好、易维护的装饰装修建筑材料",
+          max_score: "5",
           score: "0",
           description: "",
           evaluation_index: "",
           locked: false,
           dialogVisible: false,
-          popOverShow: false
+          popOverShow: false,
+          checklist: []
         }
       ]
     };

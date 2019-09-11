@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h2>2.2.7&nbsp;一体化装修设计</h2>
+    <h2>4.2.2&nbsp;电气及自动化</h2>
     <el-card v-for="item in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="number">{{ item.id }}.&nbsp;{{ item.title }}</span>
@@ -67,11 +67,30 @@
           <div>{{ item.aspect }}.（{{ item.max_score }}分）</div>
         </div>
         <el-form ref="form" :model="item" label-width="100px">
-          <el-form-item label="是否满足">
+          <el-form-item v-if="item.id!=2&&item.id!=4" label="是否满足">
             <el-radio-group v-model="item.satisfy">
               <el-radio :label="true" :disabled="item.locked">是</el-radio>
               <el-radio :label="false" :disabled="item.locked">否</el-radio>
             </el-radio-group>
+          </el-form-item>
+          <el-form-item v-else-if="item.id==2" label>
+            <el-radio-group v-model="item.score">
+              <el-radio :label="4">主要房间满足要求</el-radio>
+              <el-radio :label="8">所有区域均满足要求</el-radio>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item v-else-if="item.id==4" label>
+            <el-checkbox-group v-model="item.checklist">
+              <el-checkbox :label="3">三相配电变压器满足现行国家标准《三相配电变压器能效限定值及能效等级》GB20052的节能评价值要求</el-checkbox>
+              <el-checkbox :label="2">水泵、风机等设备，及其他电气装置满足相关现行国家标准的节能评价值要求</el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+          <el-form-item v-if="item.id==3" label="得分">
+            <span v-if="item.de>=0.15">10&nbsp;&nbsp;</span>
+            <span v-else-if="item.de>=0.1">7&nbsp;&nbsp;</span>
+            <span v-else-if="item.de>=0.05">3&nbsp;&nbsp;</span>
+            <span v-else>0&nbsp;&nbsp;</span>
           </el-form-item>
           <el-form-item v-if="!item.satisfy" label="不满足简述">
             <el-input v-model="item.description" label="不满足简述" type="textarea" />
@@ -84,16 +103,17 @@
 
 <script>
 export default {
-  name: "IntergrateDecoration",
+  name: "Automation",
   data() {
     return {
       items: [
         {
           id: 1,
-          title: "设计深度",
-          aspect: "具有完整的室内装饰装修设计方案，设计深度满足施工要求",
+          title: "",
+          aspect:
+            "走廊、楼梯间、门厅、大堂、大空间、地下停车场等场所的照明系统采取分区、定时、感应等节能控制措施",
           satisfy: true,
-          max_score: "4",
+          max_score: "5",
           score: "0",
           description: "",
           evaluation_index: "",
@@ -103,9 +123,23 @@ export default {
         },
         {
           id: 2,
-          title: "协同设计",
+          title: "",
           aspect:
-            "装修设计与主体结构、机电设备设计紧密结合，并建立协同工作机制",
+            "照明功率密度值达到现行国家标准《建筑照明设计标准》GB50034中规定的目标值",
+          satisfy: true,
+          max_score: "8",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 3,
+          title: "",
+          aspect:
+            "合理选用电梯和自动扶梯，并采取电梯群控、扶梯自动启停等节能控制措施",
           satisfy: true,
           max_score: "3",
           score: "0",
@@ -116,18 +150,18 @@ export default {
           popOverShow: false
         },
         {
-          id: 3,
-          title: "设计方法",
-          aspect:
-            "装修设计采用标准化、模数化设计；各构件、部品与主体结构之间的尺寸匹配、协调，提前预留、预埋接口，易于装修工程的装配化施工；墙、地面块材铺装基本保证现场无二次加工",
+          id: 4,
+          title: "",
+          aspect: "合理选用节能型电气设备，按照下列规则累计得分",
           satisfy: true,
-          max_score: "3",
+          max_score: "5",
           score: "0",
-          description: "",
-          evaluation_index: "",
-          locked: false,
           dialogVisible: false,
-          popOverShow: false
+          evaluation_index: "",
+          description: "",
+          locked: false,
+          popOverShow: false,
+          checklist: []
         }
       ]
     };
