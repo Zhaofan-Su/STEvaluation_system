@@ -5,6 +5,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
+// import HomePage from '@/homepage'
 
 /* Router Modules */
 import designRouter from './modules/design'
@@ -70,19 +71,24 @@ export const constantRoutes = [{
   },
   {
     path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: {
-        name: 'Dashboard',
-        title: '首页',
-        icon: 'documentation',
-        affix: true,
-      }
-    }]
+    component: () => import('@/views/homepage/index'),
+    hidden: true
   },
+  // {
+  //   path: '/dashboard',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   children: [{
+  //     path: 'dashboard',
+  //     component: () => import('@/views/dashboard/index'),
+  //     meta: {
+  //       name: 'Dashboard',
+  //       title: '首页',
+  //       icon: 'documentation',
+  //       affix: true,
+  //     }
+  //   }]
+  // },
 
 ]
 
@@ -92,7 +98,7 @@ export const constantRoutes = [{
  */
 export const asyncRoutes = [{
     path: '/peoples',
-    component: Layout,
+    component: () => import('@/views/homepage/index'),
     redirect: '/peoples/index',
     children: [{
       path: 'index',
@@ -108,18 +114,25 @@ export const asyncRoutes = [{
   },
   {
     path: '/projects',
-    component: Layout,
-    children: [{
-      path: 'index',
-      component: () => import('@/views/projects/index'),
-      meta: {
-        name: 'Projects',
-        title: '全部项目',
-        icon: 'list',
-        roles: ['admin', 'inner'],
-        noCache: true
-      }
-    }]
+    component: () => import('@/views/projects/index'),
+    meta: {
+      name: 'Projects',
+      title: '全部项目',
+      icon: 'list',
+      roles: ['admin', 'inner'],
+      noCache: true
+    }
+    // children: [{
+    //   path: 'index',
+    //   component: () => import('@/views/projects/index'),
+    //   meta: {
+    //     name: 'Projects',
+    //     title: '全部项目',
+    //     icon: 'list',
+    //     roles: ['admin', 'inner'],
+    //     noCache: true
+    //   }
+    // }]
   },
   {
     path: '/projectInfo',

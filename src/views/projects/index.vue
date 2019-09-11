@@ -1,5 +1,7 @@
+
 <template>
-  <div class="dashboard-admin-container">
+  <div class="app-wrapper">
+    <navbar />
     <div class="filter-container">
       <el-input v-model="listQuery.projectName" placeholder="项目名称" style="width: 200px" />
       <el-select v-model="listQuery.type" placeholder="建筑类型">
@@ -103,13 +105,20 @@
 import { fetchList } from "@/api/article";
 import waves from "@/directive/waves";
 import Pagination from "@/components/Pagination";
-import { setTimeout } from "timers";
 import { format } from "path";
 
+import { Navbar } from '../../layout/components'
+import ResizeMixin from '../../layout/mixin/ResizeHandler'
+import { mapStat, mapState, mapGetters } from 'vuex'
+
+import { fromTextArea } from 'codemirror';
+import ResizeHandler from '../../layout/mixin/ResizeHandler';
+
 export default {
-  name: "Projects",
+  name: 'Projects',
   components: {
-    Pagination
+    Pagination,
+    Navbar,
   },
   directives: { waves },
   data () {
@@ -144,7 +153,6 @@ export default {
         }
       ],
       total: 0,
-      // listLoading: true,
       listLoading: false,
       listQuery: {
         page: 1,
@@ -154,13 +162,28 @@ export default {
       }
     };
   },
+  mixins: [ResizeHandler],
+  computed: {
+    ...mapState({
+      device: state => state.app.device,
+    }),
+    ...mapGetters(['roles']),
+    classObj () {
+      return {
+        mobile: this.device === 'mobile'
+      }
+    }
+  },
   created () {
-    // this.getList()
+    if (!this.roles.includes("admin")) {
+      if (!this.roles.includes("inner")) {
+        this.currentRole = "OuterHomepage"
+      } else {
+        this.currentRole = "InnerHomepage"
+      }
+    }
   },
   methods: {
-    // handleSetLineChartData (type) {
-    //   this.lineChartData = lineChartData[type]
-    // },
     getList () {
       this.listLoading = true;
       fetchList(this.listQuery).then(response => {
@@ -174,17 +197,17 @@ export default {
     },
     onSearch () { }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
-.dashboard-admin-container {
-  padding: 32px;
-}
+@import "~@/styles/mixin.scss";
+@import "~@/styles/variables.scss";
 
-@media (max-width: 1024px) {
-  .chart-wrapper {
-    padding: 8px;
-  }
+.app-wrapper {
+  @include clearfix;
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 </style>

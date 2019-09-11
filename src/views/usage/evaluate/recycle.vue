@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h2>4.2.3&nbsp;给排水（此页前几项的评分标准好像没有给）</h2>
+    <h2>4.2.5&nbsp;建筑的回收再利用率</h2>
     <el-card v-for="item in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="number">{{ item.id }}.&nbsp;{{ item.title }}</span>
@@ -107,8 +107,8 @@ export default {
         {
           id: 1,
           title: "",
-          aspect: "使用较高用水效率等级的卫生器具",
-          max_score: "10",
+          aspect: "公共建筑中可变换功能的室内空间采用可重复使用的隔断（墙）比例",
+          max_score: "5",
           score: "0",
           description: "",
           evaluation_index: "",
@@ -119,7 +119,7 @@ export default {
         {
           id: 2,
           title: "",
-          aspect: "绿化灌溉采用节水灌溉方式",
+          aspect: "施工现场500km以内生产的建筑材料重量占建筑材料总重量的比例",
           max_score: "10",
           score: "0",
           description: "",
@@ -131,7 +131,7 @@ export default {
         {
           id: 3,
           title: "",
-          aspect: "空调设备或系统采用节水冷却技术",
+          aspect: "现浇混凝土采用预拌混凝土",
           max_score: "10",
           score: "0",
           description: "",
@@ -143,7 +143,7 @@ export default {
         {
           id: 4,
           title: "",
-          aspect: "除卫生器具、绿化灌溉和冷却塔外的其他用水采用节水技术或措施",
+          aspect: "建筑砂浆采用预拌砂浆",
           max_score: "5",
           score: "0",
           dialogVisible: false,
@@ -151,7 +151,42 @@ export default {
           description: "",
           locked: false,
           popOverShow: false,
-          checklist: []
+        },
+        {
+          id: 5,
+          title: "",
+          aspect: "合理采用高强建筑结构材料",
+          max_score: "10",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 6,
+          title: "",
+          aspect: "合理采用高耐久性建筑结构材料",
+          max_score: "5",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
+        },
+        {
+          id: 7,
+          title: "",
+          aspect: "采用可再利用材料和可再循环材料",
+          max_score: "10",
+          score: "0",
+          description: "",
+          evaluation_index: "",
+          locked: false,
+          dialogVisible: false,
+          popOverShow: false
         }
       ]
     };

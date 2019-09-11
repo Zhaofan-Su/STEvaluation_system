@@ -28,6 +28,7 @@ export default {
   flex-direction: column;
   > .el-dialog__body {
     overflow: auto;
+    padding: 10px 40px 10px 30px;
   }
 }
 </style>
