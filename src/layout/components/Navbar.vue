@@ -14,15 +14,20 @@
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <search id="header-search" class="right-menu-item" />
-
+        <!-- <search id="header-search" class="right-menu-item" /> -->
+        <div id="homepage" class="right-menu-item">首页</div>
         <!-- <error-log class="errLog-container right-menu-item hover-effect" /> -->
 
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
-
-        <el-tooltip content="Global Size" effect="dark" placement="bottom">
+        <!-- <screenfull id="screenfull" class="right-menu-item hover-effect" /> -->
+        <div
+          id="projects"
+          class="right-menu-item"
+          v-if="this.roles.includes('inner')||this.roles.includes('admin')"
+        >全部项目</div>
+        <div id="peoples" class="right-menu-item" v-if="this.roles.includes('admin')">全部用户</div>
+        <!-- <el-tooltip content="Global Size" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip>
+        </el-tooltip>-->
       </template>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
@@ -53,13 +58,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 // import Breadcrumb from '@/components/Breadcrumb'
-import Hamburger from '@/components/Hamburger'
+import Hamburger from "@/components/Hamburger";
 // import ErrorLog from '@/components/ErrorLog'
-import Screenfull from '@/components/Screenfull'
-import SizeSelect from '@/components/SizeSelect'
-import Search from '@/components/HeaderSearch'
+import Screenfull from "@/components/Screenfull";
+import SizeSelect from "@/components/SizeSelect";
+import Search from "@/components/HeaderSearch";
 
 export default {
   components: {
@@ -71,22 +76,18 @@ export default {
     Search
   },
   computed: {
-    ...mapGetters([
-      'sidebar',
-      'avatar',
-      'device'
-    ])
+    ...mapGetters(["sidebar", "avatar", "device", "roles"])
   },
   methods: {
-    toggleSideBar () {
-      this.$store.dispatch('app/toggleSideBar')
+    toggleSideBar() {
+      this.$store.dispatch("app/toggleSideBar");
     },
-    async logout () {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    async logout() {
+      await this.$store.dispatch("user/logout");
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

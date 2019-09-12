@@ -1,7 +1,6 @@
 
 <template>
-  <div class="app-wrapper">
-    <navbar />
+  <div class="app-container">
     <div class="filter-container">
       <el-input v-model="listQuery.projectName" placeholder="项目名称" style="width: 200px" />
       <el-select v-model="listQuery.type" placeholder="建筑类型">
@@ -107,21 +106,15 @@ import waves from "@/directive/waves";
 import Pagination from "@/components/Pagination";
 import { format } from "path";
 
-import { Navbar } from '../../layout/components'
-import ResizeMixin from '../../layout/mixin/ResizeHandler'
-import { mapStat, mapState, mapGetters } from 'vuex'
-
-import { fromTextArea } from 'codemirror';
-import ResizeHandler from '../../layout/mixin/ResizeHandler';
+import { mapStat, mapState, mapGetters } from "vuex";
 
 export default {
-  name: 'Projects',
+  name: "Projects",
   components: {
-    Pagination,
-    Navbar,
+    Pagination
   },
   directives: { waves },
-  data () {
+  data() {
     return {
       tabelKey: 0,
       list: [
@@ -162,29 +155,18 @@ export default {
       }
     };
   },
-  mixins: [ResizeHandler],
-  computed: {
-    ...mapState({
-      device: state => state.app.device,
-    }),
-    ...mapGetters(['roles']),
-    classObj () {
-      return {
-        mobile: this.device === 'mobile'
-      }
-    }
-  },
-  created () {
+  computed: {},
+  created() {
     if (!this.roles.includes("admin")) {
       if (!this.roles.includes("inner")) {
-        this.currentRole = "OuterHomepage"
+        this.currentRole = "OuterHomepage";
       } else {
-        this.currentRole = "InnerHomepage"
+        this.currentRole = "InnerHomepage";
       }
     }
   },
   methods: {
-    getList () {
+    getList() {
       this.listLoading = true;
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items;
@@ -195,19 +177,10 @@ export default {
         }, 1500);
       });
     },
-    onSearch () { }
+    onSearch() {}
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/mixin.scss";
-@import "~@/styles/variables.scss";
-
-.app-wrapper {
-  @include clearfix;
-  position: relative;
-  height: 100%;
-  width: 100%;
-}
 </style>

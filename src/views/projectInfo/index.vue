@@ -48,10 +48,11 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 
 export default {
   name: "ProjectInfo",
-  data () {
+  data() {
     return {
       form: {
         projectName: "",
@@ -67,9 +68,16 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["evaluate"])
+  },
+  created() {
+    if (!this.evaluate) {
+      // this.$alert('还没有选择项目')
+      alert("还没有选择项目");
+    }
   },
   methods: {
-    onSave () {
+    onSave() {
       // 用户所填信息先保存到网页
     }
   }

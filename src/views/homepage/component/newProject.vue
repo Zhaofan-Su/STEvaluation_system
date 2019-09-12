@@ -42,22 +42,24 @@
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="handleSave">保存</el-button>
+      <el-button type="primary" @click="handleSave">新建项目</el-button>
       <el-button type="primary" @click="handleCancle">取消</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
-  name: 'newProject',
+  name: "newProject",
   props: {
-    'dialogVisible': {
+    dialogVisible: {
       type: Boolean,
       default: false
     }
   },
-  data () {
+  data() {
     return {
       // dialogVisible: false,
       form: {
@@ -71,35 +73,35 @@ export default {
         build: "",
         structType: ""
       }
-    }
+    };
   },
   methods: {
-    handleClose () {
-      this.$confirm('是否创建项目？')
+    handleClose() {
+      this.$confirm("是否创建项目？")
         .then(_ => {
-          this.dialogVisible = false
-          this.toEvaluate()
-        }).catch(_ => {
-          this.dialogVisible = false
-          console.log('不保存')
+          this.dialogVisible = false;
+          this.toEvaluate();
         })
+        .catch(_ => {
+          this.dialogVisible = false;
+        });
     },
-    handleSave () {
-      this.dialogVisible = false
-      console.log('保存')
-      this.toEvaluate()
+    handleSave() {
+      this.toEvaluate();
+      this.dialogVisible = false;
     },
-    handleCancle () {
-      this.dialogVisible = false
-      console.log('不保存')
+    handleCancle() {
+      this.dialogVisible = false;
     },
-    toEvaluate () {
+    toEvaluate() {
+      // 用户进入评估状态
+      this.$store.commit("SET_EVALUATE", true);
       this.$message({
-        message: '成功创建项目',
-        type: 'success'
-      })
-      this.$router.push('/projectInfo/index')
+        message: "成功创建项目",
+        type: "success"
+      });
+      this.$router.push("/projectInfo/index");
     }
   }
-}
+};
 </script>

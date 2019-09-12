@@ -5,7 +5,6 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-// import HomePage from '@/homepage'
 
 /* Router Modules */
 import designRouter from './modules/design'
@@ -70,42 +69,28 @@ export const constantRoutes = [{
     hidden: true
   },
   {
-    path: '/',
-    component: () => import('@/views/homepage/index'),
-    hidden: true
-  },
-  // {
-  //   path: '/dashboard',
-  //   component: Layout,
-  //   redirect: '/dashboard',
-  //   children: [{
-  //     path: 'dashboard',
-  //     component: () => import('@/views/dashboard/index'),
-  //     meta: {
-  //       name: 'Dashboard',
-  //       title: '首页',
-  //       icon: 'documentation',
-  //       affix: true,
-  //     }
-  //   }]
-  // },
-
-]
-
-/**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
- */
-export const asyncRoutes = [{
-    path: '/peoples',
-    component: () => import('@/views/homepage/index'),
-    redirect: '/peoples/index',
+    path: "/",
+    component: Layout,
     children: [{
-      path: 'index',
+      path: '',
+      component: () => import('@/views/homepage/index'),
+      meta: {
+        name: 'Homepage',
+        title: '首页',
+        icon: 'dashboard',
+        noCache: true
+      }
+    }]
+  },
+  {
+    path: '/peoples',
+    component: Layout,
+    children: [{
+      path: '',
       component: () => import('@/views/peoples/index'),
       meta: {
         name: 'Peoples',
-        title: '系统用户',
+        title: '用户管理',
         icon: 'peoples',
         roles: ['admin'],
         noCache: true
@@ -114,29 +99,99 @@ export const asyncRoutes = [{
   },
   {
     path: '/projects',
-    component: () => import('@/views/projects/index'),
-    meta: {
-      name: 'Projects',
-      title: '全部项目',
-      icon: 'list',
-      roles: ['admin', 'inner'],
-      noCache: true
-    }
-    // children: [{
-    //   path: 'index',
-    //   component: () => import('@/views/projects/index'),
-    //   meta: {
-    //     name: 'Projects',
-    //     title: '全部项目',
-    //     icon: 'list',
-    //     roles: ['admin', 'inner'],
-    //     noCache: true
-    //   }
-    // }]
+    component: Layout,
+    children: [{
+      path: '',
+      component: () => import('@/views/projects/index'),
+      meta: {
+        name: 'Projects',
+        title: '项目管理',
+        icon: 'list',
+        roles: ['admin', 'inner'],
+        noCache: true
+      }
+    }]
   },
+  {
+    path: '/myprojects',
+    component: Layout,
+    children: [{
+      path: '',
+      component: () => import('@/views/myprojects/index'),
+      meta: {
+        name: 'Projects',
+        title: '我的项目',
+        icon: 'list',
+        noCache: true
+      }
+    }]
+  },
+
+]
+// hidden: true
+
+// {
+//   path: '/dashboard',
+//   component: Layout,
+//   redirect: '/dashboard',
+//   children: [{
+//     path: 'dashboard',
+//     component: () => import('@/views/dashboard/index'),
+//     meta: {
+//       name: 'Dashboard',
+//       title: '首页',
+//       icon: 'documentation',
+//       affix: true,
+//     }
+//   }]
+// },
+
+
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [
+  // {
+  //   path: '/peoples',
+  //   component: () => import('@/views/peoples/index'),
+  //   meta: {
+  //     name: 'Peoples',
+  //     title: '系统用户',
+  //     icon: 'peoples',
+  //     roles: ['admin'],
+  //     noCache: true
+  //   },
+  //   hidden: true
+  // },
+  // {
+  //   path: '/projects',
+  //   component: () => import('@/views/projects/index'),
+  //   meta: {
+  //     name: 'Projects',
+  //     title: '全部项目',
+  //     icon: 'list',
+  //     roles: ['admin', 'inner'],
+  //     noCache: true
+  //   },
+  //   hidden: true
+  // },
+  // {
+  //   path: '/myprojects',
+  //   component: () => import('@/views/myprojects/index'),
+  //   meta: {
+  //     name: 'Projects',
+  //     title: '我的项目',
+  //     icon: 'list',
+  //     // roles: ['admin', 'inner'],
+  //     noCache: true
+  //   },
+  //   hidden: true
+  // },
   {
     path: '/projectInfo',
     component: Layout,
+    name: 'ProjectInfo',
     children: [{
       path: 'index',
       component: () => import('@/views/projectInfo/index'),

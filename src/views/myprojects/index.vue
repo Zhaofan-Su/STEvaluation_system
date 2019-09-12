@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "Peoples",
+  name: "MyProjects",
   components: {},
   data() {
     return {};

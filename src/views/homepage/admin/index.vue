@@ -3,29 +3,37 @@
     <!-- <h1>欢迎使用装配式钢结构体系建筑一体化集成建造评价体系</h1> -->
     <h2 style="text-align:center;margin:50px auto;">您当前的身份是：管理员</h2>
     <div class="options" style="width:80%;margin:0 auto;">
-      <el-row type="flex" justify="space-around">
+      <el-row :gutter="30" type="flex" justify="space-around">
         <el-col :span="6" class="card">
           <el-card :body-style="{padding:'0px'}" shadow="hover">
             <img src="../../../assets/homepage/users.jpg" class="image" />
             <div class="card-footer">
-              <el-button type="text" class="e-button">全部用户</el-button>
+              <el-button type="text" class="e-button" @click="toPeoples">用户管理</el-button>
             </div>
           </el-card>
         </el-col>
         <el-col :span="6" class="card">
           <el-card :body-style="{padding:'0px'}" shadow="hover">
-            <img src="../../../assets/homepage/products.png" class="image" />
+            <img src="../../../assets/homepage/projects.jpg" class="image" />
             <div class="card-footer">
-              <el-button type="text" class="e-button">全部项目</el-button>
+              <el-button type="text" class="e-button" @click="toProjects">项目管理</el-button>
             </div>
           </el-card>
         </el-col>
         <el-col :span="6" class="card">
           <el-card :body-style="{padding:'0px'}" shadow="hover">
-            <img src="../../../assets/homepage/product.jpg" class="image" />
+            <img src="../../../assets/homepage/newProject.jpg" class="image" />
             <div class="card-footer">
-              <el-button type="text" class="e-button" @click="dialogVisible=true">新建项目</el-button>
+              <el-button type="text" class="e-button" @click="createProject">新建项目</el-button>
               <newProject :dialogVisible="dialogVisible" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="6" class="card">
+          <el-card :body-style="{padding:'0px'}" shadow="hover">
+            <img src="../../../assets/homepage/myProject.png" class="image" />
+            <div class="card-footer">
+              <el-button type="text" class="e-button" @click="toMyProjects">我的项目</el-button>
             </div>
           </el-card>
         </el-col>
@@ -35,21 +43,31 @@
 </template>
 
 <script>
-import newProject from '../component/newProject'
+import newProject from "../component/newProject";
 
 export default {
-  name: 'AdminHomepage',
+  name: "AdminHomepage",
   components: { newProject },
-  data () {
+  data() {
     return {
       dialogVisible: false
-    }
-
+    };
   },
   methods: {
-
+    createProject() {
+      this.dialogVisible = true;
+    },
+    toProjects() {
+      this.$router.push("/projects");
+    },
+    toPeoples() {
+      this.$router.push("/peoples");
+    },
+    toMyProjects() {
+      this.$router.push("/myprojects");
+    }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
