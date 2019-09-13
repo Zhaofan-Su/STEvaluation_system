@@ -151,49 +151,12 @@ export const constantRoutes = [{
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
-export const asyncRoutes = [
-  // {
-  //   path: '/peoples',
-  //   component: () => import('@/views/peoples/index'),
-  //   meta: {
-  //     name: 'Peoples',
-  //     title: '系统用户',
-  //     icon: 'peoples',
-  //     roles: ['admin'],
-  //     noCache: true
-  //   },
-  //   hidden: true
-  // },
-  // {
-  //   path: '/projects',
-  //   component: () => import('@/views/projects/index'),
-  //   meta: {
-  //     name: 'Projects',
-  //     title: '全部项目',
-  //     icon: 'list',
-  //     roles: ['admin', 'inner'],
-  //     noCache: true
-  //   },
-  //   hidden: true
-  // },
-  // {
-  //   path: '/myprojects',
-  //   component: () => import('@/views/myprojects/index'),
-  //   meta: {
-  //     name: 'Projects',
-  //     title: '我的项目',
-  //     icon: 'list',
-  //     // roles: ['admin', 'inner'],
-  //     noCache: true
-  //   },
-  //   hidden: true
-  // },
-  {
+export const asyncRoutes = [{
     path: '/projectInfo',
     component: Layout,
     name: 'ProjectInfo',
     children: [{
-      path: 'index',
+      path: '',
       component: () => import('@/views/projectInfo/index'),
       meta: {
         name: 'ProjectInfo',

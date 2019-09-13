@@ -6,10 +6,17 @@
       class="hamburger-container"
       @toggleClick="toggleSideBar"
     />
+    <div v-if="!evaluate">
+      <router-link to="/">
+        <div id="project-name" class="project-name">装配式钢结构体系建筑一体化集成建造评价体系</div>
+      </router-link>
+    </div>
+    <div v-else>
+      <router-link to="/projectInfo">
+        <div id="project-name" class="project-name">{{projectInfo.projectName}}</div>
+      </router-link>
+    </div>
 
-    <router-link to="/">
-      <div id="project-name" class="project-name">装配式钢结构体系建筑一体化集成建造评价体系</div>
-    </router-link>
     <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" /> -->
 
     <div class="right-menu">
@@ -76,13 +83,13 @@ export default {
     Search
   },
   computed: {
-    ...mapGetters(["sidebar", "avatar", "device", "roles"])
+    ...mapGetters(["sidebar", "avatar", "device", "roles", "evaluate", "projectInfo"])
   },
   methods: {
-    toggleSideBar() {
+    toggleSideBar () {
       this.$store.dispatch("app/toggleSideBar");
     },
-    async logout() {
+    async logout () {
       await this.$store.dispatch("user/logout");
       this.$router.push(`/login?redirect=${this.$route.fullPath}`);
     }

@@ -22,7 +22,7 @@ export default {
   left: 50%;
   margin: 0 !important;
   transform: translate(-50%, -50%);
-  max-height: calc(100%-60px);
+  max-height: calc(100%-100px);
   max-width: calc(100%-80px);
   display: flex;
   flex-direction: column;

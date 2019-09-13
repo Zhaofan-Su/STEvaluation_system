@@ -24,8 +24,7 @@
           <el-card :body-style="{padding:'0px'}" shadow="hover">
             <img src="../../../assets/homepage/newProject.jpg" class="image" />
             <div class="card-footer">
-              <el-button type="text" class="e-button" @click="createProject">新建项目</el-button>
-              <newProject :dialogVisible="dialogVisible" />
+              <newProject />
             </div>
           </el-card>
         </el-col>
@@ -48,22 +47,18 @@ import newProject from "../component/newProject";
 export default {
   name: "AdminHomepage",
   components: { newProject },
-  data() {
+  data () {
     return {
-      dialogVisible: false
     };
   },
   methods: {
-    createProject() {
-      this.dialogVisible = true;
-    },
-    toProjects() {
+    toProjects () {
       this.$router.push("/projects");
     },
-    toPeoples() {
+    toPeoples () {
       this.$router.push("/peoples");
     },
-    toMyProjects() {
+    toMyProjects () {
       this.$router.push("/myprojects");
     }
   }

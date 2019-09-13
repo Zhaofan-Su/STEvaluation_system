@@ -8,8 +8,7 @@
           <el-card :body-style="{padding:'0px'}" shadow="hover" class="card">
             <img src="../../../assets/homepage/newProject.jpg" class="image" />
             <div class="card-footer">
-              <el-button type="text" class="e-button" @click="dialogVisible=true">新建项目</el-button>
-              <newProject :dialogVisible="dialogVisible" />
+              <newProject />
             </div>
           </el-card>
           <el-col :span="6" class="card">
@@ -32,7 +31,7 @@ import newProject from "../component/newProject";
 export default {
   name: "OuterHomepage",
   components: { newProject },
-  data() {
+  data () {
     return {
       dialogVisible: false
     };
