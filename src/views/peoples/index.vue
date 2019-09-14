@@ -2,31 +2,50 @@
   <div class="app-container">
     <el-button type="primary" @click="createUser">新增用户</el-button>
     <div class="userTable">
-      <el-table :data="tableData" border style="width:60%">
-        <el-table-column prop="id" label="用户ID" align="header-center" width="180"></el-table-column>
-        <el-table-column prop="name" label="用户姓名" align="center" width="180"></el-table-column>
-        <el-table-column prop="role" label="用户角色" align="cneter" width="180"></el-table-column>
+      <el-table
+        :data="tableData"
+        fit
+        highlight-current-row
+        style="width:60%"
+        :header-cell-style="{background:'#eef1f6'}"
+      >
+        <el-table-column prop="userId" label="用户ID" align="header-center" width="100"></el-table-column>
+        <el-table-column prop="username" label="用户名" align="center" width="150"></el-table-column>
+        <el-table-column prop="realname" label="真实姓名" align="center" width="120"></el-table-column>
+        <el-table-column label="用户角色" align="cneter" width="100">
+          <template slot-scope="scope">{{roleMap[scope.row.role]}}</template>
+        </el-table-column>
         <el-table-column label="操作" align="center">
-          <template slot-scope="scope" v-if="scope.row.role!=='管理员'">
+          <template slot-scope="scope" v-if="scope.row.role!==0">
             <el-button type="primary" @click="changeRole(scope)" size="medium">编辑角色</el-button>
             <el-button type="danger" @click="deleteUser(scope)" size="medium">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'修改用户角色':'新增用户'">
-      <el-form v-model="choosedUser" label-width="100px" label-position="left">
-        <el-form-item label="用户姓名">
-          <el-input
-            v-model="choosedUser.name"
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'修改用户角色':'新增用户'" center>
+      <el-form v-model="choosedUser" label-width="100px">
+        <el-form-item label="用户名">
+          <el-input v-model="choosedUser.username" :disabled="disabled" placeholder="请输入用户名" />
+        </el-form-item>
+        <el-form-item label="真实姓名">
+          <!-- <el-input
+            v-model="choosedUser.realname"
             :disabled="dialogType==='edit'?true:false"
-            placeholder="请输入用户姓名"
-          />
+            placeholder="请输入真实姓名"
+          />-->
+          <el-input v-model="choosedUser.realname" :disabled="disabled" placeholder="请输入真实姓名" />
+        </el-form-item>
+        <el-form-item v-if="dialogType==='add'" label="密码">
+          <el-input v-model="choosedUser.password" :disabled="disabled" placeholder="请输入密码" />
+        </el-form-item>
+        <el-form-item label="电话号码">
+          <el-input v-model="choosedUser.mobile" :disabled="disabled" placeholder="请输入电话号码" />
         </el-form-item>
         <el-form-item label="用户角色">
-          <el-radio-group v-model="choosedUser.role" :disabled="dialogType==='edit'?true:false">
-            <el-radio :label="'inner'">内部人员</el-radio>
-            <el-radio :label="'outer'">外部人员</el-radio>
+          <el-radio-group v-model="choosedUser.role">
+            <el-radio :label="1">内部人员</el-radio>
+            <el-radio :label="2">外部人员</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -40,46 +59,73 @@
 
 <script>
 import { async } from 'q';
+import { getUsers } from '@/api/user'
 export default {
   name: "Peoples",
   components: {},
   data () {
     return {
+      roleMap: {
+        0: '管理员',
+        1: '内部人员',
+        2: '外部人员'
+      },
       choosedUser: {
         id: '',
-        name: '',
+        username: '',
+        realname: '',
+        password: '',
         role: ''
       },
       dialogVisible: false,
+      disabled: false,
       dialogType: '',
       tableData: [
-        {
-          id: 1,
-          name: '张三',
-          role: '管理员',
-
-        },
-        {
-          id: 2,
-          name: '李四',
-          role: '内部人员'
-        }, {
-          id: 3,
-          name: '王五',
-          role: '外部人员'
-        }
+        // {
+        //   id: 1,
+        //   name: '张三',
+        //   role: 0,
+        // },
+        // {
+        //   id: 2,
+        //   name: '李四',
+        //   role: 1
+        // }, {
+        //   id: 3,
+        //   name: '王五',
+        //   role: 2
+        // }
       ]
     };
   },
-  created () { },
+  watch: {
+    dialogType: function (newVal, oldVal) {
+      if (newVal === 'edit') {
+        this.disabled = true
+      }
+      else {
+        this.disabled = false
+      }
+    }
+  },
+  created () {
+    this.getUsers()  },
   methods: {
+    async getUsers () {
+      const res = await getUsers()
+      let list = []
+      for (var key in res.data.value) {
+        list.push(res.data.value[key])
+      }
+      this.tableData = list
+    },
     createUser () {
       this.dialogType = 'add'
       this.dialogVisible = true
-
     },
     changeRole ({ $index, row }) {
-      console.log(row)
+      this.dialogType = 'edit'
+      this.dialogVisible = true
     },
     deleteUser ({ $index, row }) {
       this.$confirm('确认删除用户？', '警告', {
@@ -117,7 +163,6 @@ export default {
 .app-container {
   .userTable {
     text-align: center;
-
     >>> .el-table {
       margin: 30px auto;
     }

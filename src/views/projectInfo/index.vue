@@ -1,6 +1,6 @@
 <template>
   <div class="project-editor-container">
-    <lock :_locked="true" :_popOverShow="true" v-on:click.native="locked=!locked" class="lock" />
+    <lock :_locked="locked" :_popOverShow="true" v-on:click.native="locked=!locked" class="lock" />
     <el-form ref="form" :model="form" label-width="120px">
       <el-form-item label="项目名称">
         <el-input v-model="form.projectName" :disabled="locked" />
@@ -51,8 +51,8 @@
       </el-form-item>
       <el-form-item label="是否公开">
         <el-radio-group v-model="RWState" :disabled="locked">
-          <el-radio :label="1">是</el-radio>
-          <el-radio :label="0">否</el-radio>
+          <el-radio label="1">是</el-radio>
+          <el-radio label="0">否</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="评价人员">
@@ -103,6 +103,19 @@ export default {
   methods: {
     onSave () {
       // 用户所填信息先保存到网页
+      let updating = {
+        evaluate: this.evaluate,
+        info: this.form,
+        endTime: this.endTime,
+        RWState: this.RWState,
+        sendTo: this.sendTo,
+      }
+      this.$store.dispatch('project/updateProject', updating)
+      this.locked = true
+      this.$message({
+        message: '项目信息保存成功',
+        type: 'success'
+      })
     },
   }
 };

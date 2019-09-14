@@ -1,7 +1,8 @@
 import {
   login,
   logout,
-  getInfo
+  getInfo,
+  getUserById
 } from '@/api/user'
 import {
   getToken,
@@ -11,14 +12,21 @@ import {
 import router, {
   resetRouter
 } from '@/router'
+// import {
+//   getUserById
+// } from '../../api/user'
 
 const state = {
   token: getToken(),
-  id: '',
-  name: '',
+  userId: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  username: '',
+  realname: '',
+  mobile: '',
+  password: '',
+  role: 2
 }
 
 const mutations = {
@@ -28,17 +36,29 @@ const mutations = {
   SET_INTRODUCTION: (state, introduction) => {
     state.introduction = introduction
   },
-  SET_ID: (state, id) => {
-    state.id = id
-  },
-  SET_NAME: (state, name) => {
-    state.name = name
+  SET_USERID: (state, userId) => {
+    state.userId = userId
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_USERNAME: (state, username) => {
+    state.username = username
+  },
+  SET_REALNAME: (state, realname) => {
+    state.realname = realname
+  },
+  SET_MOBILE: (state, mobile) => {
+    state.mobile = mobile
+  },
+  SET_PASSWORD: (state, password) => {
+    state.password = password
+  },
+  SET_ROLE: (state, role) => {
+    state.role = role
   }
 }
 
@@ -48,12 +68,14 @@ const actions = {
     commit
   }, userInfo) {
     const {
-      username,
+      // username,
+      mobile,
       password
     } = userInfo
     return new Promise((resolve, reject) => {
       login({
-        username: username.trim(),
+        // username: username.trim(),
+        mobile: mobile,
         password: password
       }).then(response => {
         const {
@@ -85,9 +107,13 @@ const actions = {
 
         const {
           roles,
-          name,
           avatar,
-          introduction
+          introduction,
+          userId,
+          username,
+          realname,
+          mobile,
+          role
         } = data
 
         // roles must be a non-empty array
@@ -96,9 +122,14 @@ const actions = {
         }
 
         commit('SET_ROLES', roles)
-        commit('SET_NAME', name)
+        // commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
         commit('SET_INTRODUCTION', introduction)
+        commit('SET_USERNAME', username)
+        commit('SET_USERID', userId)
+        commit('SET_REALNAME', realname)
+        commit('SET_MOBILE', mobile)
+        commit('SET_ROLE', role)
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -106,6 +137,51 @@ const actions = {
     })
   },
 
+  // get user info by id
+  getUerById({
+    commit,
+    state
+  }) {
+    return new Promise((resolve, reject) => {
+      getUserById(state.userId).then(response => {
+        const {
+          data
+        } = response
+
+        if (!data) {
+          reject('Verification failed, please Login again.')
+        }
+
+        const {
+          roles,
+          avatar,
+          introduction,
+          userId,
+          username,
+          realname,
+          mobile,
+          role
+        } = data
+
+        // roles must be a non-empty array
+        if (!roles || roles.length <= 0) {
+          reject('getInfo: roles must be a non-null array!')
+        }
+
+        commit('SET_ROLES', roles)
+        commit('SET_AVATAR', avatar)
+        commit('SET_INTRODUCTION', introduction)
+        commit('SET_USERNAME', username)
+        commit('SET_USERID', userId)
+        commit('SET_REALNAME', realname)
+        commit('SET_MOBILE', mobile)
+        commit('SET_ROLE', role)
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
   // user logout
   logout({
     commit,

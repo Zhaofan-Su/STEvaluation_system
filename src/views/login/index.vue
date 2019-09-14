@@ -1,9 +1,16 @@
 <template>
   <div class="login-container">
-    <el-form
+    <!-- <el-form
       ref="loginForm"
       :model="loginForm"
       :rules="loginRules"
+      class="login-form"
+      autocomplete="on"
+      label-position="left"
+    >-->
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
       class="login-form"
       autocomplete="on"
       label-position="left"
@@ -12,15 +19,15 @@
         <h3 class="title">装配式钢结构体系建筑一体化集成建造评价体系</h3>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="mobile">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
           ref="username"
-          v-model="loginForm.username"
-          placeholder="用户名"
-          name="username"
+          v-model="loginForm.mobile"
+          placeholder="电话"
+          name="mobile"
           type="text"
           tabindex="1"
           autocomplete="on"
@@ -81,34 +88,34 @@ import { validUsername } from "@/utils/validate";
 
 export default {
   name: "Login",
-  data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error("请输入正确的用户名"));
-      } else {
-        callback();
-      }
-    };
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error("密码不能小于6位数"));
-      } else {
-        callback();
-      }
-    };
+  data () {
+    // const validateUsername = (rule, value, callback) => {
+    //   if (!validUsername(value)) {
+    //     callback(new Error("请输入正确的用户名"));
+    //   } else {
+    //     callback();
+    //   }
+    // };
+    // const validatePassword = (rule, value, callback) => {
+    //   if (value.length < 6) {
+    //     callback(new Error("密码不能小于6位数"));
+    //   } else {
+    //     callback();
+    //   }
+    // };
     return {
       loginForm: {
-        username: "admin",
-        password: "111111"
+        mobile: "18717710887",
+        password: "admin"
       },
-      loginRules: {
-        username: [
-          { required: true, trigger: "blur", validator: validateUsername }
-        ],
-        password: [
-          { required: true, trigger: "blur", validator: validatePassword }
-        ]
-      },
+      // loginRules: {
+      //   mobile: [
+      //     { required: true, trigger: "blur", validator: validateUsername }
+      //   ],
+      //   password: [
+      //     { required: true, trigger: "blur", validator: validatePassword }
+      //   ]
+      // },
       passwordType: "password",
       capsTooltip: false,
       loading: false,
@@ -119,7 +126,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         const query = route.query;
         if (query) {
           this.redirect = query.redirect;
@@ -129,17 +136,17 @@ export default {
       immediate: true
     }
   },
-  created() {},
-  mounted() {
-    if (this.loginForm.username === "") {
-      this.$refs.username.focus();
+  created () { },
+  mounted () {
+    if (this.loginForm.mobile === "") {
+      this.$refs.mobile.focus();
     } else if (this.loginForm.password === "") {
       this.$refs.password.focus();
     }
   },
-  destroyed() {},
+  destroyed () { },
   methods: {
-    checkCapslock({ shiftKey, key } = {}) {
+    checkCapslock ({ shiftKey, key } = {}) {
       if (key && key.length === 1) {
         if (
           (shiftKey && (key >= "a" && key <= "z")) ||
@@ -154,7 +161,7 @@ export default {
         this.capsTooltip = false;
       }
     },
-    showPwd() {
+    showPwd () {
       if (this.passwordType === "password") {
         this.passwordType = "";
       } else {
@@ -164,7 +171,7 @@ export default {
         this.$refs.password.focus();
       });
     },
-    handleLogin() {
+    handleLogin () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
@@ -187,7 +194,7 @@ export default {
         }
       });
     },
-    getOtherQuery(query) {
+    getOtherQuery (query) {
       return Object.keys(query).reduce((acc, cur) => {
         if (cur !== "redirect") {
           acc[cur] = query[cur];

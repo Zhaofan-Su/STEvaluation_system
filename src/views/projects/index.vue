@@ -20,7 +20,6 @@
       :key="tableKey"
       v-loading="listLoading"
       :data="list"
-      border
       fit
       highlight-current-row
       style="width:100%"
@@ -82,7 +81,7 @@
         </el-table-column>
       </el-table-column>
 
-      <el-table-column label="结构形式" width="160px" align="center">
+      <el-table-column label="结构形式" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.structType }}</span>
         </template>
@@ -103,7 +102,7 @@
 <script>
 import { fetchList } from "@/api/article";
 import waves from "@/directive/waves";
-import Pagination from "@/components/Pagination";
+import { Pagination } from "@/components/Pagination";
 import { format } from "path";
 
 import { mapStat, mapState, mapGetters } from "vuex";
@@ -114,9 +113,9 @@ export default {
     Pagination
   },
   directives: { waves },
-  data() {
+  data () {
     return {
-      tabelKey: 0,
+      tabelKey: 1,
       list: [
         {
           id: 1,
@@ -156,7 +155,7 @@ export default {
     };
   },
   computed: {},
-  created() {
+  created () {
     if (!this.roles.includes("admin")) {
       if (!this.roles.includes("inner")) {
         this.currentRole = "OuterHomepage";
@@ -166,7 +165,7 @@ export default {
     }
   },
   methods: {
-    getList() {
+    getList () {
       this.listLoading = true;
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items;
@@ -177,7 +176,7 @@ export default {
         }, 1500);
       });
     },
-    onSearch() {}
+    onSearch () { }
   }
 };
 </script>

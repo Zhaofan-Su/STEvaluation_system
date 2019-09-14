@@ -55,6 +55,11 @@ export default {
       popOverShow: this._popOverShow
     }
   },
+  watch: {
+    _locked: function (newVal) {
+      this.locked = newVal
+    }
+  },
   created () {
     if (this.popOverShow) {
       setTimeout(() => {
