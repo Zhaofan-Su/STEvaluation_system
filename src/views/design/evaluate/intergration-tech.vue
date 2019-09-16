@@ -1,70 +1,27 @@
 <template>
   <div class="app-container">
     <h2>2.2.5&nbsp;建筑集成技术设计评分</h2>
-    <el-card v-for="item in items" :key="item.id" class="evaluation-item" shadow="hover">
+    <el-card v-for="(item,index) in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="number">{{ item.id }}.&nbsp;{{ item.title }}</span>
         <div class="options">
-          <el-button
-            type="primary"
-            circle
-            icon="el-icon-document"
-            size="mini"
-            @click="item.dialogVisible=true"
+          <evaluationStd
+            :_aspect="item.title"
+            :_evaluatioon_index="item.evaluation_index"
+            class="evaluation"
           />
-          <!-- 弹出框，提示具体的评价指标 -->
-          <el-dialog
-            :title="item.title+'--评价指标及要求'"
-            :visible.sync="item.dialogVisible"
-            width="30%"
-            :before-close="handleClose"
-            center
-          >
-            <span>{{ item.evaluation_index }}</span>
-            <span slot="footer" class="dialog-footer">
-              <el-button type="primary" @click="item.dialogVisible=false">确定</el-button>
-            </span>
-          </el-dialog>
 
-          <el-popover
-            v-if="!item.locked"
-            v-model="item.popOverShow"
-            placement="bottom"
-            width="25"
-            trigger="manual"
-            content="已解锁"
-          >
-            <el-button
-              slot="reference"
-              type="primary"
-              circle
-              icon="el-icon-unlock"
-              size="mini"
-              @click="handleLock(item)"
-            />
-          </el-popover>
-          <el-popover
-            v-else
-            v-model="item.popOverShow"
-            placement="bottom"
-            width="25"
-            trigger="manual"
-            content="已锁定"
-          >
-            <el-button
-              slot="reference"
-              type="warning"
-              circle
-              icon="el-icon-lock"
-              size="mini"
-              @click="handleLock(item)"
-            />
-          </el-popover>
+          <lock
+            :_locked="score[index].locked"
+            :_popOverShow="false"
+            v-on:click.native="handleLock(index)"
+            class="lock"
+          />
         </div>
       </div>
       <el-card
-        v-for="(i,index) in item.children_question"
-        :key="index"
+        v-for="(i,_index) in item.children_question"
+        :key="_index"
         class="children-question"
         shadow="never"
       >
@@ -73,13 +30,17 @@
         </div>
         <el-form ref="form" :model="i" label-width="100px">
           <el-form-item label="是否满足">
-            <el-radio-group v-model="i.satisfy">
-              <el-radio :label="true" :disabled="item.locked">是</el-radio>
-              <el-radio :label="false" :disabled="item.locked">否</el-radio>
+            <el-radio-group v-model="score[index].children_question[_index].satisfy">
+              <el-radio :label="true" :disabled="score[index].locked">是</el-radio>
+              <el-radio :label="false" :disabled="score[index].locked">否</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="!i.satisfy" label="不满足简述">
-            <el-input v-model="i.description" label="不满足简述" type="textarea" />
+          <el-form-item v-if="!score[index].children_question[_index].satisfy" label="不满足简述">
+            <el-input
+              v-model="score[index].children_question[_index].description"
+              label="不满足简述"
+              type="textarea"
+            />
           </el-form-item>
         </el-form>
       </el-card>
@@ -88,9 +49,17 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import Lock from '@/components/Lock'
+import EvaluationStd from '@/components/EvaluationStd'
+
 export default {
   name: "IntergrationTech",
-  data() {
+  components: {
+    Lock,
+    EvaluationStd
+  },
+  data () {
     return {
       items: [
         {
@@ -100,26 +69,17 @@ export default {
             {
               aspect:
                 "采用预制结构墙板、保温、外饰面一体化外维护系统，满足结构、保温、防渗、装饰要求",
-              satisfy: true,
               max_score: "4",
-              score: "0",
-
-              description: ""
+              score: "0"
             },
             {
               aspect:
                 "采用预制结构墙板、保温、外饰面一体化维护系统，满足结构、保温、防渗、装饰要求",
-              satisfy: true,
               max_score: "2",
-              score: "0",
-              description: ""
+              score: "0"
             }
           ],
-
-          evaluation_index: "",
-          locked: false,
-          dialogVisible: false,
-          popOverShow: false
+          evaluation_index: ""
         },
         {
           id: 2,
@@ -128,17 +88,11 @@ export default {
             {
               aspect:
                 "项目室内装修与建筑结构，机电设备一体化设计，采用管线与结构分离等系统集成技术",
-              satisfy: true,
               max_score: "3",
-              score: "0",
-              description: ""
+              score: "0"
             }
           ],
-
-          evaluation_index: "",
-          locked: false,
-          dialogVisible: false,
-          popOverShow: false
+          evaluation_index: ""
         },
         {
           id: 3,
@@ -146,36 +100,32 @@ export default {
           children_question: [
             {
               aspect: "机电设备管线系统采用集中布置，管线及点位预留、预埋到位",
-              satisfy: true,
               max_score: "3",
-              score: "0",
-              description: ""
+              score: "0"
             }
           ],
-
-          evaluation_index: "",
-          locked: false,
-          dialogVisible: false,
-          popOverShow: false
+          evaluation_index: ""
         }
-      ]
+      ],
+      score: []
     };
+  },
+  computed: {
+    ...mapGetters({
+      designScore: 'design'
+    })
+  },
+  created () {
+    this.score = this.designScore._2_2_5
+  },
+  beforeDestroy () {
+    this.$store.dispatch('score/updateScore', this.score, 'design', '_2_2_5')
   },
   methods: {
     // 这个项目判断得分的时候，要注意第一个问题，是互斥的
-    handleClose() {
-      this.$confirm("确认关闭?")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
-    },
-    handleLock(item) {
-      item.popOverShow = !item.popOverShow;
-      item.locked = !item.locked;
-      setTimeout(() => {
-        item.popOverShow = !item.popOverShow;
-      }, 1000);
+
+    handleLock (index) {
+      this.score[index].locked = !this.score[index].locked
     }
   }
 };
@@ -212,6 +162,10 @@ export default {
       .options {
         float: right;
         bottom: 0;
+        .lock,
+        .evaluation {
+          display: inline-block;
+        }
       }
     }
 

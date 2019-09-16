@@ -1,70 +1,27 @@
 <template>
   <div class="app-container">
     <h2>2.2.1&nbsp;标准化设计</h2>
-    <el-card v-for="item in items" :key="item.id" class="evaluation-item" shadow="hover">
+    <el-card v-for="(item,index) in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="number">{{item.id}}.&nbsp;{{item.title}}</span>
         <div class="options">
-          <el-button
-            type="primary"
-            circle
-            icon="el-icon-document"
-            size="mini"
-            @click="item.dialogVisible=true"
-          ></el-button>
-          <!-- 弹出框，提示具体的评价指标 -->
-          <el-dialog
-            :title="item.title+'--评价指标及要求'"
-            :visible.sync="item.dialogVisible"
-            width="30%"
-            :before-close="handleClose"
-            center
-          >
-            <span>{{item.evaluation_index}}</span>
-            <span slot="footer" class="dialog-footer">
-              <el-button type="primary" @click="item.dialogVisible=false">确定</el-button>
-            </span>
-          </el-dialog>
+          <evaluationStd
+            :_aspect="item.title"
+            :_evaluatioon_index="item.evaluation_index"
+            class="evaluation"
+          />
 
-          <el-popover
-            v-if="!item.locked"
-            placement="bottom"
-            width="25"
-            trigger="manual"
-            content="已解锁"
-            v-model="item.popOverShow"
-          >
-            <el-button
-              type="primary"
-              circle
-              icon="el-icon-unlock"
-              size="mini"
-              slot="reference"
-              @click="handleLock(item)"
-            ></el-button>
-          </el-popover>
-          <el-popover
-            v-else
-            placement="bottom"
-            width="25"
-            trigger="manual"
-            content="已锁定"
-            v-model="item.popOverShow"
-          >
-            <el-button
-              type="warning"
-              circle
-              icon="el-icon-lock"
-              size="mini"
-              slot="reference"
-              @click="handleLock(item)"
-            ></el-button>
-          </el-popover>
+          <lock
+            :_locked="score[index].locked"
+            :_popOverShow="false"
+            v-on:click.native="handleLock(index)"
+            class="lock"
+          />
         </div>
       </div>
       <el-card
-        v-for="(i,index) in item.children_question"
-        :key="index"
+        v-for="(i,_index) in item.children_question"
+        :key="_index"
         class="children-question"
         shadow="never"
       >
@@ -73,23 +30,39 @@
         </div>
         <el-form ref="form" :model="i" label-width="100px">
           <el-form-item label="是否满足">
-            <el-radio-group v-model="i.satisfy">
-              <el-radio :label="true" :disabled="item.locked">是</el-radio>
-              <el-radio :label="false" :disabled="item.locked">否</el-radio>
+            <el-radio-group v-model="score[index].children_question[_index].satisfy">
+              <el-radio :label="true" :disabled="score[index].locked">是</el-radio>
+              <el-radio :label="false" :disabled="score[index].locked">否</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="不满足简述" v-if="!i.satisfy">
-            <el-input label="不满足简述" type="textarea" v-model="i.description" />
+          <el-form-item label="不满足简述" v-if="!score[index].children_question[_index].satisfy">
+            <el-input
+              label="不满足简述"
+              type="textarea"
+              v-model="score[index].children_question[_index].description"
+            />
           </el-form-item>
         </el-form>
       </el-card>
+      <!-- <div class="socre">
+        <div class="score-title">得分&nbsp;&nbsp;</div>
+        <div class="sum-score">{{item.score}}&nbsp;分</div>
+      </div>-->
     </el-card>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import Lock from '@/components/Lock'
+import EvaluationStd from '@/components/EvaluationStd'
+
 export default {
   name: "Standard",
+  components: {
+    Lock,
+    EvaluationStd
+  },
   data () {
     return {
       items: [
@@ -100,18 +73,11 @@ export default {
             {
               aspect:
                 "建筑设计采用统一模数协调尺寸，并符合现行国家标准《建筑模数协调标准GB/T50002》的有关规定",
-              satisfy: true,
               max_score: "2",
               score: "0",
-
-              description: ""
             }
           ],
-
-          evaluation_index: "",
-          locked: false,
-          dialogVisible: false,
-          popOverShow: false
+          evaluation_index: ""
         },
         {
           id: 2,
@@ -119,17 +85,11 @@ export default {
           children_question: [
             {
               aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              satisfy: true,
               max_score: "4",
               score: "0",
-              description: ""
             }
           ],
-
-          evaluation_index: "",
-          locked: false,
-          dialogVisible: false,
-          popOverShow: false
+          evaluation_index: ""
         },
         {
           id: 3,
@@ -137,17 +97,11 @@ export default {
           children_question: [
             {
               aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              satisfy: true,
               max_score: "2",
               score: "0",
-              description: ""
             }
           ],
-
-          evaluation_index: "",
-          locked: false,
-          dialogVisible: false,
-          popOverShow: false
+          evaluation_index: ""
         },
         {
           id: 4,
@@ -156,17 +110,11 @@ export default {
             {
               aspect:
                 "建筑设计采用统一模数协调尺寸，并符合现行国家标准《建筑模数协调标准GB/T50002》的有关规定",
-              satisfy: true,
               max_score: "2",
               score: "0",
-              dialogVisible: false
             }
           ],
-
-          evaluation_index: "",
-          description: "",
-          locked: false,
-          popOverShow: false
+          evaluation_index: ""
         },
         {
           id: 5,
@@ -174,45 +122,31 @@ export default {
           children_question: [
             {
               aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              satisfy: true,
               max_score: "4",
               score: "0",
-              dialogVisible: false
             },
             {
               aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              satisfy: true,
               max_score: "2",
               score: "0",
-              dialogVisible: false
             },
             {
               aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              satisfy: true,
               max_score: "2",
               score: "0",
-              dialogVisible: false
             },
             {
               aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              satisfy: true,
               max_score: "2",
               score: "0",
-              dialogVisible: false
             },
             {
               aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              satisfy: true,
               max_score: "1",
               score: "0",
-              dialogVisible: false
             }
           ],
-
-          evaluation_index: "",
-          description: "",
-          locked: false,
-          popOverShow: false
+          evaluation_index: ""
         },
         {
           id: 6,
@@ -220,43 +154,35 @@ export default {
           children_question: [
             {
               aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              satisfy: true,
               max_score: "2",
               score: "0",
-              dialogVisible: false
             },
             {
               aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              satisfy: true,
               max_score: "2",
               score: "0",
-              dialogVisible: false
             }
           ],
-
-          evaluation_index: "",
-          description: "",
-          locked: false,
-
-          popOverShow: false
+          evaluation_index: ""
         }
-      ]
+      ],
+      score: []
     };
   },
+  computed: {
+    ...mapGetters({
+      designScore: 'design'
+    })
+  },
+  created () {
+    this.score = this.designScore._2_2_1
+  },
+  beforeDestroy () {
+    this.$store.dispatch('score/updateScore', this.score, 'design', '_2_2_1')
+  },
   methods: {
-    handleClose () {
-      this.$confirm("确认关闭?")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => { });
-    },
-    handleLock (item) {
-      item.popOverShow = !item.popOverShow;
-      item.locked = !item.locked;
-      setTimeout(() => {
-        item.popOverShow = !item.popOverShow;
-      }, 1000);
+    handleLock (index) {
+      this.score[index].locked = !this.score[index].locked
     }
   }
 };
@@ -293,9 +219,12 @@ export default {
       .options {
         float: right;
         bottom: 0;
+        .lock,
+        .evaluation {
+          display: inline-block;
+        }
       }
     }
-
     .children-question {
       width: 100%;
       border: none;
@@ -306,6 +235,18 @@ export default {
       }
       >>> .el-card__body {
         padding: 10px 20px;
+      }
+    }
+
+    .score {
+      text-align: right;
+      float: right;
+      .score-title {
+        display: block;
+        font-weight: 800;
+      }
+      .sum-score {
+        display: block;
       }
     }
   }

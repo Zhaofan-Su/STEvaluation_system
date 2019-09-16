@@ -1,24 +1,43 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="createUser">新增用户</el-button>
+    <div class="filter-container">
+      <el-input v-model="listQuery.mobile" placeholder="用户电话" style="width:200px" />
+      <el-select v-model="listQuery.userType" placeholder="用户类型">
+        <el-option label="管理员" value="0" />
+        <el-option label="内部人员" value="1" />
+        <el-option label="外部人员" value="2" />
+      </el-select>
+
+      <el-button
+        v-waves
+        class="filter-item"
+        type="primary"
+        icon="el-icon-search"
+        @click="onSearch"
+      >搜索</el-button>
+
+      <el-button type="primary" @click="createUser">新增用户</el-button>
+    </div>
+
     <div class="userTable">
       <el-table
         :data="tableData"
         fit
         highlight-current-row
-        style="width:60%"
+        style="width:100%"
         :header-cell-style="{background:'#eef1f6'}"
       >
         <el-table-column prop="userId" label="用户ID" align="header-center" width="100"></el-table-column>
         <el-table-column prop="username" label="用户名" align="center" width="150"></el-table-column>
         <el-table-column prop="realname" label="真实姓名" align="center" width="120"></el-table-column>
+        <el-table-column prop="mobile" label="电话" align="header-center" width="180"></el-table-column>
         <el-table-column label="用户角色" align="cneter" width="100">
           <template slot-scope="scope">{{roleMap[scope.row.role]}}</template>
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope" v-if="scope.row.role!==0">
-            <el-button type="primary" @click="changeRole(scope)" size="medium">编辑角色</el-button>
-            <el-button type="danger" @click="deleteUser(scope)" size="medium">删除</el-button>
+            <el-button type="primary" @click="changeRole(scope)" size="small" plain>编辑角色</el-button>
+            <el-button type="danger" @click="deleteUser(scope)" size="small" plain>删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -59,6 +78,7 @@
 
 <script>
 import { async } from 'q';
+import waves from '@/directive/waves'
 import { getUsers } from '@/api/user'
 export default {
   name: "Peoples",
@@ -74,28 +94,20 @@ export default {
         id: '',
         username: '',
         realname: '',
+        mobile: '',
         password: '',
         role: ''
       },
       dialogVisible: false,
       disabled: false,
       dialogType: '',
-      tableData: [
-        // {
-        //   id: 1,
-        //   name: '张三',
-        //   role: 0,
-        // },
-        // {
-        //   id: 2,
-        //   name: '李四',
-        //   role: 1
-        // }, {
-        //   id: 3,
-        //   name: '王五',
-        //   role: 2
-        // }
-      ]
+      tableData: [],
+      listQuery: {
+        page: 1,
+        limit: 20,
+        mobile: undefined,
+        userType: undefined
+      }
     };
   },
   watch: {
@@ -109,7 +121,8 @@ export default {
     }
   },
   created () {
-    this.getUsers()  },
+    this.getUsers()
+  },
   methods: {
     async getUsers () {
       const res = await getUsers()
@@ -118,6 +131,9 @@ export default {
         list.push(res.data.value[key])
       }
       this.tableData = list
+    },
+    onSearch () {
+
     },
     createUser () {
       this.dialogType = 'add'
@@ -163,9 +179,9 @@ export default {
 .app-container {
   .userTable {
     text-align: center;
-    >>> .el-table {
-      margin: 30px auto;
-    }
+    // >>> .el-table {
+    //   margin: 30px auto;
+    // }
   }
   .dialog-button {
     text-align: center;

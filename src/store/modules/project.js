@@ -3,7 +3,7 @@ import {
 } from "fs";
 
 const state = {
-  evaluate: false,
+  evaluate: true,
   eId: '',
   userId: '',
   info: {

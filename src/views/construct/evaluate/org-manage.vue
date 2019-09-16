@@ -1,65 +1,22 @@
 <template>
   <div class="app-container">
     <h2>3.2.3&nbsp;装配化施工组织与管理</h2>
-    <el-card v-for="item in items" :key="item.id" class="evaluation-item" shadow="hover">
+    <el-card v-for="(item,index) in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="number">{{ item.id }}.&nbsp;{{ item.title }}</span>
         <div class="options">
-          <el-button
-            type="primary"
-            circle
-            icon="el-icon-document"
-            size="mini"
-            @click="item.dialogVisible=true"
+          <evaluationStd
+            :_aspect="item.title"
+            :_evaluatioon_index="item.evaluation_index"
+            class="evaluation"
           />
-          <!-- 弹出框，提示具体的评价指标 -->
-          <el-dialog
-            :title="item.title+'--评价指标及要求'"
-            :visible.sync="item.dialogVisible"
-            width="30%"
-            :before-close="handleClose"
-            center
-          >
-            <span>{{ item.evaluation_index }}</span>
-            <span slot="footer" class="dialog-footer">
-              <el-button type="primary" @click="item.dialogVisible=false">确定</el-button>
-            </span>
-          </el-dialog>
 
-          <el-popover
-            v-if="!item.locked"
-            v-model="item.popOverShow"
-            placement="bottom"
-            width="25"
-            trigger="manual"
-            content="已解锁"
-          >
-            <el-button
-              slot="reference"
-              type="primary"
-              circle
-              icon="el-icon-unlock"
-              size="mini"
-              @click="handleLock(item)"
-            />
-          </el-popover>
-          <el-popover
-            v-else
-            v-model="item.popOverShow"
-            placement="bottom"
-            width="25"
-            trigger="manual"
-            content="已锁定"
-          >
-            <el-button
-              slot="reference"
-              type="warning"
-              circle
-              icon="el-icon-lock"
-              size="mini"
-              @click="handleLock(item)"
-            />
-          </el-popover>
+          <lock
+            :_locked="score[index].locked"
+            :_popOverShow="false"
+            v-on:click.native="handleLock(index)"
+            class="lock"
+          />
         </div>
       </div>
       <el-card class="children-question" shadow="never">
@@ -68,13 +25,13 @@
         </div>
         <el-form ref="form" :model="item" label-width="100px">
           <el-form-item label="是否满足">
-            <el-radio-group v-model="item.satisfy">
-              <el-radio :label="true" :disabled="item.locked">是</el-radio>
-              <el-radio :label="false" :disabled="item.locked">否</el-radio>
+            <el-radio-group v-model="score[index].satisfy">
+              <el-radio :label="true" :disabled="score[index].locked">是</el-radio>
+              <el-radio :label="false" :disabled="score[index].locked">否</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="!item.satisfy" label="不满足简述">
-            <el-input v-model="item.description" label="不满足简述" type="textarea" />
+          <el-form-item v-if="!score[index].satisfy" label="不满足简述">
+            <el-input v-model="score[index].description" label="不满足简述" type="textarea" />
           </el-form-item>
         </el-form>
       </el-card>
@@ -83,82 +40,71 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import Lock from '@/components/Lock'
+import EvaluationStd from '@/components/EvaluationStd'
 export default {
   name: "OrgManage",
-  data() {
+  components: {
+    Lock,
+    EvaluationStd
+  },
+  data () {
     return {
       items: [
         {
           id: 1,
           title: "",
           aspect: "参评项目具有工程总承包管理模式和专业化的施工队伍",
-          satisfy: true,
           max_score: "4",
           score: "0",
-          description: "",
           evaluation_index: "",
-          locked: false,
-          dialogVisible: false,
-          popOverShow: false
         },
         {
           id: 2,
           title: "",
           aspect:
             "参评项目具备完整的施工组织方案，内容包括构件安装工程进场、场地、材料、人员、机械的组织，以及相应的质量、环境、安全管理措施",
-          satisfy: true,
           max_score: "4",
           score: "0",
-          description: "",
-          evaluation_index: "",
-          locked: false,
-          dialogVisible: false,
-          popOverShow: false
+          evaluation_index: ""
         },
         {
           id: 3,
           title: "",
           aspect: "参评项目具备完整的装配化施工工法或技术标准",
-          satisfy: true,
           max_score: "4",
           score: "0",
-          description: "",
-          evaluation_index: "",
-          locked: false,
-          dialogVisible: false,
-          popOverShow: false
+          evaluation_index: ""
         },
         {
           id: 4,
           title: "",
           aspect: "参评项目采用机械化施工，减少人力成本，并明显提高效率",
-          satisfy: true,
           max_score: "3",
           score: "0",
-          description: "",
-          evaluation_index: "",
-          locked: false,
-          dialogVisible: false,
-          popOverShow: false
+          evaluation_index: ""
         }
-      ]
+      ],
+      score: []
     };
+  },
+  computed: {
+    ...mapGetters({
+      constructScore: 'construct'
+    })
+  },
+  created () {
+    this.score = this.constructScore._3_2_3
+  },
+  beforeDestroy () {
+    this.$store.dispatch('score/updateScore', this.score, 'construct', '_3_2_3')
   },
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
-    handleClose() {
-      this.$confirm("确认关闭?")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
-    },
-    handleLock(item) {
-      item.popOverShow = !item.popOverShow;
-      item.locked = !item.locked;
-      setTimeout(() => {
-        item.popOverShow = !item.popOverShow;
-      }, 1000);
+
+    handleLock (index) {
+      this.score[index].locked = !this.score[index].locked
     }
   }
 };
@@ -195,6 +141,10 @@ export default {
       .options {
         float: right;
         bottom: 0;
+        .lock,
+        .evaluation {
+          display: inline-block;
+        }
       }
     }
 
