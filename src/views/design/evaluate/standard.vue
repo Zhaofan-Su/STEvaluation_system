@@ -3,7 +3,7 @@
     <h2>2.2.1&nbsp;标准化设计</h2>
     <el-card v-for="(item,index) in items" :key="item.id" class="evaluation-item" shadow="hover">
       <div slot="header" class="clearfix">
-        <span class="number">{{item.id}}.&nbsp;{{item.title}}</span>
+        <span class="number">{{ item.id }}.&nbsp;{{ item.title }}</span>
         <div class="options">
           <evaluationStd
             :_aspect="item.title"
@@ -13,9 +13,9 @@
 
           <lock
             :_locked="score[index].locked"
-            :_popOverShow="false"
-            v-on:click.native="handleLock(index)"
+            :-pop-over-show="false"
             class="lock"
+            @click.native="handleLock(index)"
           />
         </div>
       </div>
@@ -26,20 +26,28 @@
         shadow="never"
       >
         <div slot="header" class="children-header">
-          <div>{{i.aspect}}.（{{i.max_score}}分）</div>
+          <div>{{ i.aspect }}.（{{ i.max_score }}分）</div>
         </div>
         <el-form ref="form" :model="i" label-width="100px">
           <el-form-item label="是否满足">
             <el-radio-group v-model="score[index].children_question[_index].satisfy">
-              <el-radio :label="true" :disabled="score[index].locked">是</el-radio>
-              <el-radio :label="false" :disabled="score[index].locked">否</el-radio>
+              <el-radio
+                label="是"
+                :disabled="score[index].locked"
+                @change="addScore(index, _index, true)"
+              >是</el-radio>
+              <el-radio
+                label="否"
+                :disabled="score[index].locked"
+                @change="addScore(index, _index,false)"
+              >否</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="不满足简述" v-if="!score[index].children_question[_index].satisfy">
+          <el-form-item v-if="!score[index].children_question[_index].satisfy" label="不满足简述">
             <el-input
+              v-model="score[index].children_question[_index].description"
               label="不满足简述"
               type="textarea"
-              v-model="score[index].children_question[_index].description"
             />
           </el-form-item>
         </el-form>
@@ -53,9 +61,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
+import { mapGetters } from "vuex";
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
 
 export default {
   name: "Standard",
@@ -63,7 +71,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -73,8 +81,7 @@ export default {
             {
               aspect:
                 "建筑设计采用统一模数协调尺寸，并符合现行国家标准《建筑模数协调标准GB/T50002》的有关规定",
-              max_score: "2",
-              score: "0",
+              max_score: 2
             }
           ],
           evaluation_index: ""
@@ -84,9 +91,9 @@ export default {
           title: "建筑单元",
           children_question: [
             {
-              aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              max_score: "4",
-              score: "0",
+              aspect:
+                "在单体住宅建筑中重复使用量最多的三个基本户型的面积之和占总建筑面积的比例不低于70%；在单体公共建筑中重复使用最多的三个基本单元的面积之和占总建筑面积的比例不低于60%",
+              max_score: 4
             }
           ],
           evaluation_index: ""
@@ -96,9 +103,9 @@ export default {
           title: "平面布局",
           children_question: [
             {
-              aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              max_score: "2",
-              score: "0",
+              aspect:
+                "各功能空间布局合理、规则有序，符合建筑功能和结构抗震安全要素",
+              max_score: 2
             }
           ],
           evaluation_index: ""
@@ -108,10 +115,8 @@ export default {
           title: "连接节点",
           children_question: [
             {
-              aspect:
-                "建筑设计采用统一模数协调尺寸，并符合现行国家标准《建筑模数协调标准GB/T50002》的有关规定",
-              max_score: "2",
-              score: "0",
+              aspect: "连接节点具备标准化设计，符合安全、经济、方便施工等要求",
+              max_score: 2
             }
           ],
           evaluation_index: ""
@@ -121,29 +126,29 @@ export default {
           title: "预制构件",
           children_question: [
             {
-              aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              max_score: "4",
-              score: "0",
+              aspect:
+                "预制梁、预制柱、预制外承重墙板、内承重墙板、外挂墙板在单体建筑中重复使用最多的三个规格构件的总个数占同类构件总个数的比例均不低于50%",
+              max_score: 4
             },
             {
-              aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              max_score: "2",
-              score: "0",
+              aspect:
+                "预制楼板、预制叠合楼板在单体建筑中重复使用量最多的三个规格构件的总个数占预制楼板总数的比例不低于60%",
+              max_score: 2
             },
             {
-              aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              max_score: "2",
-              score: "0",
+              aspect:
+                "预制楼梯在单体建筑中重复使用最多的一个规格的总个数占楼梯总个数的比例不低于70%",
+              max_score: 2
             },
             {
-              aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              max_score: "2",
-              score: "0",
+              aspect:
+                "预制内隔墙板在单体建筑中重复使用量最多的一个规格构件的面积之和占同类型墙板总面积的比例不低于50%",
+              max_score: 2
             },
             {
-              aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              max_score: "1",
-              score: "0",
+              aspect:
+                "预制阳台板在单体建筑中重复使用量最多的一个规格构件的总个数占阳台板总数的比例不低于50%",
+              max_score: 1
             }
           ],
           evaluation_index: ""
@@ -153,14 +158,14 @@ export default {
           title: "建筑部品",
           children_question: [
             {
-              aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              max_score: "2",
-              score: "0",
+              aspect:
+                "外墙在单体建筑中重复使用量最多的三个规格的总个数占外墙总数量的比例不低于60%",
+              max_score: 2
             },
             {
-              aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
-              max_score: "2",
-              score: "0",
+              aspect:
+                "集成卫生间、整体橱柜、储物间等室内建筑部品在单体建筑中重复使用量最多的三个规格的总个数占同类部品总数量的比例不低于70%，并采用标准化接口、工厂化生产、装配化施工",
+              max_score: 2
             }
           ],
           evaluation_index: ""
@@ -171,18 +176,35 @@ export default {
   },
   computed: {
     ...mapGetters({
-      designScore: 'design'
+      designScore: "design"
     })
   },
-  created () {
-    this.score = this.designScore._2_2_1
+  created() {
+    this.score = this.designScore._2_2_1;
+    this.sum = this.designScore.sum;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', this.score, 'design', '_2_2_1')
+  beforeDestroy() {
+    this.$store.dispatch(
+      "score/updateScore",
+      this.score,
+      this.sum,
+      "design",
+      "_2_2_1"
+    );
   },
   methods: {
-    handleLock (index) {
-      this.score[index].locked = !this.score[index].locked
+    handleLock(index) {
+      this.score[index].locked = !this.score[index].locked;
+    },
+    addScore(index, _index, whether) {
+      if (whether) {
+        this.score[index].children_question[_index].score = this.items[
+          index
+        ].children_question[_index].max_score;
+        this.sum += this.items[index].children_question[_index].max_score;
+      } else {
+        this.score[index].children_question[_index].score = 0;
+      }
     }
   }
 };

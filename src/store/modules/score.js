@@ -5,71 +5,80 @@ import {
 const state = {
   design: {
     basic: [{
-        satisfy: true,
+        satisfy: "",
         locked: false
       },
       {
-        satisfy: true,
+        satisfy: "",
         locked: false
       }, {
-        satisfy: true,
+        satisfy: "",
         locked: false
       }
     ],
     _2_2_1: [{
         children_question: [{
-          satisfy: true,
+          satisfy: "",
           discription: '',
+          score: 0
         }],
         locked: false
       },
       {
         children_question: [{
-          satisfy: true,
+          satisfy: "",
           discription: '',
+          score: 0
         }],
         locked: false
       },
       {
         children_question: [{
-          satisfy: true,
+          satisfy: "",
           discription: '',
+          score: 0
         }],
         locked: false
       },
       {
         children_question: [{
-          satisfy: true,
+          satisfy: "",
           discription: '',
+          score: 0
         }],
         locked: false
       },
       {
         children_question: [{
-          satisfy: true,
-          discription: ''
+          satisfy: "",
+          discription: '',
+          score: 0
         }, {
-          satisfy: true,
-          discription: ''
+          satisfy: "",
+          discription: '',
+          score: 0
         }, {
-          satisfy: true,
-          discription: ''
+          satisfy: "",
+          discription: '',
+          score: 0
         }, {
-          satisfy: true,
-          discription: ''
+          satisfy: "",
+          discription: '',
+          score: 0
         }, {
-          satisfy: true,
-          discription: ''
+          satisfy: "",
+          discription: '',
+          score: 0
         }],
         locked: false
       },
       {
         children_question: [{
-            satisfy: true,
+            satisfy: "",
             discription: ''
           },
           {
-            satisfy: true,
+            satisfy: "",
             discription: ''
           }
         ],
@@ -79,15 +88,18 @@ const state = {
     _2_2_2: [{
       indicator: null,
       description: "",
-      locked: false
+      locked: false,
+      score: 0
     }, {
       indicator: null,
       description: "",
-      locked: false
+      locked: false,
+      score: 0
     }, {
       indicator: null,
       description: "",
-      locked: false
+      locked: false,
+      score: 0
     }],
     _2_2_3: [],
     _2_2_4: [{
@@ -117,322 +129,323 @@ const state = {
     }],
     _2_2_5: [{
       children_question: [{
-        satisfy: true,
+        satisfy: "",
         description: ''
       }, {
-        satisfy: true,
+        satisfy: "",
         description: ''
       }],
       locked: false
     }, {
       children_question: [{
-        satisfy: true,
+        satisfy: "",
         description: ''
       }],
       locked: false
     }, {
       children_question: [{
-        satisfy: true,
+        satisfy: "",
         description: ''
       }],
       locked: false
     }],
     _2_2_6: [{
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }],
     _2_2_7: [{
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }],
     _2_2_8: [{
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }],
     _2_2_9: [{
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
-    }]
+    }],
+    sum: 0
   },
   construct: {
     basic: [{
-        satisfy: true,
+        satisfy: "",
         locked: false
       },
       {
-        satisfy: true,
+        satisfy: "",
         locked: false
       }, {
-        satisfy: true,
+        satisfy: "",
         locked: false
       }, {
-        satisfy: true,
+        satisfy: "",
         locked: false
       },
       {
-        satisfy: true,
+        satisfy: "",
         locked: false
       }, {
-        satisfy: true,
+        satisfy: "",
         locked: false
       }
     ],
     _3_2_0: [],
     _3_2_1: [{
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }],
     _3_2_2: [{
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }],
     _3_2_3: [{
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }],
     _3_2_4: [{
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }],
     _3_2_5: [{
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }],
     _3_2_6: [{
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }],
     _3_2_7: [{
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }],
     _3_2_8: [{
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }, {
-      satisfy: true,
+      satisfy: "",
       description: '',
       locked: false
     }],
     _3_2_9: [{
       children_question: [{
-        satisfy: true,
+        satisfy: "",
         description: ''
       }],
       locked: false
     }, {
       children_question: [{
-        satisfy: true,
+        satisfy: "",
         description: ''
       }],
       locked: false
     }, {
       children_question: [{
-        satisfy: true,
+        satisfy: "",
         description: ''
       }, {
-        satisfy: true,
+        satisfy: "",
         description: ''
       }, {
-        satisfy: true,
+        satisfy: "",
         description: ''
       }],
       locked: false
     }, {
       children_question: [{
-        satisfy: true,
+        satisfy: "",
         description: ''
       }],
       locked: false
@@ -442,20 +455,21 @@ const state = {
       description: '',
       locked: false
     }],
+    sum: 0
   },
   usage: {
     basic: [{
-        satisfy: true,
+        satisfy: "",
         locked: false
       },
       {
-        satisfy: true,
+        satisfy: "",
         locked: false
       }, {
-        satisfy: true,
+        satisfy: "",
         locked: false
       }, {
-        satisfy: true,
+        satisfy: "",
         locked: false
       }
     ],
@@ -463,15 +477,17 @@ const state = {
     _4_2_2: [],
     _4_2_3: [],
     _4_2_4: [],
-    _4_2_5: []
+    _4_2_5: [],
+    sum: 0
   }
 
 }
 
 const mutations = {
 
-  SET_SCORE: (state, score, phase, aspect) => {
+  SET_SCORE: (state, score, sum, phase, aspect) => {
     state[phase][aspect] = score
+    state[phase].sum = sum
   }
 
 }
@@ -480,13 +496,13 @@ const actions = {
 
   updateScore({
     commit
-  }, score, phase, aspect) {
-    commit('SET_SCORE', score, phase, aspect)
+  }, score, sum, phase, aspect) {
+    commit('SET_SCORE', score, sum, phase, aspect)
   },
 
 }
 export default {
-  namespaced: true,
+  namespaced: "",
   state,
   mutations,
   actions

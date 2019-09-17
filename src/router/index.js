@@ -69,6 +69,26 @@ export const constantRoutes = [{
     hidden: true
   },
   {
+    path: '/pdf',
+    component: Layout,
+    meta: {
+      title: 'pdf'
+    },
+    children: [{
+      path: '',
+      component: () => import('@/views/pdf/index'),
+      meta: {
+        title: 'index'
+      }
+    }, {
+      path: 'download',
+      component: () => import('@/views/pdf/download'),
+      meta: {
+        title: '下载'
+      }
+    }]
+  },
+  {
     path: "/",
     component: Layout,
     children: [{

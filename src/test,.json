@@ -1,0 +1,50 @@
+{
+  "score": {
+    "design": {
+      "basic": [{
+        "satisfy": null,
+        "locked": false
+      }, {
+
+      }],
+
+      "_2_2_1": [{
+        "children_question": [{
+          "satisfy": null,
+          "discription": ""
+        }, {
+
+        }, {
+
+        }],
+        "locked": false
+      }, {
+        "children_question": [],
+        "locked": false
+      }],
+
+      "_2_2_2": [{
+        "indicator": null,
+        "description": "",
+        "locke": false
+      }],
+      "_2_2_3": [],
+      "_2_2_4": [],
+      "_2_2_5": [],
+      "_2_2_6": [{
+        "satisfy": null,
+        "description": "",
+        "locked": false
+      }, {
+
+      }]
+
+    },
+    "construct": {
+
+    },
+    "usage": {
+
+    }
+  }
+}

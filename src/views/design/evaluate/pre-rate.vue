@@ -13,9 +13,9 @@
 
           <lock
             :_locked="score[index].locked"
-            :_popOverShow="false"
-            v-on:click.native="handleLock(index)"
+            :-pop-over-show="false"
             class="lock"
+            @click.native="handleLock(index)"
           />
         </div>
       </div>
@@ -23,17 +23,24 @@
         <div slot="header" class="children-header">
           <div>{{ item.aspect }}.（{{ item.max_score }}分）</div>
         </div>
-        <el-form ref="form" :model="item" label-width="100px">
-          <el-form-item label="预制率">
-            <el-input v-model="score[index].indicator" style="width:40%" placeholder="请输入预制率" />
+        <el-form ref="form" :model="item" label-width="100px" :rules="rules">
+          <el-form-item label="预制率" prop="indicator">
+            <el-input
+              v-model="score[index].indicator"
+              style="width:40%"
+              placeholder="请输入预制率"
+              @blur="changeScore(index)"
+            >
+              <template slot="suffix">%</template>
+            </el-input>
           </el-form-item>
           <el-form-item label="不满足简述">
             <el-input v-model="score[index].description" label="不满足简述" type="textarea" />
           </el-form-item>
           <el-form-item label="得分">
-            <span v-if="score[index].indicator>=0.8">{{ item.max_score }}&nbsp;&nbsp;分</span>
-            <span v-else-if="score[index].indicator>=0.65">{{ item.second_score }}&nbsp;&nbsp;分</span>
-            <span v-else-if="score[index].indicator>=0.5">{{ item.third_score }}&nbsp;&nbsp;分</span>
+            <span v-if="score[index].indicator>=80">{{ item.max_score }}&nbsp;&nbsp;分</span>
+            <span v-else-if="score[index].indicator>=65">{{ item.second_score }}&nbsp;&nbsp;分</span>
+            <span v-else-if="score[index].indicator>=50">{{ item.third_score }}&nbsp;&nbsp;分</span>
             <span v-else>0&nbsp;&nbsp;分</span>
           </el-form-item>
         </el-form>
@@ -43,9 +50,10 @@
 </template>
 
 <script>
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
-import { mapGetters, mapState } from 'vuex'
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
+import { mapGetters, mapState } from "vuex";
+import { setTimeout } from "timers";
 
 export default {
   name: "PreRate",
@@ -53,59 +61,102 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
+    var checkNum = (rule, value, callback) => {
+      if (!checkNum) {
+        return callback(new Error("预制率不能为空"));
+      }
+      setTimeout(() => {
+        if (!Number.isInteger(value)) {
+          callback(new Error("请输入数字"));
+        } else {
+          if (value < 0 || value > 100) {
+            callback(new Error("请输入范围0--100的数字"));
+          } else {
+            callback();
+          }
+        }
+      }, 500);
+    };
     return {
       items: [
         {
           id: 1,
           title: "外墙板",
-          aspect: "预制外挂墙板",
-          max_score: "10",
-          second_score: "8",
-          third_score: "5",
-          score: 0,
+          aspect: "预制外挂墙板、预制复合墙板",
+          max_score: 10,
+          second_score: 8,
+          third_score: 5,
           evaluation_index: ""
         },
         {
           id: 2,
           title: "楼板",
           aspect: "预制（叠合）楼板",
-          max_score: "8",
-          second_score: "6",
-          third_score: "4",
-          score: 0,
+          max_score: 8,
+          second_score: 6,
+          third_score: 4,
           evaluation_index: ""
         },
         {
           id: 3,
           title: "其他",
           aspect: "楼梯、空调板、阳台板",
-          max_score: "7",
-          second_score: "5",
-          third_score: "3",
-          score: 0,
+          max_score: 7,
+          second_score: 5,
+          third_score: 3,
           evaluation_index: ""
         }
       ],
+      rules: {
+        indicator: [
+          {
+            required: true,
+            type: "number",
+            validator: checkNum,
+            trigger: "blur"
+          }
+        ]
+      },
       score: []
     };
   },
   computed: {
     ...mapGetters({
-      desginSocre: 'design'
+      desginSocre: "design"
     })
   },
-  created () {
-    this.score = this.desginSocre._2_2_2
+  created() {
+    this.score = this.desginSocre._2_2_2;
+    this.sum = this.desginSocre.sum;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', this.score, 'design', '_2_2_2')
+  beforeDestroy() {
+    this.$store.dispatch(
+      "score/updateScore",
+      this.score,
+      this.sum,
+      "design",
+      "_2_2_2"
+    );
   },
   // 最后提交的时候再计算每一个选项的得分
   methods: {
-
-    handleLock (item) {
-      this.score[index].locked = !this.score[index].locked
+    handleLock(item) {
+      this.score[index].locked = !this.score[index].locked;
+    },
+    changeScore(index) {
+      let value = this.score[index].indicator;
+      if (value >= 80) {
+        this.score[index].score = this.items[index].max_score;
+        this.sum += this.items[index].max_score;
+      } else if (value >= 65) {
+        this.score[index].score = this.items[index].second_score;
+        this.sum += this.items[index].second_score;
+      } else if (value >= 50) {
+        this.score[index].score = this.items[index].third_score;
+        this.sum += this.items[index].third_score;
+      }
+      console.log(this.sum);
     }
   }
 };
