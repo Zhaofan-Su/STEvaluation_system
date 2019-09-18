@@ -13,9 +13,9 @@
 
           <lock
             :_locked="score[index].locked"
-            :_popOverShow="false"
-            v-on:click.native="handleLock(index)"
+            :-pop-over-show="false"
             class="lock"
+            @click.native="handleLock(index)"
           />
         </div>
       </div>
@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
+import { mapGetters } from "vuex";
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
 
 export default {
   name: "DesignDepth",
@@ -50,7 +50,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -58,8 +58,7 @@ export default {
           title: "",
           aspect:
             "具有完整的构件深化图，主要包括：设计说明、构件统计表、连接节点详图、构件加工详图、预埋件详图",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
           evaluation_index: ""
         },
         {
@@ -67,8 +66,7 @@ export default {
           title: "",
           aspect:
             "构件深化图要满足工厂生产、施工装配等相关环节承接工序的技术和安全要求，各种埋件、连接件设计准确、清晰、合理",
-          max_score: "4",
-          score: "0",
+          max_score: 1,
           evaluation_index: ""
         },
         {
@@ -76,16 +74,14 @@ export default {
           title: "",
           aspect:
             "构件设计与构件生产工业结合良好，与构件生产工厂建立有协同工作机制",
-          max_score: "2",
-          score: "0",
+          max_score: 1,
           evaluation_index: ""
         },
         {
           id: 4,
           title: "",
           aspect: "项目设计与施工组织紧密结合，与施工企业建立有协同工作机制",
-          max_score: "2",
-          score: "0",
+          max_score: 1,
           evaluation_index: ""
         },
         {
@@ -93,40 +89,35 @@ export default {
           title: "",
           aspect:
             "构件设计合理、规格尺寸优化、便于生产制作，有利于提高工效，降低成本",
-          max_score: "4",
-          score: "0",
+          max_score: 1,
           evaluation_index: ""
         },
         {
           id: 6,
           title: "",
           aspect: "构件连接技术安全可靠、构造合理、施工简便",
-          max_score: "2",
-          score: "0",
+          max_score: 1,
           evaluation_index: ""
         },
         {
           id: 7,
           title: "",
           aspect: "构件设计满足构件运输和吊装能力要求，便于安装施工",
-          max_score: "2",
-          score: "0",
+          max_score: 1,
           evaluation_index: ""
         },
         {
           id: 8,
           title: "",
-          aspect: "满足不同施工外架条件的影响以及模板和支撑系统的采用",
-          max_score: "4",
-          score: "0",
+          aspect: "满足不同施工外界条件的影响以及模板和支撑系统的采用",
+          max_score: 1,
           evaluation_index: ""
         },
         {
           id: 9,
           title: "",
           aspect: "构件设计综合考虑了装配化施工的安装调节和公差配合要求",
-          max_score: "2",
-          score: "0",
+          max_score: 1,
           evaluation_index: ""
         }
       ],
@@ -135,20 +126,27 @@ export default {
   },
   computed: {
     ...mapGetters({
-      designScore: 'design'
+      designScore: "design"
     })
   },
-  created () {
-    this.score = this.designScore._2_2_6
+  created() {
+    this.score = this.designScore._2_2_6;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', this.score, 'design', '_2_2_6')
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", this.score, "design", "_2_2_6");
   },
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
 
-    handleLock (index) {
-      this.score[index].locked = !this.score[index].locked
+    handleLock(index) {
+      this.score[index].locked = !this.score[index].locked;
+    },
+    addScore(index, whether) {
+      if (whether) {
+        this.score[index].score = this.items[index].max_score;
+      } else {
+        this.score[index].score = 0;
+      }
     }
   }
 };

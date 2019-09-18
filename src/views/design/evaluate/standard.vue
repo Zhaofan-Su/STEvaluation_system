@@ -181,16 +181,10 @@ export default {
   },
   created() {
     this.score = this.designScore._2_2_1;
-    this.sum = this.designScore.sum;
+    // this.sum = this.designScore.sum;
   },
   beforeDestroy() {
-    this.$store.dispatch(
-      "score/updateScore",
-      this.score,
-      this.sum,
-      "design",
-      "_2_2_1"
-    );
+    this.$store.dispatch("score/updateScore", this.score, "design", "_2_2_1");
   },
   methods: {
     handleLock(index) {
@@ -201,9 +195,9 @@ export default {
         this.score[index].children_question[_index].score = this.items[
           index
         ].children_question[_index].max_score;
-        this.sum += this.items[index].children_question[_index].max_score;
+        // this.sum += this.items[index].children_question[_index].max_score;
       } else {
-        this.score[index].children_question[_index].score = 0;
+        // this.score[index].children_question[_index].score = 0;
       }
     }
   }

@@ -47,7 +47,7 @@ const designRouter = {
           component: () => import('@/views/design/evaluate/component-std'),
           name: 'ComponentStandard',
           meta: {
-            title: '主体结构构件标准化',
+            title: '主体结构构件采用国标构件比例',
           }
         },
         {

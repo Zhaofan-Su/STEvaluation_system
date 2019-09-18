@@ -13,9 +13,9 @@
 
           <lock
             :_locked="score[index].locked"
-            :_popOverShow="false"
-            v-on:click.native="handleLock(index)"
+            :-pop-over-show="false"
             class="lock"
+            @click.native="handleLock(index)"
           />
         </div>
       </div>
@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
+import { mapGetters } from "vuex";
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
 
 export default {
   name: "IntergrateDecoration",
@@ -50,15 +50,14 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
           id: 1,
           title: "设计深度",
           aspect: "具有完整的室内装饰装修设计方案，设计深度满足施工要求",
-          max_score: "4",
-          score: "0",
+          max_score: 4,
           evaluation_index: ""
         },
         {
@@ -66,8 +65,7 @@ export default {
           title: "协同设计",
           aspect:
             "装修设计与主体结构、机电设备设计紧密结合，并建立协同工作机制",
-          max_score: "3",
-          score: "0",
+          max_score: 3,
           evaluation_index: ""
         },
         {
@@ -75,8 +73,7 @@ export default {
           title: "设计方法",
           aspect:
             "装修设计采用标准化、模数化设计；各构件、部品与主体结构之间的尺寸匹配、协调，提前预留、预埋接口，易于装修工程的装配化施工；墙、地面块材铺装基本保证现场无二次加工",
-          max_score: "3",
-          score: "0",
+          max_score: 3,
           evaluation_index: ""
         }
       ],
@@ -85,19 +82,26 @@ export default {
   },
   computed: {
     ...mapGetters({
-      designScore: 'design'
+      designScore: "design"
     })
   },
-  created () {
-    this.score = this.designScore._2_2_7
+  created() {
+    this.score = this.designScore._2_2_7;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', this.score, 'design', '_2_2_7')
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", this.score, "design", "_2_2_7");
   },
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
-    handleLock (index) {
-      this.score[index].locked = !this.score[index].locked
+    handleLock(index) {
+      this.score[index].locked = !this.score[index].locked;
+    },
+    addScore(index, whether) {
+      if (whether) {
+        this.score[index].score = this.items[index].max_score;
+      } else {
+        this.score[index].score = 0;
+      }
     }
   }
 };

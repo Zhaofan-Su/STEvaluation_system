@@ -101,90 +101,123 @@ const state = {
       locked: false,
       score: 0
     }],
-    _2_2_3: [],
+    _2_2_3: [{
+      indicator: null,
+      description: "",
+      locked: false,
+      score: 0
+    }, {
+      indicator: null,
+      description: "",
+      locked: false,
+      score: 0
+    }, {
+      indicator: null,
+      description: "",
+      locked: false,
+      score: 0
+    }],
     _2_2_4: [{
       indicator: null,
       description: "",
-      locked: false
+      locked: false,
+      score: 0
     }, {
       indicator: null,
       description: "",
-      locked: false
+      locked: false,
+      score: 0
     }, {
       indicator: null,
       description: "",
-      locked: false
+      locked: false,
+      score: 0
     }, {
       indicator: null,
       description: "",
-      locked: false
+      locked: false,
+      score: 0
     }, {
       indicator: null,
       description: "",
-      locked: false
+      locked: false,
+      score: 0
     }, {
       indicator: null,
       description: "",
-      locked: false
+      locked: false,
+      score: 0
     }],
     _2_2_5: [{
-      children_question: [{
+      options: [{
         satisfy: "",
-        description: ''
+        subscore: 0
       }, {
         satisfy: "",
-        description: ''
+        subscore: 0
+      }, {
+        satisfy: '',
+        subscore: 0
       }],
+      score: null,
+      description: '',
       locked: false
     }, {
-      children_question: [{
-        satisfy: "",
-        description: ''
-      }],
+      satisfy: "",
+      score: 0,
+      description: '',
       locked: false
     }, {
-      children_question: [{
-        satisfy: "",
-        description: ''
-      }],
+      satisfy: "",
+      description: '',
+      score: 0,
       locked: false
     }],
     _2_2_6: [{
       satisfy: "",
       description: '',
-      locked: false
+      locked: false,
+      score: 0
     }, {
       satisfy: "",
       description: '',
-      locked: false
+      locked: false,
+      score: 0
     }, {
       satisfy: "",
       description: '',
-      locked: false
+      locked: false,
+      score: 0
     }, {
       satisfy: "",
       description: '',
-      locked: false
+      locked: false,
+      score: 0
     }, {
       satisfy: "",
       description: '',
-      locked: false
+      locked: false,
+      score: 0
     }, {
       satisfy: "",
       description: '',
-      locked: false
+      locked: false,
+      score: 0
     }, {
       satisfy: "",
       description: '',
-      locked: false
+      locked: false,
+      score: 0
     }, {
       satisfy: "",
       description: '',
-      locked: false
+      locked: false,
+      score: 0
     }, {
       satisfy: "",
       description: '',
-      locked: false
+      locked: false,
+      score: 0
     }],
     _2_2_7: [{
       satisfy: "",
@@ -485,11 +518,15 @@ const state = {
 
 const mutations = {
 
-  SET_SCORE: (state, score, sum, phase, aspect) => {
+  SET_SCORE: (state, score, phase, aspect) => {
+    state[phase][aspect] = score
+    // state[phase].sum = sum
+  },
+
+  SET_DETAIL: (state, score, sum, phase, aspect) => {
     state[phase][aspect] = score
     state[phase].sum = sum
   }
-
 }
 
 const actions = {
@@ -500,6 +537,11 @@ const actions = {
     commit('SET_SCORE', score, sum, phase, aspect)
   },
 
+  updateScore({
+    commit
+  }, score, phase, aspect) {
+    commit('SET_SCORE', score, phase, aspect)
+  },
 }
 export default {
   namespaced: "",

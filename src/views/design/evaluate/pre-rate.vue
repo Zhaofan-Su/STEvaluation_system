@@ -128,35 +128,25 @@ export default {
   },
   created() {
     this.score = this.desginSocre._2_2_2;
-    this.sum = this.desginSocre.sum;
+    // this.sum = this.desginSocre.sum;
   },
   beforeDestroy() {
-    this.$store.dispatch(
-      "score/updateScore",
-      this.score,
-      this.sum,
-      "design",
-      "_2_2_2"
-    );
+    this.$store.dispatch("score/updateScore", this.score, "design", "_2_2_2");
   },
   // 最后提交的时候再计算每一个选项的得分
   methods: {
-    handleLock(item) {
+    handleLock(index) {
       this.score[index].locked = !this.score[index].locked;
     },
     changeScore(index) {
       let value = this.score[index].indicator;
       if (value >= 80) {
         this.score[index].score = this.items[index].max_score;
-        this.sum += this.items[index].max_score;
       } else if (value >= 65) {
         this.score[index].score = this.items[index].second_score;
-        this.sum += this.items[index].second_score;
       } else if (value >= 50) {
         this.score[index].score = this.items[index].third_score;
-        this.sum += this.items[index].third_score;
       }
-      console.log(this.sum);
     }
   }
 };
