@@ -13,9 +13,9 @@
 
           <lock
             :_locked="score[index].locked"
-            :_popOverShow="false"
-            v-on:click.native="handleLock(index)"
+            :-pop-over-show="false"
             class="lock"
+            @click.native="handleLock(index)"
           />
         </div>
       </div>
@@ -26,8 +26,16 @@
         <el-form ref="form" :model="item" label-width="100px">
           <el-form-item label="是否满足">
             <el-radio-group v-model="score[index].satisfy">
-              <el-radio :label="true" :disabled="score[index].locked">是</el-radio>
-              <el-radio :label="false" :disabled="score[index].locked">否</el-radio>
+              <el-radio
+                :label="true"
+                :disabled="score[index].locked"
+                @change="addScore(index, true)"
+              >是</el-radio>
+              <el-radio
+                :label="false"
+                :disabled="score[index].locked"
+                @change="addScore(index, false)"
+              >否</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item v-if="!score[index].satisfy" label="不满足简述">
@@ -40,9 +48,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
+import { mapGetters } from "vuex";
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
 
 export default {
   name: "InformationTech",
@@ -50,7 +58,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -58,7 +66,7 @@ export default {
           title: "方案设计",
           aspect:
             "应用信息技术（BIM）进行方案设计，包括项目总体分析、性能分析、方案优化等",
-          max_score: "2",
+          max_score: 2,
           score: "0",
           evaluation_index: ""
         },
@@ -67,7 +75,7 @@ export default {
           title: "施工图设计",
           aspect:
             "应用信息技术（BIM）进行施工图设计，包括专业协同、管线综合、信息模型制作、施工图信息表达等",
-          max_score: "2",
+          max_score: 2,
           score: "0",
           evaluation_index: ""
         },
@@ -76,8 +84,7 @@ export default {
           title: "构件图设计",
           aspect:
             "应用信息技术（BIM）进行构件深化设计，包括连接节点设计、钢筋碰撞检查、构件信息模型、完成构件图信息表达等",
-          max_score: "1",
-          score: "0",
+          max_score: 1,
           evaluation_index: ""
         }
       ],
@@ -86,20 +93,27 @@ export default {
   },
   computed: {
     ...mapGetters({
-      designScore: 'design'
+      designScore: "design"
     })
   },
-  created () {
-    this.score = this.designScore._2_2_8
+  created() {
+    this.score = this.designScore._2_2_8;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', this.score, 'design', '_2_2_8')
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", this.score, "design", "_2_2_8");
   },
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
 
-    handleLock (index) {
-      this.score[index].locked = !this.score[index].locked
+    handleLock(index) {
+      this.score[index].locked = !this.score[index].locked;
+    },
+    addScore(index, whether) {
+      if (whether) {
+        this.score[index].score = this.items[index].max_score;
+      } else {
+        this.score[index].score = 0;
+      }
     }
   }
 };

@@ -283,7 +283,37 @@ const state = {
         locked: false
       }
     ],
-    _3_2_0: [],
+    _3_2_0: [{
+        satisfy: "",
+        description: '',
+        locked: false
+      },
+      {
+        satisfy: "",
+        description: '',
+        locked: false
+      }, {
+        satisfy: "",
+        description: '',
+        locked: false
+      }, {
+        satisfy: "",
+        description: '',
+        locked: false
+      }, {
+        satisfy: "",
+        description: '',
+        locked: false
+      }, {
+        satisfy: "",
+        description: '',
+        locked: false
+      }, {
+        satisfy: "",
+        description: '',
+        locked: false
+      }
+    ],
     _3_2_1: [{
       satisfy: "",
       description: '',

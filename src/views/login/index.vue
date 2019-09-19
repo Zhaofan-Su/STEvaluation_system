@@ -88,7 +88,7 @@ import { validUsername } from "@/utils/validate";
 
 export default {
   name: "Login",
-  data () {
+  data() {
     // const validateUsername = (rule, value, callback) => {
     //   if (!validUsername(value)) {
     //     callback(new Error("请输入正确的用户名"));
@@ -126,7 +126,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function (route) {
+      handler: function(route) {
         const query = route.query;
         if (query) {
           this.redirect = query.redirect;
@@ -136,17 +136,17 @@ export default {
       immediate: true
     }
   },
-  created () { },
-  mounted () {
+  created() {},
+  mounted() {
     if (this.loginForm.mobile === "") {
       this.$refs.mobile.focus();
     } else if (this.loginForm.password === "") {
       this.$refs.password.focus();
     }
   },
-  destroyed () { },
+  destroyed() {},
   methods: {
-    checkCapslock ({ shiftKey, key } = {}) {
+    checkCapslock({ shiftKey, key } = {}) {
       if (key && key.length === 1) {
         if (
           (shiftKey && (key >= "a" && key <= "z")) ||
@@ -161,7 +161,7 @@ export default {
         this.capsTooltip = false;
       }
     },
-    showPwd () {
+    showPwd() {
       if (this.passwordType === "password") {
         this.passwordType = "";
       } else {
@@ -171,7 +171,7 @@ export default {
         this.$refs.password.focus();
       });
     },
-    handleLogin () {
+    handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
@@ -194,7 +194,7 @@ export default {
         }
       });
     },
-    getOtherQuery (query) {
+    getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {
         if (cur !== "redirect") {
           acc[cur] = query[cur];
@@ -313,12 +313,6 @@ $light_gray: #eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
-  }
-
-  .thirdparty-button {
-    position: absolute;
-    right: 0;
-    bottom: 6px;
   }
 
   @media only screen and (max-width: 470px) {

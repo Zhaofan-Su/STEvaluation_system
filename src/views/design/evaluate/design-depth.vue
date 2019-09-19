@@ -26,8 +26,16 @@
         <el-form ref="form" :model="item" label-width="100px">
           <el-form-item label="是否满足">
             <el-radio-group v-model="score[index].satisfy">
-              <el-radio :label="true" :disabled="score[index].locked">是</el-radio>
-              <el-radio :label="false" :disabled="score[index].locked">否</el-radio>
+              <el-radio
+                :label="true"
+                :disabled="score[index].locked"
+                @change="addScore(index, true)"
+              >是</el-radio>
+              <el-radio
+                :label="false"
+                :disabled="score[index].locked"
+                @change="addScore(index, false)"
+              >否</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item v-if="!score[index].satisfy" label="不满足简述">

@@ -89,14 +89,6 @@ const designRouter = {
           meta: {
             title: '信息化技术应用设计',
           }
-        },
-        {
-          path: 'struct-safe',
-          component: () => import('@/views/design/evaluate/struct-safe'),
-          name: 'StructSafe',
-          meta: {
-            title: '结构安全设计评估',
-          }
         }
       ]
     },
