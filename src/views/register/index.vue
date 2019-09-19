@@ -6,6 +6,7 @@
       class="register-form"
       autocomplete="on"
       label-position="left"
+      :rules="rules"
     >
       <div class="title-container">
         <h3 class="title">用户注册</h3>
@@ -56,10 +57,18 @@
             <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
           </span>
         </el-form-item>
-        <el-form-item prop="confirmPwd">
-          <el-input />
-        </el-form-item>
       </el-tooltip>
+      <el-form-item prop="confirmPwd">
+        <span class="svg-container">
+          <svg-icon icon-class="form" />
+        </span>
+        <el-input
+          ref="confirm"
+          type="password"
+          v-model="registerForm.confirmPwd"
+          placeholder="请再次输入密码"
+        />
+      </el-form-item>
       <el-button
         :loading="loading"
         type="primary"
@@ -71,23 +80,52 @@
 </template>
 
 <script>
+import { register } from '@/api/user'
 export default {
   name: "Register",
-  data() {
+  data () {
+    var checkPwd = (rule, value, callback) => {
+      if (value === "") {
+        return callback(new Error("请输入密码"))
+      } else {
+        if (this.registerForm.confirmPwd !== "") {
+          this.$refs.registerForm.validateField('confirm')
+        }
+        callback()
+      }
+    }
+    var confirmPwd = (rule, value, callback) => {
+      if (value === "") {
+        return callback(new Error("请再次输入密码"))
+      } else if (value !== this.registerForm.password) {
+        return callback(new Error("两次输入的密码不一致"))
+      } else {
+        callback()
+      }
+    }
     return {
       registerForm: {
         username: "",
         realname: "",
         mobile: "",
-        password: ""
+        password: "",
+        confirmPwd: "",
       },
       passwordType: "password",
       capsTooltip: false,
-      loading: false
+      loading: false,
+      rules: {
+        password: [
+          { validator: checkPwd, trigger: 'blur' }
+        ],
+        confirm: [
+          { validator: confirmPwd, trigger: 'blur' }
+        ]
+      }
     };
   },
   methods: {
-    checkCapslock({ shiftKey, key } = {}) {
+    checkCapslock ({ shiftKey, key } = {}) {
       if (key && key.length === 1) {
         if (
           (shiftKey && (key >= "a" && key <= "z")) ||
@@ -102,17 +140,40 @@ export default {
         this.capsTooltip = false;
       }
     },
-    showPwd() {
+    showPwd () {
       if (this.passwordType === "password") {
         this.passwordType = "";
       } else {
         this.passwordType = "password";
       }
-      this.$$nextTick(() => {
+      this.$nextTick(() => {
         this.$refs.password.focus();
       });
     },
-    handleRegister() {}
+    handleRegister () {
+      this.$refs.registerForm.validate(valid => {
+        if (valid) {
+          var newUser = {
+            username: this.registerForm.username,
+            realname: this.registerForm.realname,
+            mobile: this.registerForm.mobile,
+            password: this.registerForm.password
+          }
+          return new Promise((resolve, reject) => {
+            register(newUser).then(response => {
+              this.$router.push("/")
+              this.loading = false
+              resolve()
+            })
+          }).catch(err => {
+            console.log(err)
+            reject(err)
+          })
+        } else {
+          this.loading = true
+        }
+      })
+    }
   }
 };
 </script>
@@ -175,7 +236,7 @@ $light_gray: #eee;
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    padding: 80px 35px 0;
     margin: 0 auto;
     overflow: hidden;
   }

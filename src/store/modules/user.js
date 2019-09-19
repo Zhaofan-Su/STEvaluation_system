@@ -64,19 +64,6 @@ const mutations = {
 }
 
 const actions = {
-  // user register
-  register({
-    commit
-  }, userInfo) {
-    const {
-      username,
-      realname,
-      mobile,
-      password
-    } = userInfo
-    return new Promise
-
-  },
   // user login
   login({
     commit

@@ -74,26 +74,6 @@ export const constantRoutes = [{
     hidden: true
   },
   {
-    path: '/pdf',
-    component: Layout,
-    meta: {
-      title: 'pdf'
-    },
-    children: [{
-      path: '',
-      component: () => import('@/views/pdf/index'),
-      meta: {
-        title: 'index'
-      }
-    }, {
-      path: 'download',
-      component: () => import('@/views/pdf/download'),
-      meta: {
-        title: '下载'
-      }
-    }]
-  },
-  {
     path: "/",
     component: Layout,
     children: [{
@@ -195,7 +175,29 @@ export const asyncRoutes = [{
   constructRouter,
   usageRouter,
   additionRouter,
-  calculateRouter
+  calculateRouter,
+  {
+    path: '/pdf',
+    component: Layout,
+    meta: {
+      name: 'pdf',
+      title: '报告预览及下载',
+      icon: 'pdf'
+    },
+    children: [{
+      path: '',
+      component: () => import('@/views/pdf/index'),
+      meta: {
+        title: 'index'
+      }
+    }, {
+      path: 'download',
+      component: () => import('@/views/pdf/download'),
+      meta: {
+        title: '下载'
+      }
+    }]
+  },
 ]
 
 const createRouter = () => new Router({

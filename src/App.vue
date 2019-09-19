@@ -22,6 +22,9 @@ export default {
 </script>
 
 <style lang="scss">
+body {
+  background-color: #f4f4f5;
+}
 .el-popover {
   min-width: 90px;
   text-align: center;
