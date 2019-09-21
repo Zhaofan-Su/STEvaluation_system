@@ -68,10 +68,12 @@ export default {
   },
   computed: {
     ...mapGetters({
-      designScore: 'design'
+      designScore: 'design',
+      project: 'project'
     })
   },
   created () {
+    console.log(this.project)
     this.score = this.designScore['basic']
   },
   beforeDestroy () {

@@ -27,7 +27,6 @@
         style="width:100%"
         :header-cell-style="{background:'#eef1f6'}"
       >
-        <el-table-column prop="userId" label="用户ID" align="header-center" width="100"></el-table-column>
         <el-table-column prop="username" label="用户名" align="center" width="150"></el-table-column>
         <el-table-column prop="realname" label="真实姓名" align="center" width="120"></el-table-column>
         <el-table-column prop="mobile" label="电话" align="header-center" width="180"></el-table-column>
@@ -83,6 +82,7 @@ import { getUsers } from '@/api/user'
 export default {
   name: "Peoples",
   components: {},
+  directives: { waves },
   data () {
     return {
       roleMap: {
@@ -127,8 +127,8 @@ export default {
     async getUsers () {
       const res = await getUsers()
       let list = []
-      for (var key in res.data.value) {
-        list.push(res.data.value[key])
+      for (var key in res.value) {
+        list.push(res.value[key])
       }
       this.tableData = list
     },
@@ -151,11 +151,11 @@ export default {
       })
         .then(async () => {
           // await deleteUser()远程数据库删除数据
-          this.tableData.splice($index, 1)
-          this.$message({
-            type: 'success',
-            message: '删除成功！'
-          })
+          // this.tableData.splice($index, 1)
+          // this.$message({
+          //   type: 'success',
+          //   message: '删除成功！'
+          // })
         })
         .catch(err => {
           console.log(err)

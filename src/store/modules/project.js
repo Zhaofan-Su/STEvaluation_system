@@ -1,11 +1,13 @@
 import {
   stat
 } from "fs";
+import {
+  ifError
+} from "assert";
 
 const state = {
-  evaluate: true,
+  evaluate: false,
   eId: '',
-  userId: '',
   info: {
     projectName: '',
     province: '',
@@ -21,7 +23,7 @@ const state = {
   createTime: '',
   endTime: '',
   creator: '',
-  RWState: 0, //1，对所有人可见；0，对内部人员可见
+  RWState: null, //1，对所有人可见；0，对内部人员可见
   sendTo: [],
 }
 
@@ -32,14 +34,12 @@ const mutations = {
   SET_EID: (state, eId) => {
     state.eId = eId
   },
-  SET_USERID: (state, userId) => {
-    state.userId = userId
-  },
   SET_PROJECTINFO: (state, projectInfo) => {
     Object.keys(state.info).forEach(function (key) {
-      state.info[key] = projectInfo[key]
+      if (projectInfo[key] !== '') {
+        state.info[key] = projectInfo[key]
+      }
     })
-
   },
   SET_CREATETIME: (state, createTime) => {
     state.createTime = createTime
@@ -63,19 +63,28 @@ const actions = {
   updateProject({
     commit
   }, newProject) {
+    // if (newProject.evaluate !== '') {
     commit('SET_EVALUATE', newProject.evaluate)
+    // }
+    // if (newProject.info !== '') {
     commit('SET_PROJECTINFO', newProject.info)
-    if (newProject.createTime !== '') {
-      commit('SET_CREATETIME', newProject.createTime)
-    }
-    if (newProject.endTime !== '') {
-      commit('SET_ENDTIME', newProject.endTime)
-    }
-    if (newProject.creator !== '') {
-      commit('SET_CREATOR', newProject.creator)
-    }
+    // }
+
+    // if (newProject.createTime !== '') {
+    commit('SET_CREATETIME', newProject.createTime)
+    // }
+    // if (newProject.endTime !== '') {
+    commit('SET_ENDTIME', newProject.endTime)
+    // }
+    // if (newProject.creator !== '') {
+    commit('SET_CREATOR', newProject.creator)
+    // }
+    // if (newProject.RWState !== "") {
     commit('SET_RWSTATE', newProject.RWState)
+    // }
+    // if (newProject.sendTo !== '') {
     commit('SET_SENDTO', newProject.sendTo)
+    // }
   },
 
   evaluate({

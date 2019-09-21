@@ -5,9 +5,9 @@ const tokens = {
   '18916093813': {
     token: 'inner-token'
   },
-  // '123456': {
-  //   token: 'outer-token'
-  // },
+  '123456': {
+    token: 'outer-token'
+  },
 
 }
 
@@ -34,17 +34,17 @@ const users = {
     password: 'inner',
     role: 1
   },
-  // 'outer-token': {
-  //   roles: ['outer'],
-  //   introduction: 'I am an outer user',
-  //   avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-  //   userId: 3,
-  //   username: '小犀牛',
-  //   realname: '王五',
-  //   mobile: '123456',
-  //   password: 'outer',
-  //   role: 2
-  // },
+  'outer-token': {
+    roles: ['outer'],
+    introduction: 'I am an outer user',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    userId: 3,
+    username: '小犀牛',
+    realname: '王五',
+    mobile: '123456',
+    password: 'outer',
+    role: 2
+  },
   // 'editor-token': {
   //   roles: ['editor'],
   //   introduction: 'I am an editor',
@@ -55,49 +55,49 @@ const users = {
 
 export default [
   // user register
-  {
-    url: '/user',
-    type: 'post',
-    response: config => {
-      const {
-        username,
-        realname,
-        mobile,
-        password
-      } = config.body
+  // {
+  //   url: '/user',
+  //   type: 'post',
+  //   response: config => {
+  //     const {
+  //       username,
+  //       realname,
+  //       mobile,
+  //       password
+  //     } = config.body
 
 
-      tokens[mobile] = 'outer-token'
-      users[mobile] = {
-        'outer-token': {
-          roles: ['outer'],
-          introduction: 'I am an outer user',
-          avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-          userId: 3,
-          username: username,
-          realname: realname,
-          mobile: mobile,
-          password: password,
-          role: 2
-        }
-      }
+  //     tokens[mobile] = 'outer-token'
+  //     users[mobile] = {
+  //       'outer-token': {
+  //         roles: ['outer'],
+  //         introduction: 'I am an outer user',
+  //         avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+  //         userId: 3,
+  //         username: username,
+  //         realname: realname,
+  //         mobile: mobile,
+  //         password: password,
+  //         role: 2
+  //       }
+  //     }
 
-      return {
-        code: 20000,
-        data: {
-          status: 200,
-          message: 'success',
-          value: {
-            userId: '2333',
-            username: username,
-            realname: realname,
-            mobile: mobile,
-            role: 2
-          }
-        }
-      }
-    }
-  },
+  //     return {
+  //       code: 20000,
+  //       data: {
+  //         status: 200,
+  //         message: 'success',
+  //         value: {
+  //           userId: '2333',
+  //           username: username,
+  //           realname: realname,
+  //           mobile: mobile,
+  //           role: 2
+  //         }
+  //       }
+  //     }
+  //   }
+  // },
   // user login
   {
     url: '/user/login',

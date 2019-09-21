@@ -61,52 +61,27 @@
       <el-button
         :loading="loading"
         type="primary"
-        style="width:100%;margin-bottom:30px;"
+        style="width:48%;margin-bottom:30px;"
         @click.native.prevent="handleLogin"
       >登录</el-button>
-
-      <!-- <div style="position:relative">
-        <div class="tips">
-          <span>Username : admin</span>
-          <span>Password : any</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">Username : editor</span>
-          <span>Password : any</span>
-        </div>
-
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
-        </el-button>
-      </div>-->
+      <el-button
+        type="plain"
+        style="width:48%;margin-bottom:30px;float:right"
+        @click.native.prevent="handleRegister"
+      >注册</el-button>
     </el-form>
   </div>
 </template>
 
 <script>
-import { validUsername } from "@/utils/validate";
 
 export default {
   name: "Login",
-  data() {
-    // const validateUsername = (rule, value, callback) => {
-    //   if (!validUsername(value)) {
-    //     callback(new Error("请输入正确的用户名"));
-    //   } else {
-    //     callback();
-    //   }
-    // };
-    // const validatePassword = (rule, value, callback) => {
-    //   if (value.length < 6) {
-    //     callback(new Error("密码不能小于6位数"));
-    //   } else {
-    //     callback();
-    //   }
-    // };
+  data () {
     return {
       loginForm: {
-        mobile: "18717710887",
-        password: "admin"
+        mobile: "",
+        password: ""
       },
       // loginRules: {
       //   mobile: [
@@ -126,7 +101,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         const query = route.query;
         if (query) {
           this.redirect = query.redirect;
@@ -136,17 +111,13 @@ export default {
       immediate: true
     }
   },
-  created() {},
-  mounted() {
-    if (this.loginForm.mobile === "") {
-      this.$refs.mobile.focus();
-    } else if (this.loginForm.password === "") {
-      this.$refs.password.focus();
-    }
+  created () { },
+  mounted () {
+
   },
-  destroyed() {},
+  destroyed () { },
   methods: {
-    checkCapslock({ shiftKey, key } = {}) {
+    checkCapslock ({ shiftKey, key } = {}) {
       if (key && key.length === 1) {
         if (
           (shiftKey && (key >= "a" && key <= "z")) ||
@@ -161,7 +132,7 @@ export default {
         this.capsTooltip = false;
       }
     },
-    showPwd() {
+    showPwd () {
       if (this.passwordType === "password") {
         this.passwordType = "";
       } else {
@@ -171,7 +142,7 @@ export default {
         this.$refs.password.focus();
       });
     },
-    handleLogin() {
+    handleLogin () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
@@ -182,7 +153,9 @@ export default {
               //   path: this.redirect || "/",
               //   query: this.otherQuery
               // });
+
               this.$router.push("/");
+
               this.loading = false;
             })
             .catch(() => {
@@ -194,7 +167,10 @@ export default {
         }
       });
     },
-    getOtherQuery(query) {
+    handleRegister () {
+      this.$router.push('/register')
+    },
+    getOtherQuery (query) {
       return Object.keys(query).reduce((acc, cur) => {
         if (cur !== "redirect") {
           acc[cur] = query[cur];

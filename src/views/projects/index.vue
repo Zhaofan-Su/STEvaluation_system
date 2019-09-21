@@ -88,7 +88,7 @@
       </el-table-column>
     </el-table>
 
-    <paginaton
+    <pagination
       v-show="total>0"
       :total="total"
       :page.sync="listQuery.page"
@@ -102,8 +102,7 @@
 <script>
 import { fetchList } from "@/api/article";
 import waves from "@/directive/waves";
-import { Pagination } from "@/components/Pagination";
-import { format } from "path";
+import Pagination from "@/components/Pagination";
 
 import { mapStat, mapState, mapGetters } from "vuex";
 
@@ -115,7 +114,7 @@ export default {
   directives: { waves },
   data () {
     return {
-      tabelKey: 1,
+      tableKey: 1,
       list: [
         {
           id: 1,
@@ -156,13 +155,7 @@ export default {
   },
   computed: {},
   created () {
-    if (!this.roles.includes("admin")) {
-      if (!this.roles.includes("inner")) {
-        this.currentRole = "OuterHomepage";
-      } else {
-        this.currentRole = "InnerHomepage";
-      }
-    }
+
   },
   methods: {
     getList () {

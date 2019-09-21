@@ -24,6 +24,7 @@ const getters = {
   permission_routes: state => state.permission.routes,
   errorLogs: state => state.errorLog.logs,
 
+  project: state => state.project,
   eId: state => state.project.eId,
   evaluate: state => state.project.evaluate,
   projectInfo: state => state.project.info,

@@ -161,6 +161,10 @@ export default {
           }
           return new Promise((resolve, reject) => {
             register(newUser).then(response => {
+              this.$message({
+                message: "注册成功！",
+                type: 'success'
+              })
               this.$router.push("/")
               this.loading = false
               resolve()

@@ -25,6 +25,7 @@ router.beforeEach(async (to, from, next) => {
 
   // determine whether the user has logged in
   const hasToken = getToken()
+  // const role = state.getters.role
 
   if (hasToken) {
     if (to.path === '/login') {
@@ -45,7 +46,6 @@ router.beforeEach(async (to, from, next) => {
           const {
             roles
           } = await store.dispatch('user/getInfo')
-
           // generate accessible routes map based on roles
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
 

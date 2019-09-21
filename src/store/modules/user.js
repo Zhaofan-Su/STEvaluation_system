@@ -80,10 +80,24 @@ const actions = {
         password: password
       }).then(response => {
         const {
-          data
+          value
         } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+
+        // 用id代替token
+        commit('SET_TOKEN', value.id)
+        setToken(value.id)
+        commit('SET_MOBILE', value.mobile)
+        commit('SET_USERNAME', value.username)
+        commit('SET_REALNAME', value.realname)
+        commit('SET_ROLE', value.role)
+        if (value.role == 0) {
+          commit('SET_ROLES', ['admin'])
+        } else if (value.role == 1) {
+          commit('SET_ROLES', ['inner'])
+        } else if (value.role == 2) {
+          commit('SET_ROLES', ['outer'])
+        }
+
         resolve()
       }).catch(error => {
         reject(error)
@@ -99,106 +113,60 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
         const {
-          data
+          value
         } = response
 
-        if (!data) {
+        if (!value) {
           reject('Verification failed, please Login again.')
         }
 
         const {
           roles,
-          avatar,
-          introduction,
-          userId,
+          // avatar,
+          // introduction,
+          id,
           username,
           realname,
           mobile,
           role
-        } = data
+        } = value
 
-        // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
+        // commit('SET_ROLES', roles)
+        if (role == 0) {
+          commit('SET_ROLES', ['admin'])
+          value.roles = ['admin']
+        } else if (role == 1) {
+          commit('SET_ROLES', ['inner'])
+          value.roles = ['inner']
+        } else if (role == 2) {
+          commit('SET_ROLES', ['outer'])
+          value.roles = ['outer']
         }
-
-        commit('SET_ROLES', roles)
-        // commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
+        // commit('SET_AVATAR', avatar)
+        // commit('SET_INTRODUCTION', introduction)
         commit('SET_USERNAME', username)
-        commit('SET_USERID', userId)
+        commit('SET_USERID', id)
         commit('SET_REALNAME', realname)
         commit('SET_MOBILE', mobile)
         commit('SET_ROLE', role)
-        resolve(data)
+        resolve(value)
       }).catch(error => {
         reject(error)
       })
     })
   },
 
-  // get user info by id
-  getUerById({
-    commit,
-    state
-  }) {
-    return new Promise((resolve, reject) => {
-      getUserById(state.userId).then(response => {
-        const {
-          data
-        } = response
-
-        if (!data) {
-          reject('Verification failed, please Login again.')
-        }
-
-        const {
-          roles,
-          avatar,
-          introduction,
-          userId,
-          username,
-          realname,
-          mobile,
-          role
-        } = data
-
-        // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
-        }
-
-        commit('SET_ROLES', roles)
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
-        commit('SET_USERNAME', username)
-        commit('SET_USERID', userId)
-        commit('SET_REALNAME', realname)
-        commit('SET_MOBILE', mobile)
-        commit('SET_ROLE', role)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
   // user logout
   logout({
     commit,
     state
   }) {
-    return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        commit('SET_TOKEN', '')
-        commit('SET_ROLES', [])
-        removeToken()
-        resetRouter()
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
+
+    commit('SET_TOKEN', '')
+    commit('SET_ROLES', [])
+    removeToken()
+    resetRouter()
+
   },
 
   // remove token

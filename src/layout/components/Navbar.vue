@@ -21,20 +21,16 @@
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <!-- <search id="header-search" class="right-menu-item" /> -->
-        <div id="homepage" class="right-menu-item">首页</div>
-        <!-- <error-log class="errLog-container right-menu-item hover-effect" /> -->
-
-        <!-- <screenfull id="screenfull" class="right-menu-item hover-effect" /> -->
-        <div
-          id="projects"
-          class="right-menu-item"
-          v-if="this.roles.includes('inner')||this.roles.includes('admin')"
-        >全部项目</div>
-        <div id="peoples" class="right-menu-item" v-if="this.roles.includes('admin')">全部用户</div>
-        <!-- <el-tooltip content="Global Size" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip>-->
+        <el-tooltip effect="dark" content="提交项目" placement="bottom">
+          <div id="submit" class="right-menu-item hover-effect">
+            <i class="el-icon-upload" @click="submitProject" />
+          </div>
+        </el-tooltip>
+        <el-tooltip effect="dark" content="新建项目" placement="bottom">
+          <div id="newProject" class="right-menu-item hover-effect" @click="handleNewProject">
+            <i class="el-icon-document-add" />
+          </div>
+        </el-tooltip>
       </template>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
@@ -61,18 +57,52 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+
+    <el-dialog
+      title="新建项目"
+      :visible.sync="dialogVisible"
+      width="50%"
+      :before-close="handleClose"
+      center
+    >
+      <el-form ref="form" :model="form" label-width="120px">
+        <el-form-item label="项目名称" prop="projectName">
+          <el-input v-model="form.projectName" />
+        </el-form-item>
+        <el-form-item label="所在省份">
+          <el-input v-model="form.province" placeholder="请输入省份" />
+        </el-form-item>
+        <el-form-item label="所在城市">
+          <el-input v-model="form.city" placeholder="请输入城市" />
+        </el-form-item>
+        <el-form-item label="建筑类型" prop="type">
+          <el-radio-group v-model="form.type">
+            <el-radio label="居住建筑" />
+            <el-radio label="公共建筑" />
+            <el-radio label="厂房" />
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="是否公开" prop="RWState">
+          <el-radio-group v-model="RWState">
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="0">否</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="createProject">新建项目</el-button>
+        <el-button type="primary" @click="dialogVisible=false">取消</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-// import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from "@/components/Hamburger";
-// import ErrorLog from '@/components/ErrorLog'
 import Screenfull from "@/components/Screenfull";
 import SizeSelect from "@/components/SizeSelect";
 import Search from "@/components/HeaderSearch";
-
 export default {
   components: {
     // Breadcrumb,
@@ -82,8 +112,20 @@ export default {
     SizeSelect,
     Search
   },
+  data () {
+    return {
+      dialogVisible: false,
+      form: {
+        projectName: '',
+        province: '',
+        city: '',
+        type: ''
+      },
+      RWState: null,
+    }
+  },
   computed: {
-    ...mapGetters(["sidebar", "avatar", "device", "roles", "evaluate", "projectInfo"])
+    ...mapGetters(["sidebar", "avatar", "device", "roles", "evaluate", "userId", "projectInfo"])
   },
   methods: {
     toggleSideBar () {
@@ -92,7 +134,51 @@ export default {
     async logout () {
       await this.$store.dispatch("user/logout");
       this.$router.push(`/login?redirect=${this.$route.fullPath}`);
-    }
+    },
+    submitProject () {
+
+    },
+    handleNewProject () {
+      this.dialogVisible = true
+    },
+
+
+    handleClose () {
+      let _this = this
+      this.$confirm("是否创建项目？")
+        .then(_ => {
+          this.dialogVisible = false;
+          this.createProject();
+        })
+        .catch(_ => {
+          this.dialogVisible = false;
+        });
+    },
+    handleCancle () {
+      this.dialogVisible = false;
+    },
+    createProject () {
+      // 用户进入评估状态
+      this.$store.dispatch('project/evaluate', true);
+      // 对话框消失
+      this.dialogVisible = false;
+      // 成功创建提示
+      this.$message({
+        message: "成功创建项目",
+        type: "success"
+      });
+      let newCase = {
+        evaluate: true,
+        info: this.form,
+        createTime: new Date().toJSON(),
+        // endTime: endTime.toJSON(),
+        creator: this.userId,
+        RWState: this.RWState,
+      };
+
+      this.$store.dispatch('project/updateProject', newCase);
+      this.$router.push("/projectInfo");
+    },
   }
 };
 </script>
@@ -148,10 +234,14 @@ export default {
       display: inline-block;
       padding: 0 8px;
       height: 100%;
-      font-size: 18px;
+      font-size: 35px;
       color: #5a5e66;
       vertical-align: text-bottom;
 
+      .el-icon-upload,
+      .el-icon-document-add {
+        vertical-align: middle;
+      }
       &.hover-effect {
         cursor: pointer;
         transition: background 0.3s;

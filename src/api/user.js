@@ -16,13 +16,11 @@ export function login(data) {
   })
 }
 
-export function getInfo(token) {
+export function getInfo(userId) {
   return request({
-    url: '/user/info',
+    url: `/user/${userId}`,
     method: 'get',
-    params: {
-      token
-    }
+
   })
 }
 
@@ -42,7 +40,7 @@ export function logout() {
 
 export function getUsers() {
   return request({
-    url: '/v1/users',
+    url: '/users',
     method: 'get'
   })
 }
