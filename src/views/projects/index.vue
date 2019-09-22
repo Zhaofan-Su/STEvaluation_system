@@ -116,32 +116,7 @@ export default {
     return {
       tableKey: 1,
       list: [
-        {
-          id: 1,
-          projectName: "case1",
-          province: "北京市",
-          city: "北京市",
-          type: "居住建筑",
-          area: "120",
-          height: "",
-          construct: "",
-          design: "",
-          build: "",
-          structType: ""
-        },
-        {
-          id: 2,
-          projectName: "case2",
-          province: "上海市",
-          city: "上海市",
-          type: "厂房",
-          area: "120",
-          height: "",
-          construct: "",
-          design: "",
-          build: "",
-          structType: ""
-        }
+
       ],
       total: 0,
       listLoading: false,
@@ -160,14 +135,20 @@ export default {
   methods: {
     getList () {
       this.listLoading = true;
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.items;
-        this.total = response.data.total;
+      // fetchList(this.listQuery).then(response => {
+      //   this.list = response.value.items;
+      //   this.total = response.value.total;
 
-        setTimeout(() => {
-          this.listLoading = false;
-        }, 1500);
-      });
+      //   setTimeout(() => {
+      //     this.listLoading = false;
+      //   }, 1500);
+      // });
+      getProjectsByUser(this.userId).then(response => {
+        //返回的项目详情带有项目目前是否已经完成
+
+
+
+      })
     },
     onSearch () { }
   }

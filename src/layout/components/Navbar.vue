@@ -160,24 +160,25 @@ export default {
     createProject () {
       // 用户进入评估状态
       this.$store.dispatch('project/evaluate', true);
-      // 对话框消失
-      this.dialogVisible = false;
-      // 成功创建提示
-      this.$message({
-        message: "成功创建项目",
-        type: "success"
-      });
-      let newCase = {
-        evaluate: true,
-        info: this.form,
-        createTime: new Date().toJSON(),
-        // endTime: endTime.toJSON(),
-        creator: this.userId,
-        RWState: this.RWState,
-      };
-
-      this.$store.dispatch('project/updateProject', newCase);
       this.$router.push("/projectInfo");
+      // 对话框消失
+      // this.dialogVisible = false;
+      // 成功创建提示
+      // this.$message({
+      //   message: "成功创建项目",
+      //   type: "success"
+      // });
+      // let newCase = {
+      //   evaluate: true,
+      //   info: this.form,
+      //   createTime: new Date().toJSON(),
+      //   // endTime: endTime.toJSON(),
+      //   creator: this.userId,
+      //   RWState: this.RWState,
+      // };
+
+      // this.$store.dispatch('project/updateProject', newCase);
+      // this.$router.push("/projectInfo");
     },
   }
 };

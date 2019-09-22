@@ -80,7 +80,7 @@ export const constantRoutes = [{
       path: '',
       component: () => import('@/views/myprojects/index'),
       meta: {
-        name: 'Projects',
+        name: 'MyProjects',
         title: '我的项目',
         icon: 'list',
         noCache: true
