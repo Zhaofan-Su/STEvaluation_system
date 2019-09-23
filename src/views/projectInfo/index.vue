@@ -86,20 +86,18 @@ import { mapGetters } from "vuex";
 export default {
   name: "ProjectInfo",
   // components: { Lock },
-  data () {
+  data() {
     return {
       locked: false,
       form: {},
-      endTime: '',
-      RWState: null,
+      endTime: "",
+      RWState: 0,
       sendTo: [],
       rules: {
         projectName: [
           { required: true, message: "请输入项目名称", trigger: "blur" }
         ],
-        type: [
-          { required: true, message: "请选择建筑类型", trigger: "blur" }
-        ],
+        type: [{ required: true, message: "请选择建筑类型", trigger: "blur" }],
         area: [
           { required: true, message: "请输入建筑面积", trigger: "blur" },
           { type: "number", message: "必须输入数字" }
@@ -107,30 +105,26 @@ export default {
         height: [
           { required: true, message: "请输入建筑面积", trigger: "blur" },
           { type: "number", message: "必须输入数字" }
-        ],
-        RWState: [
-          { required: true, message: "请选择是否公开项目", trigger: "blur" }
         ]
       }
-    }
+    };
   },
   computed: {
     ...mapGetters({
-      project: 'project'
-    }),
-
+      project: "project"
+    })
   },
-  created () {
-    this.form = this.project.info
-    this.endTime = this.project.endTime
-    this.RWState = this.project.RWState
-    this.sendTo = this.project.sendTo
+  created() {
+    this.form = this.project.info;
+    this.endTime = this.project.endTime;
+    this.RWState = this.project.RWState;
+    this.sendTo = this.project.sendTo;
   },
   methods: {
-    onSave () {
+    onSave() {
       // 用户所填信息先保存到网页
       if (this.endTime == "") {
-        this.endTime = new Date('10000', '0', 0)
+        this.endTime = new Date("10000", "0", 0);
       }
       let updating = {
         evaluate: true,
@@ -139,16 +133,15 @@ export default {
         creator: this.project.creator,
         endTime: this.endTime.toJSON(),
         RWState: this.RWState,
-        sendTo: this.sendTo,
-      }
-      this.$store.dispatch('project/updateProject', updating)
+        sendTo: this.sendTo
+      };
+      this.$store.dispatch("project/updateProject", updating);
       // this.locked = true
       this.$message({
-        message: '项目信息保存成功',
-        type: 'success'
-      })
-
-    },
+        message: "项目信息保存成功",
+        type: "success"
+      });
+    }
   }
 };
 </script>

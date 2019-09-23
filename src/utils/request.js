@@ -15,18 +15,19 @@ const service = axios.create({
   baseURL: 'http://49.234.210.232:8999/v1',
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000, // request timeout
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-  },
-  transformRequest: [
-    data => {
-      let params = ''
-      for (var index in data) {
-        params += index + '=' + data[index] + '&'
-      }
-      return params
-    }
-  ]
+  // headers: {
+  //   'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+  //   // 'Content-type': 'application/x-www-form-urlencoded'
+  // },
+  // transformRequest: [
+  //   data => {
+  //     let params = ''
+  //     for (var index in data) {
+  //       params += index + '=' + data[index] + '&'
+  //     }
+  //     return params
+  //   }
+  // ]
 
 })
 

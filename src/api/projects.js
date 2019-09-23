@@ -7,3 +7,10 @@ export function createProject(data) {
     data
   })
 }
+
+export function getProjectsByUser(userId) {
+  return request({
+    url: `/evaluation/user/${userId}`,
+    method: 'GET'
+  })
+}

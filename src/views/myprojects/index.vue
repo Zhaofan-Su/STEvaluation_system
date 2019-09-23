@@ -87,22 +87,22 @@
         </template>
       </el-table-column>
     </el-table>
-
+    <!-- 
     <pagination
       v-show="total>0"
       :total="total"
       :page.sync="listQuery.page"
       :limit.sync="listQuery.limit"
       @pagination="getList"
-    />
+    />-->
   </div>
 </template>
 
 
 <script>
-import { fetchList } from "@/api/article";
 import waves from "@/directive/waves";
 import Pagination from "@/components/Pagination";
+import { getProjectsByUser } from "@/api/projects";
 
 import { mapStat, mapState, mapGetters } from "vuex";
 
@@ -112,37 +112,10 @@ export default {
     Pagination
   },
   directives: { waves },
-  data () {
+  data() {
     return {
       tableKey: 1,
-      list: [
-        {
-          id: 1,
-          projectName: "case1",
-          province: "北京市",
-          city: "北京市",
-          type: "居住建筑",
-          area: "120",
-          height: "",
-          construct: "",
-          design: "",
-          build: "",
-          structType: ""
-        },
-        {
-          id: 2,
-          projectName: "case2",
-          province: "上海市",
-          city: "上海市",
-          type: "厂房",
-          area: "120",
-          height: "",
-          construct: "",
-          design: "",
-          build: "",
-          structType: ""
-        }
-      ],
+      list: [],
       total: 0,
       listLoading: false,
       listQuery: {
@@ -153,23 +126,31 @@ export default {
       }
     };
   },
-  computed: {},
-  created () {
-
+  computed: {
+    ...mapGetters(["userId"])
+  },
+  created() {
+    console.log(this.userId);
+    this.getProjects(this.userId);
   },
   methods: {
-    getList () {
-      this.listLoading = true;
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.items;
-        this.total = response.data.total;
+    // getList() {
+    //   this.listLoading = true;
+    //   fetchList(this.listQuery).then(response => {
+    //     this.list = response.data.items;
+    //     this.total = response.data.total;
 
-        setTimeout(() => {
-          this.listLoading = false;
-        }, 1500);
-      });
+    //     setTimeout(() => {
+    //       this.listLoading = false;
+    //     }, 1500);
+    //   });
+    // },
+    async getProjects(userId) {
+      const response = await getProjectsByUser(userId);
+      console.log(response);
+      this.list = response.value;
     },
-    onSearch () { }
+    onSearch() {}
   }
 };
 </script>

@@ -18,7 +18,7 @@ const state = {
     ],
     _2_2_1: [{
         children_question: [{
-          satisfy: "",
+          satisfy: null,
           discription: '',
           score: 0
         }],
@@ -26,7 +26,7 @@ const state = {
       },
       {
         children_question: [{
-          satisfy: "",
+          satisfy: null,
           discription: '',
           score: 0
         }],
@@ -34,7 +34,7 @@ const state = {
       },
       {
         children_question: [{
-          satisfy: "",
+          satisfy: null,
           discription: '',
           score: 0
         }],
@@ -42,7 +42,7 @@ const state = {
       },
       {
         children_question: [{
-          satisfy: "",
+          satisfy: null,
           discription: '',
           score: 0
         }],
@@ -50,23 +50,23 @@ const state = {
       },
       {
         children_question: [{
-          satisfy: "",
+          satisfy: null,
           discription: '',
           score: 0
         }, {
-          satisfy: "",
+          satisfy: null,
           discription: '',
           score: 0
         }, {
-          satisfy: "",
+          satisfy: null,
           discription: '',
           score: 0
         }, {
-          satisfy: "",
+          satisfy: null,
           discription: '',
           score: 0
         }, {
-          satisfy: "",
+          satisfy: null,
           discription: '',
           score: 0
         }],
@@ -74,11 +74,11 @@ const state = {
       },
       {
         children_question: [{
-            satisfy: "",
+            satisfy: null,
             discription: ''
           },
           {
-            satisfy: "",
+            satisfy: null,
             discription: ''
           }
         ],

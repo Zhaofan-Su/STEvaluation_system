@@ -65,15 +65,19 @@
       :before-close="handleClose"
       center
     >
-      <el-form ref="form" :model="form" label-width="120px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="项目名称" prop="projectName">
           <el-input v-model="form.projectName" />
         </el-form-item>
-        <el-form-item label="所在省份">
-          <el-input v-model="form.province" placeholder="请输入省份" />
+        <el-form-item label="项目建筑面积" prop="area">
+          <el-input v-model.number="form.area" style="width: 200px">
+            <template slot="suffix">m^2</template>
+          </el-input>
         </el-form-item>
-        <el-form-item label="所在城市">
-          <el-input v-model="form.city" placeholder="请输入城市" />
+        <el-form-item label="建筑主题高度" prop="height">
+          <el-input v-model.number="form.height" type="text" style="width: 200px">
+            <template slot="suffix">m</template>
+          </el-input>
         </el-form-item>
         <el-form-item label="建筑类型" prop="type">
           <el-radio-group v-model="form.type">
@@ -82,7 +86,7 @@
             <el-radio label="厂房" />
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="是否公开" prop="RWState">
+        <el-form-item label="是否公开">
           <el-radio-group v-model="RWState">
             <el-radio :label="1">是</el-radio>
             <el-radio :label="0">否</el-radio>
@@ -103,6 +107,7 @@ import Hamburger from "@/components/Hamburger";
 import Screenfull from "@/components/Screenfull";
 import SizeSelect from "@/components/SizeSelect";
 import Search from "@/components/HeaderSearch";
+import createProject from "@/api/projects";
 export default {
   components: {
     // Breadcrumb,
@@ -112,39 +117,58 @@ export default {
     SizeSelect,
     Search
   },
-  data () {
+  data() {
     return {
       dialogVisible: false,
       form: {
-        projectName: '',
-        province: '',
-        city: '',
-        type: ''
+        projectName: "",
+        province: "",
+        area: "",
+        height: ""
       },
-      RWState: null,
-    }
+      RWState: 0,
+      rules: {
+        projectName: [
+          { required: true, message: "请输入项目名称", trigger: "blur" }
+        ],
+        area: [
+          { required: true, message: "请输入建筑面积", trigger: "blur" },
+          { type: "number", message: "必须输入数字" }
+        ],
+        height: [
+          { required: true, message: "请输入建筑面积", trigger: "blur" },
+          { type: "number", message: "必须输入数字" }
+        ],
+        type: [{ required: true, message: "请选择建筑类型", trigger: "change" }]
+      }
+    };
   },
   computed: {
-    ...mapGetters(["sidebar", "avatar", "device", "roles", "evaluate", "userId", "projectInfo"])
+    ...mapGetters([
+      "sidebar",
+      "avatar",
+      "device",
+      "roles",
+      "evaluate",
+      "userId",
+      "projectInfo"
+    ])
   },
   methods: {
-    toggleSideBar () {
+    toggleSideBar() {
       this.$store.dispatch("app/toggleSideBar");
     },
-    async logout () {
+    async logout() {
       await this.$store.dispatch("user/logout");
       this.$router.push(`/login?redirect=${this.$route.fullPath}`);
     },
-    submitProject () {
-
-    },
-    handleNewProject () {
-      this.dialogVisible = true
+    submitProject() {},
+    handleNewProject() {
+      this.dialogVisible = true;
     },
 
-
-    handleClose () {
-      let _this = this
+    handleClose() {
+      let _this = this;
       this.$confirm("是否创建项目？")
         .then(_ => {
           this.dialogVisible = false;
@@ -154,32 +178,48 @@ export default {
           this.dialogVisible = false;
         });
     },
-    handleCancle () {
+    handleCancle() {
       this.dialogVisible = false;
     },
-    createProject () {
-      // 用户进入评估状态
-      this.$store.dispatch('project/evaluate', true);
-      this.$router.push("/projectInfo");
-      // 对话框消失
-      // this.dialogVisible = false;
-      // 成功创建提示
-      // this.$message({
-      //   message: "成功创建项目",
-      //   type: "success"
-      // });
-      // let newCase = {
-      //   evaluate: true,
-      //   info: this.form,
-      //   createTime: new Date().toJSON(),
-      //   // endTime: endTime.toJSON(),
-      //   creator: this.userId,
-      //   RWState: this.RWState,
-      // };
+    createProject() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          // 用户进入评估状态
+          // this.$store.dispatch("project/evaluate", true);
+          let endTime = new Date("10000", "0", 0);
+          let newCase = {
+            evaluate: true,
+            info: this.form,
+            createTime: new Date().toJSON(),
+            endTime: endTime.toJSON(),
+            creator: this.userId,
+            RWState: this.RWState,
+            sendTo: []
+          };
+          this.$store
+            .dispatch("project/createProject", newCase)
+            .then(() => {
+              //成功创建提示
+              this.$message({
+                message: "成功创建项目",
+                type: "success"
+              });
+              this.$router.push("/projectInfo");
+            })
+            .catch(error => {
+              this.$message({
+                message: error.message,
+                type: "wrong"
+              });
+            });
 
-      // this.$store.dispatch('project/updateProject', newCase);
-      // this.$router.push("/projectInfo");
-    },
+          // 对话框消失
+          this.dialogVisible = false;
+          // 信息拿到本地
+          this.$store.dispatch("project/updateProject", newCase);
+        }
+      });
+    }
   }
 };
 </script>

@@ -32,12 +32,12 @@
           <el-form-item label="是否满足">
             <el-radio-group v-model="score[index].children_question[_index].satisfy">
               <el-radio
-                label="是"
+                :label="true"
                 :disabled="score[index].locked"
                 @change="addScore(index, _index, true)"
               >是</el-radio>
               <el-radio
-                label="否"
+                :label="false"
                 :disabled="score[index].locked"
                 @change="addScore(index, _index,false)"
               >否</el-radio>
