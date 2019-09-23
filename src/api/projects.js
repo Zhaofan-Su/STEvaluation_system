@@ -14,3 +14,11 @@ export function getProjectsByUser(userId) {
     method: 'GET'
   })
 }
+
+export function submitProject(data) {
+  return request({
+    url: '/evaluation/questionnaire',
+    method: 'PUT',
+    data
+  })
+}

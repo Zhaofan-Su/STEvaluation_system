@@ -1,5 +1,6 @@
 import {
-  createProject
+  createProject,
+  submitProject
 } from '@/api/projects'
 
 
@@ -61,40 +62,6 @@ const mutations = {
 }
 
 const actions = {
-  updateProject({
-    commit
-  }, newProject) {
-    // if (newProject.evaluate !== '') {
-    // commit('SET_EVALUATE', newProject.evaluate)
-    // }
-    // if (newProject.info !== '') {
-    commit('SET_PROJECTINFO', newProject.info)
-    // }
-
-    // if (newProject.createTime !== '') {
-    // commit('SET_CREATETIME', newProject.createTime)
-    // }
-    // if (newProject.endTime !== '') {
-    commit('SET_ENDTIME', newProject.endTime)
-    // }
-    // if (newProject.creator !== '') {
-    // commit('SET_CREATOR', newProject.creator)
-    // }
-    // if (newProject.RWState !== "") {
-    commit('SET_RWSTATE', newProject.RWState)
-    // }
-    // if (newProject.sendTo !== '') {
-    commit('SET_SENDTO', newProject.sendTo)
-    // }
-
-  },
-
-  // evaluate({
-  //   commit
-  // }, evaluateState) {
-  //   commit('SET_EVALUATE', evaluateState)
-  // },
-
   createProject({
     dispatch,
     commit
@@ -131,8 +98,52 @@ const actions = {
         reject(error)
       })
     })
+  },
 
+  updateProject({
+    commit
+  }, newProject) {
+    commit('SET_PROJECTINFO', newProject.info)
+    commit('SET_RWSTATE', newProject.RWState)
+    commit('SET_SENDTO', newProject.sendTo)
+  },
+
+  submitProject({
+    commit
+  }, project) {
+    const {
+      userId,
+      eId,
+      score,
+      endTime
+    } = project
+    return new Promise((resolve, reject) => {
+      submitProject({
+        userId: userId,
+        eId: eId,
+        score: score,
+        endTime: endTime
+      }).then(response => {
+        this.$message({
+          message: '评估单提交成功',
+          type: 'success'
+        })
+
+        // 是否更新状态还不确定
+        commit('SET_STATUS', 'finished')
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
+  // evaluate({
+  //   commit
+  // }, evaluateState) {
+  //   commit('SET_EVALUATE', evaluateState)
+  // },
+
+
 }
 export default {
   namespaced: true,

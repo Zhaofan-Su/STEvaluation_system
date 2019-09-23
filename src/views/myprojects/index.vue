@@ -24,66 +24,53 @@
       highlight-current-row
       style="width:100%"
     >
-      <el-table-column label="ID" prop="id" align="center" width="80">
-        <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="项目名称" prop="projectName" width="120px" align="center">
+        <!-- <router-link to="/"></router-link> -->
         <template slot-scope="scope">
-          <span>{{ scope.row.projectName }}</span>
+          <span>{{ scope.row.info.projectName }}</span>
         </template>
       </el-table-column>
+
       <el-table-column label="所在省份" prop="province" width="100px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.province }}</span>
+          <span>{{ scope.row.info.province }}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="所在城市" prop="city" width="100px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.city }}</span>
+          <span>{{ scope.row.info.city }}</span>
         </template>
       </el-table-column>
       <el-table-column label="建筑类型" prop="type" width="110px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.type }}</span>
+          <span>{{ scope.row.info.type }}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="项目建筑面积/m^2" prop="area" width="110px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.area }}</span>
+          <span>{{ scope.row.info.area }}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="建筑主体高度/m" prop="height" width="110px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.height }}</span>
+          <span>{{ scope.row.info.height }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="相关单位" width="360px" align="center">
-        <el-table-column label="建设单位" prop="construct" width="120px">
-          <template slot-scope="scope">
-            <span>{{ scope.row.construt }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="设计单位" prop="design" width="120px">
-          <template slot-scope="scope">
-            <span>{{ scope.row.design }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="施工单位" prop="build" width="120px">
-          <template slot-scope="scope">
-            <span>{{ scope.row.build }}</span>
-          </template>
-        </el-table-column>
+      <el-table-column label="是否公开" width="120px" align="center">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.rwState==='private'" type="primary">是</el-tag>
+          <el-tag v-else type="success">否</el-tag>
+        </template>
       </el-table-column>
 
-      <el-table-column label="结构形式" align="center">
+      <el-table-column label="项目状态" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.structType }}</span>
+          <el-tag v-if="scope.row.state==='finished'" type="success">已完成</el-tag>
+          <el-tag v-else type="warning">未完成</el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -112,7 +99,7 @@ export default {
     Pagination
   },
   directives: { waves },
-  data() {
+  data () {
     return {
       tableKey: 1,
       list: [],
@@ -129,7 +116,7 @@ export default {
   computed: {
     ...mapGetters(["userId"])
   },
-  created() {
+  created () {
     console.log(this.userId);
     this.getProjects(this.userId);
   },
@@ -145,12 +132,12 @@ export default {
     //     }, 1500);
     //   });
     // },
-    async getProjects(userId) {
+    async getProjects (userId) {
       const response = await getProjectsByUser(userId);
       console.log(response);
       this.list = response.value;
     },
-    onSearch() {}
+    onSearch () { }
   }
 };
 </script>
