@@ -22,3 +22,10 @@ export function submitProject(data) {
     data
   })
 }
+
+export function getAllProjects() {
+  return request({
+    url: 'evaluation',
+    method: 'GET'
+  })
+}

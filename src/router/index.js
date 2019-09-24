@@ -82,12 +82,11 @@ export const constantRoutes = [{
       meta: {
         name: 'MyProjects',
         title: '我的项目',
-        icon: 'list',
+        icon: 'form',
         noCache: true
       }
     }]
-  },
-
+  }
 ]
 
 
@@ -95,36 +94,36 @@ export const constantRoutes = [{
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
-export const asyncRoutes = [{
-    path: '/peoples',
-    component: Layout,
-    children: [{
-      path: '',
-      component: () => import('@/views/peoples/index'),
-      meta: {
-        name: 'Peoples',
-        title: '用户管理',
-        icon: 'peoples',
-        roles: ['admin'],
-        noCache: true
-      }
-    }]
-  },
-  {
-    path: '/projects',
-    component: Layout,
-    children: [{
-      path: '',
-      component: () => import('@/views/projects/index'),
-      meta: {
-        name: 'Projects',
-        title: '项目管理',
-        icon: 'list',
-        roles: ['admin', 'inner'],
-        noCache: true
-      }
-    }]
-  },
+export const asyncRoutes = [
+  // {
+  //   path: '/peoples',
+  //   component: Layout,
+  //   children: [{
+  //     path: '',
+  //     component: () => import('@/views/peoples/index'),
+  //     meta: {
+  //       name: 'Peoples',
+  //       title: '用户管理',
+  //       icon: 'peoples',
+  //       roles: ['admin'],
+  //       noCache: true
+  //     }
+  //   }]
+  // }, {
+  //   path: '/projects',
+  //   component: Layout,
+  //   children: [{
+  //     path: '',
+  //     component: () => import('@/views/projects/index'),
+  //     meta: {
+  //       name: 'Projects',
+  //       title: '项目管理',
+  //       icon: 'list',
+  //       roles: ['admin', 'inner'],
+  //       noCache: true
+  //     }
+  //   }]
+  // }, 
   {
     path: '/projectInfo',
     component: Layout,
@@ -141,32 +140,32 @@ export const asyncRoutes = [{
     }]
   },
   designRouter,
-  constructRouter,
-  usageRouter,
-  additionRouter,
-  calculateRouter,
-  {
-    path: '/pdf',
-    component: Layout,
-    meta: {
-      name: 'pdf',
-      title: '报告预览及下载',
-      icon: 'pdf'
-    },
-    children: [{
-      path: '',
-      component: () => import('@/views/pdf/index'),
-      meta: {
-        title: 'index'
-      }
-    }, {
-      path: 'download',
-      component: () => import('@/views/pdf/download'),
-      meta: {
-        title: '下载'
-      }
-    }]
-  },
+  // constructRouter,
+  // usageRouter,
+  // additionRouter,
+  // calculateRouter,
+  // {
+  //   path: '/pdf',
+  //   component: Layout,
+  //   meta: {
+  //     name: 'pdf',
+  //     title: '报告预览及下载',
+  //     icon: 'pdf'
+  //   },
+  //   children: [{
+  //     path: '',
+  //     component: () => import('@/views/pdf/index'),
+  //     meta: {
+  //       title: 'index'
+  //     }
+  //   }, {
+  //     path: 'download',
+  //     component: () => import('@/views/pdf/download'),
+  //     meta: {
+  //       title: '下载'
+  //     }
+  //   }]
+  // },
 ]
 
 const createRouter = () => new Router({

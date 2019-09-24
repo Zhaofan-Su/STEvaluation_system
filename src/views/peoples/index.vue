@@ -76,31 +76,31 @@
 </template>
 
 <script>
-import { async } from 'q';
-import waves from '@/directive/waves'
-import { getUsers } from '@/api/user'
+import { async } from "q";
+import waves from "@/directive/waves";
+import { getUsers } from "@/api/user";
 export default {
   name: "Peoples",
   components: {},
   directives: { waves },
-  data () {
+  data() {
     return {
       roleMap: {
-        0: '管理员',
-        1: '内部人员',
-        2: '外部人员'
+        0: "管理员",
+        1: "内部人员",
+        2: "外部人员"
       },
       choosedUser: {
-        id: '',
-        username: '',
-        realname: '',
-        mobile: '',
-        password: '',
-        role: ''
+        id: "",
+        username: "",
+        realname: "",
+        mobile: "",
+        password: "",
+        role: ""
       },
       dialogVisible: false,
       disabled: false,
-      dialogType: '',
+      dialogType: "",
       tableData: [],
       listQuery: {
         page: 1,
@@ -111,43 +111,40 @@ export default {
     };
   },
   watch: {
-    dialogType: function (newVal, oldVal) {
-      if (newVal === 'edit') {
-        this.disabled = true
-      }
-      else {
-        this.disabled = false
+    dialogType: function(newVal, oldVal) {
+      if (newVal === "edit") {
+        this.disabled = true;
+      } else {
+        this.disabled = false;
       }
     }
   },
-  created () {
-    this.getUsers()
+  created() {
+    this.getUsers();
   },
   methods: {
-    async getUsers () {
-      const res = await getUsers()
-      let list = []
+    async getUsers() {
+      const res = await getUsers();
+      let list = [];
       for (var key in res.value) {
-        list.push(res.value[key])
+        list.push(res.value[key]);
       }
-      this.tableData = list
+      this.tableData = list.reverse();
     },
-    onSearch () {
-
+    onSearch() {},
+    createUser() {
+      this.dialogType = "add";
+      this.dialogVisible = true;
     },
-    createUser () {
-      this.dialogType = 'add'
-      this.dialogVisible = true
+    changeRole({ $index, row }) {
+      this.dialogType = "edit";
+      this.dialogVisible = true;
     },
-    changeRole ({ $index, row }) {
-      this.dialogType = 'edit'
-      this.dialogVisible = true
-    },
-    deleteUser ({ $index, row }) {
-      this.$confirm('确认删除用户？', '警告', {
-        confirmButtonText: '确认',
-        cancleButtonText: '取消',
-        type: 'warning'
+    deleteUser({ $index, row }) {
+      this.$confirm("确认删除用户？", "警告", {
+        confirmButtonText: "确认",
+        cancleButtonText: "取消",
+        type: "warning"
       })
         .then(async () => {
           // await deleteUser()远程数据库删除数据
@@ -158,18 +155,18 @@ export default {
           // })
         })
         .catch(err => {
-          console.log(err)
-        })
+          console.log(err);
+        });
     },
-    confirmUser () {
+    confirmUser() {
       // put到数据库里, 得到返回数据之后，更新一下id
-      if (this.dialogType === 'edit') {
-        this.tableData.splice($index, 1, this.choosedUser)
+      if (this.dialogType === "edit") {
+        this.tableData.splice($index, 1, this.choosedUser);
       } else {
-        this.tableData.push(this.choosedUser)
+        this.tableData.push(this.choosedUser);
       }
-      this.dialogType = ''
-      this.dialogVisible = false
+      this.dialogType = "";
+      this.dialogVisible = false;
     }
   }
 };

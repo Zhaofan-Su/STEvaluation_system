@@ -21,7 +21,8 @@
 
       <el-form-item prop="mobile">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <!-- <svg-icon icon-class="user" /> -->
+          <i class="el-icon-phone" />
         </span>
         <el-input
           ref="username"
@@ -74,10 +75,10 @@
 </template>
 
 <script>
-
+import { mapState } from "vuex";
 export default {
   name: "Login",
-  data () {
+  data() {
     return {
       loginForm: {
         mobile: "",
@@ -101,7 +102,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function (route) {
+      handler: function(route) {
         const query = route.query;
         if (query) {
           this.redirect = query.redirect;
@@ -111,13 +112,11 @@ export default {
       immediate: true
     }
   },
-  created () { },
-  mounted () {
-
-  },
-  destroyed () { },
+  created() {},
+  mounted() {},
+  destroyed() {},
   methods: {
-    checkCapslock ({ shiftKey, key } = {}) {
+    checkCapslock({ shiftKey, key } = {}) {
       if (key && key.length === 1) {
         if (
           (shiftKey && (key >= "a" && key <= "z")) ||
@@ -132,7 +131,7 @@ export default {
         this.capsTooltip = false;
       }
     },
-    showPwd () {
+    showPwd() {
       if (this.passwordType === "password") {
         this.passwordType = "";
       } else {
@@ -142,19 +141,19 @@ export default {
         this.$refs.password.focus();
       });
     },
-    handleLogin () {
+    handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
           this.$store
             .dispatch("user/login", this.loginForm)
             .then(() => {
-              // this.$router.push({
-              //   path: this.redirect || "/",
-              //   query: this.otherQuery
-              // });
+              this.$router.push({
+                path: this.redirect || "/",
+                query: this.otherQuery
+              });
 
-              this.$router.push("/");
+              // this.$router.push("/");
 
               this.loading = false;
             })
@@ -167,10 +166,10 @@ export default {
         }
       });
     },
-    handleRegister () {
-      this.$router.push('/register')
+    handleRegister() {
+      this.$router.push("/register");
     },
-    getOtherQuery (query) {
+    getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {
         if (cur !== "redirect") {
           acc[cur] = query[cur];

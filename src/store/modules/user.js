@@ -2,8 +2,7 @@ import {
   register,
   login,
   logout,
-  getInfo,
-  getUserById
+  getInfo
 } from '@/api/user'
 import {
   getToken,
@@ -14,9 +13,9 @@ import router, {
   resetRouter
 } from '@/router'
 // import {
-//   getUserById
-// } from '../../api/user'
-
+//   generateRoutes
+// } from './permission'
+import getters from '../getters'
 const state = {
   token: getToken(),
   userId: '',
@@ -82,22 +81,21 @@ const actions = {
         const {
           value
         } = response
-
         // 用id代替token
         commit('SET_TOKEN', value.id)
         setToken(value.id)
-        commit('SET_MOBILE', value.mobile)
-        commit('SET_USERNAME', value.username)
-        commit('SET_REALNAME', value.realname)
-        commit('SET_ROLE', value.role)
-        if (value.role == 0) {
-          commit('SET_ROLES', ['admin'])
-        } else if (value.role == 1) {
-          commit('SET_ROLES', ['inner'])
-        } else if (value.role == 2) {
-          commit('SET_ROLES', ['outer'])
-        }
-
+        // commit('SET_USERID', value.id)
+        // commit('SET_MOBILE', value.mobile)
+        // commit('SET_USERNAME', value.username)
+        // commit('SET_REALNAME', value.realname)
+        // commit('SET_ROLE', value.role)
+        // if (value.role == 0) {
+        //   commit('SET_ROLES', ['admin'])
+        // } else if (value.role == 1) {
+        //   commit('SET_ROLES', ['inner'])
+        // } else if (value.role == 2) {
+        //   commit('SET_ROLES', ['outer'])
+        // }
         resolve()
       }).catch(error => {
         reject(error)
@@ -121,7 +119,6 @@ const actions = {
         }
 
         const {
-          roles,
           // avatar,
           // introduction,
           id,
@@ -131,7 +128,6 @@ const actions = {
           role
         } = value
 
-        // commit('SET_ROLES', roles)
         if (role == 0) {
           commit('SET_ROLES', ['admin'])
           value.roles = ['admin']
@@ -142,8 +138,6 @@ const actions = {
           commit('SET_ROLES', ['outer'])
           value.roles = ['outer']
         }
-        // commit('SET_AVATAR', avatar)
-        // commit('SET_INTRODUCTION', introduction)
         commit('SET_USERNAME', username)
         commit('SET_USERID', id)
         commit('SET_REALNAME', realname)

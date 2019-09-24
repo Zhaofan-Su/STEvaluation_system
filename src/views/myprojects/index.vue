@@ -62,8 +62,8 @@
 
       <el-table-column label="是否公开" width="120px" align="center">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.rwState==='private'" type="primary">是</el-tag>
-          <el-tag v-else type="success">否</el-tag>
+          <el-tag v-if="scope.row.rwState==='private'" type="warning">否</el-tag>
+          <el-tag v-else type="primary">是</el-tag>
         </template>
       </el-table-column>
 
@@ -74,14 +74,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <!-- 
+
     <pagination
       v-show="total>0"
       :total="total"
       :page.sync="listQuery.page"
       :limit.sync="listQuery.limit"
       @pagination="getList"
-    />-->
+    />
   </div>
 </template>
 
@@ -99,7 +99,7 @@ export default {
     Pagination
   },
   directives: { waves },
-  data () {
+  data() {
     return {
       tableKey: 1,
       list: [],
@@ -116,28 +116,16 @@ export default {
   computed: {
     ...mapGetters(["userId"])
   },
-  created () {
+  created() {
     console.log(this.userId);
-    this.getProjects(this.userId);
+    this.getList(this.userId);
   },
   methods: {
-    // getList() {
-    //   this.listLoading = true;
-    //   fetchList(this.listQuery).then(response => {
-    //     this.list = response.data.items;
-    //     this.total = response.data.total;
-
-    //     setTimeout(() => {
-    //       this.listLoading = false;
-    //     }, 1500);
-    //   });
-    // },
-    async getProjects (userId) {
+    async getList(userId) {
       const response = await getProjectsByUser(userId);
-      console.log(response);
-      this.list = response.value;
+      this.list = response.value.reverse();
     },
-    onSearch () { }
+    onSearch() {}
   }
 };
 </script>

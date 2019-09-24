@@ -5,7 +5,7 @@ import {
 
 
 const state = {
-  evaluate: true,
+  evaluate: false,
   eId: '',
   info: {
     projectName: '',

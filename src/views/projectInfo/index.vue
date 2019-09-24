@@ -46,7 +46,7 @@
         <el-form-item label="结构形式">
           <el-input v-model="form.structType" :disabled="locked" />
         </el-form-item>
-        <el-form-item label="评价截止时间">
+        <!-- <el-form-item label="评价截止时间">
           <el-date-picker
             v-model="endTime"
             type="datetime"
@@ -54,7 +54,7 @@
             default-time="00:00:00"
             :disabled="locked"
           ></el-date-picker>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="是否公开" prop="RWState">
           <el-radio-group v-model="RWState" :disabled="locked">
             <el-radio :label="1">是</el-radio>
@@ -90,7 +90,7 @@ export default {
     return {
       locked: false,
       form: {},
-      endTime: "",
+      // endTime: "",
       RWState: 0,
       sendTo: [],
       rules: {
@@ -116,22 +116,22 @@ export default {
   },
   created() {
     this.form = this.project.info;
-    this.endTime = this.project.endTime;
+    // this.endTime = this.project.endTime;
     this.RWState = this.project.RWState;
     this.sendTo = this.project.sendTo;
   },
   methods: {
     onSave() {
       // 用户所填信息先保存到网页
-      if (this.endTime == "") {
-        this.endTime = new Date("10000", "0", 0);
-      }
+      // if (this.endTime == "") {
+      //   this.endTime = new Date("10000", "0", 0);
+      // }
       let updating = {
         evaluate: true,
         info: this.form,
         createTime: this.project.createTime,
         creator: this.project.creator,
-        endTime: this.endTime.toJSON(),
+        // endTime: this.endTime.toJSON(),
         RWState: this.RWState,
         sendTo: this.sendTo
       };

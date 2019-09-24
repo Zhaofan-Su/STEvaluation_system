@@ -35,7 +35,8 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" />
+          <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" /> -->
+          <i class="user-avatar el-icon-user" />
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -108,7 +109,7 @@ import Screenfull from "@/components/Screenfull";
 import SizeSelect from "@/components/SizeSelect";
 import Search from "@/components/HeaderSearch";
 import { createProject, submitProject } from "@/api/projects";
-import getters from '@/store/getters'
+import getters from "@/store/getters";
 export default {
   components: {
     // Breadcrumb,
@@ -118,7 +119,7 @@ export default {
     SizeSelect,
     Search
   },
-  data () {
+  data() {
     return {
       dialogVisible: false,
       form: {
@@ -156,17 +157,17 @@ export default {
     ])
   },
   methods: {
-    toggleSideBar () {
+    toggleSideBar() {
       this.$store.dispatch("app/toggleSideBar");
     },
-    async logout () {
+    async logout() {
       await this.$store.dispatch("user/logout");
       this.$router.push(`/login?redirect=${this.$route.fullPath}`);
     },
-    handleNewProject () {
+    handleNewProject() {
       this.dialogVisible = true;
     },
-    handleClose () {
+    handleClose() {
       let _this = this;
       this.$confirm("是否创建项目？")
         .then(_ => {
@@ -177,10 +178,10 @@ export default {
           this.dialogVisible = false;
         });
     },
-    handleCancle () {
+    handleCancle() {
       this.dialogVisible = false;
     },
-    createProject () {
+    createProject() {
       this.$refs.form.validate(valid => {
         if (valid) {
           // 用户进入评估状态
@@ -216,36 +217,40 @@ export default {
         }
       });
     },
-    submitProject () {
-      this.$confirm('确定提交评估单？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        let project = {
-          userId: this.userId,
-          eId: this.$store.getters.project.eId,
-          info: this.$store.getters.project.info,
-          endTime: new Date().toJSON()
-        }
-        submitProject(project).then(response => {
-          this.$message({
-            message: '评估单提交成功',
-            type: 'success'
-          })
-        }).catch(error => {
-          this.$message({
-            message: '评估单提交失败',
-            type: 'warning'
-          })
-        })
-      }).catch(error => {
-        this.$message({
-          message: error.message,
-          type: 'info'
-        })
+    submitProject() {
+      this.$confirm("确定提交评估单？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
       })
-    },
+        .then(() => {
+          let project = {
+            userId: this.userId,
+            eId: this.$store.getters.project.eId,
+            info: this.$store.getters.project.info,
+            endTime: new Date().toJSON()
+          };
+          submitProject(project)
+            .then(response => {
+              this.$message({
+                message: "评估单提交成功",
+                type: "success"
+              });
+            })
+            .catch(error => {
+              this.$message({
+                message: "评估单提交失败",
+                type: "warning"
+              });
+            });
+        })
+        .catch(error => {
+          this.$message({
+            message: error.message,
+            type: "info"
+          });
+        });
+    }
   }
 };
 </script>
