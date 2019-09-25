@@ -2,8 +2,8 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.projectName" placeholder="项目名称" style="width: 200px" />
-      <el-select v-model="listQuery.type" placeholder="建筑类型">
+      <el-input v-model="listQuery.projectName" class="filter-item" placeholder="项目名称" style="width: 200px" />
+      <el-select v-model="listQuery.type" class="filter-item" placeholder="建筑类型">
         <el-option label="居住建筑" value="living" />
         <el-option label="公共建筑" value="public" />
         <el-option label="厂房" value="factory" />
@@ -141,27 +141,28 @@ export default {
   methods: {
     async getList() {
       this.listLoading = true;
-      // fetchList(this.listQuery).then(response => {
-      //   this.list = response.value.items;
-      //   this.total = response.value.total;
-
-      //   setTimeout(() => {
-      //     this.listLoading = false;
-      //   }, 1500);
-      // });
       getAllProjects().then(response => {
         this.list = response.value.reverse();
         console.log(this.list);
         this.listLoading = false;
       });
-      // const results = await getAllProjects();
-      // this.list = results.reverse();
-      // this.listLoading = false;
     },
-    onSearch() {}
+    onSearch() {
+      this.$message({
+        message: "搜索功能暂未开放！",
+        type: "primary"
+      });
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.app-container {
+  .filter-container {
+    .filter-item {
+      vertical-align: bottom;
+    }
+  }
+}
 </style>

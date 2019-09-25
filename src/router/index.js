@@ -109,21 +109,22 @@ export const asyncRoutes = [
   //       noCache: true
   //     }
   //   }]
-  // }, {
-  //   path: '/projects',
-  //   component: Layout,
-  //   children: [{
-  //     path: '',
-  //     component: () => import('@/views/projects/index'),
-  //     meta: {
-  //       name: 'Projects',
-  //       title: '项目管理',
-  //       icon: 'list',
-  //       roles: ['admin', 'inner'],
-  //       noCache: true
-  //     }
-  //   }]
   // }, 
+  {
+    path: '/projects',
+    component: Layout,
+    children: [{
+      path: '',
+      component: () => import('@/views/projects/index'),
+      meta: {
+        name: 'Projects',
+        title: '项目管理',
+        icon: 'list',
+        roles: ['admin', 'inner'],
+        noCache: true
+      }
+    }]
+  },
   {
     path: '/projectInfo',
     component: Layout,

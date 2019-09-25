@@ -12,9 +12,6 @@ import {
 import router, {
   resetRouter
 } from '@/router'
-// import {
-//   generateRoutes
-// } from './permission'
 import getters from '../getters'
 const state = {
   token: getToken(),
@@ -68,13 +65,11 @@ const actions = {
     commit
   }, userInfo) {
     const {
-      // username,
       mobile,
       password
     } = userInfo
     return new Promise((resolve, reject) => {
       login({
-        // username: username.trim(),
         mobile: mobile,
         password: password
       }).then(response => {
@@ -84,11 +79,6 @@ const actions = {
         // 用id代替token
         commit('SET_TOKEN', value.id)
         setToken(value.id)
-        // commit('SET_USERID', value.id)
-        // commit('SET_MOBILE', value.mobile)
-        // commit('SET_USERNAME', value.username)
-        // commit('SET_REALNAME', value.realname)
-        // commit('SET_ROLE', value.role)
         // if (value.role == 0) {
         //   commit('SET_ROLES', ['admin'])
         // } else if (value.role == 1) {
@@ -119,8 +109,6 @@ const actions = {
         }
 
         const {
-          // avatar,
-          // introduction,
           id,
           username,
           realname,

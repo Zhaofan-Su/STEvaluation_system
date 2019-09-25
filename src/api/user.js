@@ -28,7 +28,6 @@ export function login(data) {
     data,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      // 'Content-type': 'application/x-www-form-urlencoded'
     },
     transformRequest: [
       data => {

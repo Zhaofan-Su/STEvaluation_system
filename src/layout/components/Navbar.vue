@@ -40,21 +40,24 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item to="/">
+          <!-- <el-dropdown-item to="/">
             <el-dropdown-item>首页</el-dropdown-item>
           </el-dropdown-item>
           <router-link to="/profile/index">
             <el-dropdown-item>用户中心</el-dropdown-item>
-          </router-link>
+          </router-link>-->
           <!-- <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
             <el-dropdown-item>Github</el-dropdown-item>
           </a>
           <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
             <el-dropdown-item>Docs</el-dropdown-item>
           </a>-->
-          <el-dropdown-item divided>
+          <el-dropdown-item>
             <span style="display:block;" @click="logout">注销</span>
           </el-dropdown-item>
+          <!-- <el-dropdown-item divided>
+            <span style="display:block;" @click="logout">注销</span>
+          </el-dropdown-item>-->
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -218,38 +221,45 @@ export default {
       });
     },
     submitProject() {
-      this.$confirm("确定提交评估单？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          let project = {
-            userId: this.userId,
-            eId: this.$store.getters.project.eId,
-            info: this.$store.getters.project.info,
-            endTime: new Date().toJSON()
-          };
-          submitProject(project)
-            .then(response => {
-              this.$message({
-                message: "评估单提交成功",
-                type: "success"
-              });
-            })
-            .catch(error => {
-              this.$message({
-                message: "评估单提交失败",
-                type: "warning"
-              });
-            });
+      if (this.$store.getters.project.eId !== "") {
+        this.$confirm("确定提交评估单？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
         })
-        .catch(error => {
-          this.$message({
-            message: error.message,
-            type: "info"
+          .then(() => {
+            let project = {
+              userId: this.userId,
+              eId: this.$store.getters.project.eId,
+              info: this.$store.getters.project.info,
+              endTime: new Date().toJSON()
+            };
+            submitProject(project)
+              .then(response => {
+                this.$message({
+                  message: "评估单提交成功",
+                  type: "success"
+                });
+              })
+              .catch(error => {
+                this.$message({
+                  message: "评估单提交失败",
+                  type: "warning"
+                });
+              });
+          })
+          .catch(error => {
+            this.$message({
+              message: error.message,
+              type: "info"
+            });
           });
+      } else {
+        this.$message({
+          message: "您当前还未选择项目",
+          type: "error"
         });
+      }
     }
   }
 };
