@@ -29,3 +29,11 @@ export function getAllProjects() {
     method: 'GET'
   })
 }
+
+export function getHistory(data) {
+  return request({
+    url: 'evaluation/history',
+    method: 'GET',
+    params: data
+  })
+}

@@ -50,12 +50,7 @@ export function getInfo(userId) {
   })
 }
 
-export function getUserById(userId) {
-  return request({
-    url: `/v1/user/${userId}`,
-    method: 'get'
-  })
-}
+
 
 export function logout() {
   return request({

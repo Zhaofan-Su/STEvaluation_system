@@ -72,10 +72,29 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="项目状态" align="center">
+      <el-table-column label="项目状态" width="140px" align="center">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.state==='finished'" type="success">已完成</el-tag>
           <el-tag v-else type="warning">未完成</el-tag>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center">
+        <template slot-scope="scope">
+          <el-button
+            v-if="scope.row.state!=='finished'"
+            type="primary"
+            plain
+            :disabled="scope.row.state==='finished'?true:false"
+            @click="toEdit(scope.row)"
+          >编辑</el-button>
+          <el-button
+            v-if="scope.row.state==='finished'"
+            type="success"
+            plain
+            :disabled="scope.row.state==='finished'?false:true"
+            @click="toPdf"
+          >预览</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -96,7 +115,7 @@ import waves from "@/directive/waves";
 import Pagination from "@/components/Pagination";
 import { getProjectsByUser } from "@/api/projects";
 
-import { mapStat, mapState, mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "MyProjects",
@@ -122,20 +141,49 @@ export default {
     ...mapGetters(["userId"])
   },
   created() {
-    console.log(this.userId);
     this.getList(this.userId);
   },
   methods: {
     async getList(userId) {
       const response = await getProjectsByUser(userId);
       this.list = response.value.reverse();
+      console.log(this.list);
     },
     onSearch() {
       this.$message({
         message: "搜索功能暂未开放！",
         type: "primary"
       });
-    }
+    },
+    toEdit(row) {
+      this.$store
+        .dispatch("score/getHistory", row.eId)
+        .then(() => {
+          let newProject = {
+            eId: row.eId,
+            info: row.info,
+            status: row.state,
+            RWState: row.rwState
+          };
+          this.$store
+            .dispatch("project/changeProject", newProject)
+            .then(() => {
+              console.log("成功");
+              this.$router.push("/projectInfo");
+            })
+            .catch(error => {
+              console.log("失败");
+              console.log(error);
+            });
+        })
+        .catch(error => {
+          this.$message({
+            message: error.message,
+            type: "error"
+          });
+        });
+    },
+    toPdf() {}
   }
 };
 </script>

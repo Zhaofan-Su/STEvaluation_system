@@ -141,32 +141,32 @@ export const asyncRoutes = [
     }]
   },
   designRouter,
-  // constructRouter,
-  // usageRouter,
-  // additionRouter,
-  // calculateRouter,
-  // {
-  //   path: '/pdf',
-  //   component: Layout,
-  //   meta: {
-  //     name: 'pdf',
-  //     title: '报告预览及下载',
-  //     icon: 'pdf'
-  //   },
-  //   children: [{
-  //     path: '',
-  //     component: () => import('@/views/pdf/index'),
-  //     meta: {
-  //       title: 'index'
-  //     }
-  //   }, {
-  //     path: 'download',
-  //     component: () => import('@/views/pdf/download'),
-  //     meta: {
-  //       title: '下载'
-  //     }
-  //   }]
-  // },
+  constructRouter,
+  usageRouter,
+  additionRouter,
+  calculateRouter,
+  {
+    path: '/pdf',
+    component: Layout,
+    redirect: '/pdf/index',
+    children: [{
+      path: 'index',
+      component: () => import('@/views/pdf/index'),
+      meta: {
+        name: 'pdf',
+        title: '报告预览及下载',
+        icon: 'pdf'
+      },
+    }]
+  },
+  {
+    path: '/pdf/download',
+    component: () => import('@/views/pdf/download'),
+    meta: {
+      title: '下载'
+    },
+    hidden: true
+  }
 ]
 
 const createRouter = () => new Router({

@@ -1,6 +1,9 @@
 import {
   stat
 } from "fs"
+import {
+  getHistory
+} from '@/api/projects'
 
 const state = {
   design: {
@@ -556,6 +559,11 @@ const mutations = {
   SET_DETAIL: (state, score, sum, phase, aspect) => {
     state[phase][aspect] = score
     state[phase].sum = sum
+  },
+  SET_SCORE_DB: (state, score) => {
+    Object.keys(score).forEach(key => {
+      state[key] = score[key]
+    })
   }
 }
 
@@ -572,9 +580,30 @@ const actions = {
   }, score, phase, aspect) {
     commit('SET_SCORE', score, phase, aspect)
   },
+
+
+  getHistory({
+    commit,
+    state
+  }, eId) {
+    return new Promise((resolve, reject) => {
+      getHistory({
+        userId: state.userId,
+        eId: eId
+      }).then(response => {
+        console.log(response)
+        if (response.value !== null) {
+          commit('SET_SCORE_DB', response.value)
+        }
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  }
 }
 export default {
-  namespaced: "",
+  namespaced: true,
   state,
   mutations,
   actions

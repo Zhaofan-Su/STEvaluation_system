@@ -2,7 +2,7 @@
   <div
     v-loading.fullscreen.lock="fullscreenLoading"
     class="main-article"
-    element-loading-text="Efforts to generate PDF"
+    element-loading-text="正在生成预览界面"
   >
     <div class="article__heading">
       <div class="article__heading__title">{{ article.title }}</div>
@@ -80,7 +80,8 @@ export default {
 }
 
 .main-article {
-  padding: 20px;
+  // padding: 20px;
+  padding: 40px;
   margin: 0 auto;
   display: block;
   width: 740px;

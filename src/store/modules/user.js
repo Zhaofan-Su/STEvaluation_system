@@ -12,7 +12,6 @@ import {
 import router, {
   resetRouter
 } from '@/router'
-import getters from '../getters'
 const state = {
   token: getToken(),
   userId: '',

@@ -1,11 +1,11 @@
 import {
   createProject,
-  submitProject
+  submitProject,
 } from '@/api/projects'
 
 
 const state = {
-  evaluate: false,
+  evaluate: true,
   eId: '',
   info: {
     projectName: '',
@@ -86,7 +86,6 @@ const actions = {
         const {
           value
         } = response
-        console.log(value)
         commit('SET_EID', value)
         commit('SET_EVALUATE', true)
         commit('SET_CREATETIME', newProject.createTime)
@@ -108,6 +107,16 @@ const actions = {
     commit('SET_SENDTO', newProject.sendTo)
   },
 
+  changeProject({
+    commit,
+    state
+  }, newProject) {
+    console.log(newProject)
+    Object.keys(newProject).forEach(key => {
+      state[key] = newProject[key]
+    })
+    commit('SET_EVALUATE', true)
+  },
   submitProject({
     commit
   }, project) {
@@ -136,7 +145,9 @@ const actions = {
         reject(error)
       })
     })
-  }
+  },
+
+
   // evaluate({
   //   commit
   // }, evaluateState) {

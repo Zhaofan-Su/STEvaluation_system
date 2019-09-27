@@ -28,9 +28,10 @@
 </template>
 
 <script>
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
-import { mapGetters } from 'vuex'
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
+import { mapGetters } from "vuex";
+// import { getHistory } from "@/api/projects";
 
 export default {
   name: "DesignBasic",
@@ -38,28 +39,28 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
           id: 1,
           aspect: "参评项目的预制率不低于50%， 装配率不低于70%",
           // satisfy: true,
-          evaluation_index: "",
+          evaluation_index: ""
           // locked: false,
         },
         {
           id: 2,
           aspect: "参评项目应进行建筑、结构、机电设备、室内装修一体化设计",
           // satisfy: true,
-          evaluation_index: "",
+          evaluation_index: ""
           // locked: false,
         },
         {
           id: 3,
           aspect: "参评项目应具备完整的设计、施工和验收文件资料",
           // satisfy: true,
-          evaluation_index: "",
+          evaluation_index: ""
           // locked: false,
         }
       ],
@@ -68,20 +69,28 @@ export default {
   },
   computed: {
     ...mapGetters({
-      designScore: 'design',
-      project: 'project'
+      designScore: "design",
+      project: "project"
     })
   },
-  created () {
-    console.log(this.project)
-    this.score = this.designScore['basic']
+  created() {
+    // this.getHistory();
+    this.score = this.designScore["basic"];
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', this.score, 'design', 'basic')
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", this.score, "design", "basic");
   },
   methods: {
-    handleLock (index) {
-      this.score[index].locked = !this.score[index].locked
+    // getHistory() {
+    //   getHistory({
+    //     userId: this.$store.getters.userId,
+    //     eId: this.$store.getters.eId
+    //   })
+    //     .then(() => {})
+    //     .catch(() => {});
+    // },
+    handleLock(index) {
+      this.score[index].locked = !this.score[index].locked;
     }
   }
 };
