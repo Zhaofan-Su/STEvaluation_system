@@ -45,3 +45,11 @@ export function updateScore(data) {
     data
   })
 }
+
+export function getReport(eId) {
+  return request({
+    url: `/evaluation/report/`,
+    method: 'GET',
+    params: eId
+  })
+}

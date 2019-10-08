@@ -140,14 +140,19 @@ const actions = {
   // user logout
   logout({
     commit,
-    state
+    dispatch
   }) {
 
     commit('SET_TOKEN', '')
     commit('SET_ROLES', [])
     removeToken()
     resetRouter()
-
+    commit('project/SET_EID', '', {
+      root: true
+    })
+    commit('project/SET_EVALUATE', false, {
+      root: true
+    })
   },
 
   // remove token

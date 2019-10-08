@@ -606,7 +606,6 @@ const actions = {
       }).then(response => {
         if (response.value !== null) {
           commit('SET_SCORE_DB', response.value)
-          commit('project/SET_EID', eId)
         }
         resolve()
       }).catch(error => {
@@ -615,6 +614,12 @@ const actions = {
         reject(error)
       })
     })
+  },
+
+  clearScore({
+    commit
+  }) {
+    commit('SET_SCORE', '')
   }
 }
 export default {

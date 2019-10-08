@@ -64,16 +64,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
+import { mapGetters } from "vuex";
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
 export default {
   name: "Standard",
   components: {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -83,8 +83,8 @@ export default {
             {
               aspect:
                 "制定并实施施工节能和用能方案，检查并记录施工能耗，与传统方式相比，现场施工能耗指示节约明显",
-              max_score: "5",
-              score: "0",
+              max_score: 3,
+              score: 0
             }
           ],
           evaluation_index: ""
@@ -96,8 +96,8 @@ export default {
             {
               aspect:
                 "制定并实施施工节水与用水方案，检测并记录施工水耗，与传统方式相比，现场施工节约用水指标达到50%以上",
-              max_score: "5",
-              score: "0",
+              max_score: 3,
+              score: 0
             }
           ],
           evaluation_index: ""
@@ -109,20 +109,20 @@ export default {
             {
               aspect:
                 "采用工厂化钢筋加工方法，降低现场加工的钢筋损耗率，采用工厂加工的钢筋不低于80%，钢筋损耗不大于2.0%",
-              max_score: "3",
-              score: "0"
+              max_score: 2,
+              score: 0
             },
             {
               aspect:
                 "钢结构建筑采用无模板和无支撑式楼面板施工，采用预制成品楼板或钢筋桁架式组合楼板",
-              max_score: "2",
-              score: "0"
+              max_score: 2,
+              score: 0
             },
             {
               aspect:
                 "最大限度地采用预制构件，减少预拌混凝土的损耗，混凝土的损耗率不大于1.5%",
-              max_score: "5",
-              score: "0"
+              max_score: 5,
+              score: 0
             }
           ],
           evaluation_index: ""
@@ -134,11 +134,11 @@ export default {
             {
               aspect:
                 "施工现场有整洁检查计划、检查记录和专人负责；施工现场有建筑垃圾控制计划和专人负责；施工垃圾减少50%以上；施工噪声不高于现行国家标准《建筑施工场界环境噪声排放标准》GB12532相关规定",
-              max_score: "5",
-              score: "0"
+              max_score: 4,
+              score: 0
             }
           ],
-          evaluation_index: "",
+          evaluation_index: ""
         }
       ],
       score: []
@@ -146,25 +146,24 @@ export default {
   },
   computed: {
     ...mapGetters({
-      constructScore: 'construct',
-      eId: 'eId'
+      constructScore: "construct",
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
-    this.score = this.constructScore._3_2_9
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
+    this.score = this.constructScore._3_2_9;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', {
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", {
       score: this.score,
-      phase: 'construct',
-      aspect: '_3_2_9'
-    })
+      phase: "construct",
+      aspect: "_3_2_9"
+    });
   },
   methods: {
-
-    handleLock (index) {
-      this.score[index].locked = !this.score[index].locked
+    handleLock(index) {
+      this.score[index].locked = !this.score[index].locked;
     }
   }
 };

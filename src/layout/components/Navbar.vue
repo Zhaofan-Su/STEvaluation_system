@@ -91,7 +91,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="是否公开">
-          <el-radio-group v-model="RWState">
+          <el-radio-group v-model="form.RWState">
             <el-radio :label="1">是</el-radio>
             <el-radio :label="0">否</el-radio>
           </el-radio-group>
@@ -129,9 +129,9 @@ export default {
         projectName: "",
         province: "",
         area: "",
-        height: ""
+        height: "",
+        RWState: 0
       },
-      RWState: 0,
       rules: {
         projectName: [
           { required: true, message: "请输入项目名称", trigger: "blur" }
@@ -240,6 +240,7 @@ export default {
                   message: "评估单提交成功",
                   type: "success"
                 });
+                this.$router.push("/");
               })
               .catch(error => {
                 this.$message({

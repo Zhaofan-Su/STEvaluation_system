@@ -47,7 +47,7 @@
 
     <div id="choose">
       <el-button-group>
-        <router-link to="/design/evaluate/intergration-decoration">
+        <router-link to="/design/evaluate/intergrate-decoration">
           <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
         </router-link>
 
@@ -73,7 +73,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -82,7 +82,7 @@ export default {
           aspect:
             "应用信息技术（BIM）进行方案设计，包括项目总体分析、性能分析、方案优化等",
           max_score: 2,
-          score: "0",
+          score: 0,
           evaluation_index: ""
         },
         {
@@ -91,7 +91,7 @@ export default {
           aspect:
             "应用信息技术（BIM）进行施工图设计，包括专业协同、管线综合、信息模型制作、施工图信息表达等",
           max_score: 2,
-          score: "0",
+          score: 0,
           evaluation_index: ""
         },
         {
@@ -100,6 +100,7 @@ export default {
           aspect:
             "应用信息技术（BIM）进行构件深化设计，包括连接节点设计、钢筋碰撞检查、构件信息模型、完成构件图信息表达等",
           max_score: 1,
+          score: 0,
           evaluation_index: ""
         }
       ],
@@ -109,14 +110,14 @@ export default {
   computed: {
     ...mapGetters({
       designScore: "design",
-      eId: 'eId'
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
     this.score = this.designScore._2_2_8;
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.$store.dispatch("score/updateScore", {
       score: this.score,
       phase: "design",
@@ -126,10 +127,10 @@ export default {
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
 
-    handleLock (index) {
+    handleLock(index) {
       this.score[index].locked = !this.score[index].locked;
     },
-    addScore (index, whether) {
+    addScore(index, whether) {
       if (whether) {
         this.score[index].score = this.items[index].max_score;
       } else {

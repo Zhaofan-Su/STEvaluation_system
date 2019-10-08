@@ -55,49 +55,49 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
+import { mapGetters } from "vuex";
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
 export default {
   name: "OrgManage",
   components: {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
           id: 1,
           title: "",
           aspect: "参评项目具有工程总承包管理模式和专业化的施工队伍",
-          max_score: "4",
-          score: "0",
-          evaluation_index: "",
+          max_score: 1,
+          score: 0,
+          evaluation_index: ""
         },
         {
           id: 2,
           title: "",
           aspect:
             "参评项目具备完整的施工组织方案，内容包括构件安装工程进场、场地、材料、人员、机械的组织，以及相应的质量、环境、安全管理措施",
-          max_score: "4",
-          score: "0",
+          max_score: 3,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 3,
           title: "",
           aspect: "参评项目具备完整的装配化施工工法或技术标准",
-          max_score: "4",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 4,
           title: "",
           aspect: "参评项目采用机械化施工，减少人力成本，并明显提高效率",
-          max_score: "3",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         }
       ],
@@ -106,26 +106,26 @@ export default {
   },
   computed: {
     ...mapGetters({
-      constructScore: 'construct',
-      eId: 'eId'
+      constructScore: "construct",
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
-    this.score = this.constructScore._3_2_3
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
+    this.score = this.constructScore._3_2_3;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', {
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", {
       score: this.score,
-      phase: 'construct',
-      aspect: '_3_2_3'
-    })
+      phase: "construct",
+      aspect: "_3_2_3"
+    });
   },
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
 
-    handleLock (index) {
-      this.score[index].locked = !this.score[index].locked
+    handleLock(index) {
+      this.score[index].locked = !this.score[index].locked;
     }
   }
 };

@@ -139,6 +139,8 @@ const actions = {
 
         // 是否更新状态还不确定
         commit('SET_STATUS', 'finished')
+        commit('SET_EID', '')
+        commit('SET_EVALUATE', false)
         resolve(response)
       }).catch(error => {
         reject(error)
@@ -146,12 +148,22 @@ const actions = {
     })
   },
 
+  clearDetail({
+    commit,
+    rootState
+  }) {
+    commit('SET_EVALUATE', false)
+    commit('SET_EID', '')
+    rootState.score = ''
+
+  },
 
   evaluate({
     commit
   }, evaluateState) {
     commit('SET_EVALUATE', evaluateState)
   },
+
 
 
 }

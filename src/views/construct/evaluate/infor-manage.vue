@@ -55,16 +55,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
+import { mapGetters } from "vuex";
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
 export default {
   name: "IntergrateTech",
   components: {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -72,8 +72,8 @@ export default {
           title: "设计阶段",
           aspect:
             "采用基于建筑信息模型技术的设计软件，每个构件有唯一的身份标识，按照相关标准，将设计信息传递给后续环节",
-          max_score: "4",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
@@ -81,8 +81,8 @@ export default {
           title: "生产阶段",
           aspect:
             "建立构件生产管理系统，建立构件生产信息数据库，用于记录构件生产关键信息，追溯、管理构件的生产质量、生产进度",
-          max_score: "4",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
@@ -90,8 +90,8 @@ export default {
           title: "施工阶段",
           aspect:
             "建立构件施工管理系统，将设计阶段信息模型与时间、成本信息关联整合，进行管理；结合构件中的身份识别标识，记录构件吊装、施工关键信息，追溯、管理构件施工质量、施工进度等，实现施工过程精细化管理",
-          max_score: "4",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         }
       ],
@@ -100,26 +100,26 @@ export default {
   },
   computed: {
     ...mapGetters({
-      constructScore: 'construct',
-      eId: 'eId'
+      constructScore: "construct",
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
-    this.score = this.constructScore._3_2_8
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
+    this.score = this.constructScore._3_2_8;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', {
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", {
       score: this.score,
-      phase: 'construct',
-      aspect: '_3_2_8'
-    })
+      phase: "construct",
+      aspect: "_3_2_8"
+    });
   },
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
 
-    handleLock (index) {
-      this.score[index].locked = !this.score[index].locked
+    handleLock(index) {
+      this.score[index].locked = !this.score[index].locked;
     }
   }
 };

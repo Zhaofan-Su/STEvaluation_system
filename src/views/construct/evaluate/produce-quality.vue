@@ -55,40 +55,40 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
+import { mapGetters } from "vuex";
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
 export default {
   name: "ProduceQuality",
   components: {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
           id: 1,
           title: "",
           aspect: "构件生产企业具备相应的生产工艺设备和完善的质量管理体系",
-          max_score: "4",
-          score: "0",
+          max_score: 4,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 2,
           title: "",
           aspect: "构件生产过程具有相应的技术标准、工艺流程和作业指导要求",
-          max_score: "4",
-          score: "0",
+          max_score: 4,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 3,
           title: "",
           aspect: "参评项目监理方驻厂监督构件生产过程，有完整的质量验收记录",
-          max_score: "3",
-          score: "0",
+          max_score: 3,
+          score: 0,
           evaluation_index: ""
         },
         {
@@ -96,8 +96,8 @@ export default {
           title: "",
           aspect:
             "工厂生产构件标注构件编号、制作日期、合格状态、生产单位信息等",
-          max_score: "3",
-          score: "0",
+          max_score: 3,
+          score: 0,
           evaluation_index: ""
         },
         {
@@ -105,16 +105,16 @@ export default {
           title: "",
           aspect:
             "构件各项性能指标符合设计要求，具有出厂检验报告、进场验收记录",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 6,
           title: "",
           aspect: "构件质量符合国家现行有关标准要求",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         }
       ],
@@ -123,26 +123,26 @@ export default {
   },
   computed: {
     ...mapGetters({
-      constructScore: 'construct',
-      eId: 'eId'
+      constructScore: "construct",
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
-    this.score = this.constructScore._3_2_1
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
+    this.score = this.constructScore._3_2_1;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', {
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", {
       score: this.score,
-      phase: 'construct',
-      aspect: '_3_2_1'
-    })
+      phase: "construct",
+      aspect: "_3_2_1"
+    });
   },
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
 
-    handleLock (index) {
-      this.score[index].locked = !this.score[index].locked
+    handleLock(index) {
+      this.score[index].locked = !this.score[index].locked;
     }
   }
 };

@@ -55,16 +55,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
+import { mapGetters } from "vuex";
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
 export default {
   name: "OrgManage",
   components: {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -72,8 +72,8 @@ export default {
           title: "",
           aspect:
             "参评项目具备构建安装专项技术方案，内容包括构件成品保护、存放、翻转、起吊、定位、稳固、连接等技术措施和质量、安全控制措施",
-          max_score: "3",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
@@ -81,56 +81,56 @@ export default {
           title: "",
           aspect:
             "构件连接技术施工方便、安全可靠，连接技术系统性强、经济适用，符合国家现行有关标准规定",
-          max_score: "3",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 3,
           title: "",
           aspect: "外墙、内墙、顶棚基本实现无抹灰",
-          max_score: "3",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 4,
           title: "",
           aspect: "外墙减少外脚手架施工，室内采用工具式、定型化安全支撑措施",
-          max_score: "3",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 5,
           title: "",
           aspect: "采用工具式、定型化模板及支撑系统，可重复使用30次以上",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 6,
           title: "",
           aspect: "采用吊车满足100mm以下微动性的要求，有分配梁或分配桁架的吊具",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 7,
           title: "",
           aspect: "项目所用成型钢筋、钢筋网片、钢筋桁架等由工厂加工制作",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 8,
           title: "",
           aspect: "各机电设备管线预埋到位、采用机械连接方式",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         }
       ],
@@ -139,26 +139,26 @@ export default {
   },
   computed: {
     ...mapGetters({
-      constructScore: 'construct',
-      eId: 'eId'
+      constructScore: "construct",
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
-    this.score = this.constructScore._3_2_4
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
+    this.score = this.constructScore._3_2_4;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', {
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", {
       score: this.score,
-      phase: 'construct',
-      aspect: '_3_2_4'
-    })
+      phase: "construct",
+      aspect: "_3_2_4"
+    });
   },
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
 
-    handleLock (index) {
-      this.score[index].locked = !this.score[index].locked
+    handleLock(index) {
+      this.score[index].locked = !this.score[index].locked;
     }
   }
 };

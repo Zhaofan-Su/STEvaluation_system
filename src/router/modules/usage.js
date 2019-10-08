@@ -26,7 +26,7 @@ const usageRouter = {
         title: '评分项目'
       },
       children: [{
-        path: '/evaluate/aircondition',
+        path: 'aircondition',
         component: () => import('@/views/usage/evaluate/aircondition'),
         name: 'Aircondition',
         meta: {
@@ -34,7 +34,7 @@ const usageRouter = {
           noCache: true
         }
       }, {
-        path: '/evaluate/automation',
+        path: 'automation',
         component: () => import('@/views/usage/evaluate/automation'),
         name: 'Automation',
         meta: {
@@ -42,7 +42,7 @@ const usageRouter = {
           noCache: true
         }
       }, {
-        path: '/evaluate/drainage',
+        path: 'drainage',
         component: () => import('@/views/usage/evaluate/drainage'),
         name: 'Drainage',
         meta: {
@@ -50,7 +50,7 @@ const usageRouter = {
           noCache: true
         }
       }, {
-        path: '/evaluate/material-select',
+        path: 'material-select',
         component: () => import('@/views/usage/evaluate/material-select'),
         name: 'MaterialSelect',
         meta: {
@@ -58,7 +58,7 @@ const usageRouter = {
           noCache: true
         }
       }, {
-        path: '/evaluate/recycle',
+        path: 'recycle',
         component: () => import('@/views/usage/evaluate/recycle'),
         name: 'Recycle',
         meta: {

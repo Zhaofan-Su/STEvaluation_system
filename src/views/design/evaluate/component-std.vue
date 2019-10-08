@@ -76,7 +76,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     var checkNum = (rule, value, callback) => {
       if (!checkNum) {
         return callback(new Error("输入的比例不能为空"));
@@ -98,28 +98,28 @@ export default {
         {
           id: 1,
           title: "柱",
-          aspect: "预制外挂墙板、预制复合墙板",
-          max_score: 10,
-          second_score: 8,
-          third_score: 5,
+          aspect: "",
+          max_score: 5,
+          second_score: 3,
+          third_score: 2,
           evaluation_index: ""
         },
         {
           id: 2,
           title: "梁",
-          aspect: "预制（叠合）楼板",
-          max_score: 10,
-          second_score: 8,
-          third_score: 5,
+          aspect: "",
+          max_score: 6,
+          second_score: 4,
+          third_score: 2,
           evaluation_index: ""
         },
         {
           id: 3,
           title: "支撑",
-          aspect: "楼梯、空调板、阳台板",
-          max_score: 10,
-          second_score: 8,
-          third_score: 5,
+          aspect: "",
+          max_score: 3,
+          second_score: 2,
+          third_score: 1,
           evaluation_index: ""
         }
       ],
@@ -139,14 +139,14 @@ export default {
   computed: {
     ...mapGetters({
       desginSocre: "design",
-      eId: 'eId'
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
     this.score = this.desginSocre._2_2_3;
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.$store.dispatch("score/updateScore", {
       score: this.score,
       phase: "design",
@@ -155,10 +155,10 @@ export default {
   },
   // 最后提交的时候再计算每一个选项的得分
   methods: {
-    handleLock (index) {
+    handleLock(index) {
       this.score[index].locked = !this.score[index].locked;
     },
-    changeScore (index) {
+    changeScore(index) {
       let value = this.score[index].indicator;
       if (value >= 80) {
         this.score[index].score = this.items[index].max_score;

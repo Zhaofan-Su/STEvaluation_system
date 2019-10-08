@@ -86,7 +86,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -143,7 +143,7 @@ export default {
             {
               aspect:
                 "预制梁、预制柱、预制外承重墙板、内承重墙板、外挂墙板在单体建筑中重复使用最多的三个规格构件的总个数占同类构件总个数的比例均不低于50%",
-              max_score: 4
+              max_score: 3
             },
             {
               aspect:
@@ -192,14 +192,14 @@ export default {
   computed: {
     ...mapGetters({
       designScore: "design",
-      eId: 'eId'
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
     this.score = this.designScore._2_2_1;
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.$store.dispatch("score/updateScore", {
       score: this.score,
       phase: "design",
@@ -207,10 +207,10 @@ export default {
     });
   },
   methods: {
-    handleLock (index) {
+    handleLock(index) {
       this.score[index].locked = !this.score[index].locked;
     },
-    addScore (index, _index, whether) {
+    addScore(index, _index, whether) {
       if (whether) {
         this.score[index].children_question[_index].score = this.items[
           index

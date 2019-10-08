@@ -92,7 +92,7 @@
             type="success"
             plain
             :disabled="scope.row.state==='finished'?false:true"
-            @click="toPdf"
+            @click="toPdf(scope.row)"
           >预览</el-button>
         </template>
       </el-table-column>
@@ -112,7 +112,7 @@
 <script>
 import waves from "@/directive/waves";
 import Pagination from "@/components/Pagination";
-import { getProjectsByUser } from "@/api/projects";
+import { getProjectsByUser, getReport } from "@/api/projects";
 
 import { mapState, mapGetters } from "vuex";
 
@@ -122,7 +122,7 @@ export default {
     Pagination
   },
   directives: { waves },
-  data () {
+  data() {
     return {
       tableKey: 1,
       list: [],
@@ -139,21 +139,21 @@ export default {
   computed: {
     ...mapGetters(["userId"])
   },
-  created () {
+  created() {
     this.getList(this.userId);
   },
   methods: {
-    async getList (userId) {
+    async getList(userId) {
       const response = await getProjectsByUser(userId);
       this.list = response.value.reverse();
     },
-    onSearch () {
+    onSearch() {
       this.$message({
         message: "搜索功能暂未开放！",
         type: "primary"
       });
     },
-    toEdit (row) {
+    toEdit(row) {
       this.$store
         .dispatch("score/getHistory", row.eId)
         .then(() => {
@@ -179,7 +179,11 @@ export default {
           });
         });
     },
-    toPdf () { }
+    toPdf(row) {
+      getReport(row.eId).then(response => {
+        console.log(response);
+      });
+    }
   }
 };
 </script>

@@ -77,7 +77,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -112,7 +112,7 @@ export default {
         {
           id: 5,
           title: "预制排烟管",
-          max_score: 2,
+          max_score: 1,
           second_score: 0,
           score: 0,
           evaluation_index: ""
@@ -132,16 +132,16 @@ export default {
   computed: {
     ...mapGetters({
       designScore: "design",
-      eId: 'eId'
+      eId: "eId"
     })
   },
   // 最后提交的时候再计算每一个选项的得分
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
     this.score = this.designScore._2_2_4;
     // this.sum = this.designScore.sum;
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.$store.dispatch("score/updateScore", {
       score: this.score,
       phase: "design",
@@ -149,10 +149,10 @@ export default {
     });
   },
   methods: {
-    handleLock (index) {
+    handleLock(index) {
       this.score[index].locked = !this.score[index].locked;
     },
-    changeScore (index) {
+    changeScore(index) {
       let value = this.score[index].indicator;
       if (value >= 80) {
         this.score[index].score = this.items[index].max_score;

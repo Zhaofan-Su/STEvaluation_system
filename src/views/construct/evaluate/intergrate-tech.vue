@@ -55,16 +55,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
+import { mapGetters } from "vuex";
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
 export default {
   name: "IntergrateTech",
   components: {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -72,8 +72,8 @@ export default {
           title: "",
           aspect:
             "具备装修施工组织设计，体现部品的工厂生产与现场施工工序、部品的生产工艺与施工安装工艺的协调配合",
-          max_score: "4",
-          score: "0",
+          max_score: 3,
+          score: 0,
           evaluation_index: ""
         },
         {
@@ -81,24 +81,24 @@ export default {
           title: "",
           aspect:
             "各部件与部品之间、部品与主体结构之间采用装配化施工工艺，各工序偏差控制在设计要求范围内",
-          max_score: "4",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 3,
           title: "",
           aspect: "采用工厂生产的集成式厨房、卫生间，一次安装到位",
-          max_score: "3",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 4,
           title: "",
           aspect: "采用内隔墙板系统，与主体结构连接可靠，易于安装拆卸",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
@@ -106,8 +106,8 @@ export default {
           title: "",
           aspect:
             "水、暖、电气等设备系统与主体结构的构件生产、装配施工协调配合",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         }
       ],
@@ -116,26 +116,26 @@ export default {
   },
   computed: {
     ...mapGetters({
-      constructScore: 'construct',
-      eId: 'eId'
+      constructScore: "construct",
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
-    this.score = this.constructScore._3_2_6
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
+    this.score = this.constructScore._3_2_6;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', {
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", {
       score: this.score,
-      phase: 'construct',
-      aspect: '_3_2_6'
-    })
+      phase: "construct",
+      aspect: "_3_2_6"
+    });
   },
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
 
-    handleLock (index) {
-      this.score[index].locked = !this.score[index].locked
+    handleLock(index) {
+      this.score[index].locked = !this.score[index].locked;
     }
   }
 };

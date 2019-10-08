@@ -55,56 +55,56 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
+import { mapGetters } from "vuex";
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
 export default {
   name: "IntergrateTech",
   components: {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
           id: 1,
           title: "",
           aspect: "非承重内隔墙采用装配施工技术，现场无湿作业和二次施工",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 2,
           title: "",
           aspect: "墙和地面瓷砖、石材等装修材料工厂加工编号，无现场切割",
-          max_score: "2",
-          score: "0",
+          max_score: 1,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 3,
           title: "",
           aspect: "各种柜体、内门等木制品和木装饰采用工厂定制，无现场切割",
-          max_score: "2",
-          score: "0",
+          max_score: 1,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 4,
           title: "",
           aspect: "各种设备管线，连接部位提前预留接口、孔洞，无现场剔凿",
-          max_score: "2",
-          score: "0",
+          max_score: 1,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 5,
           title: "",
           aspect: "采用预拌砂浆、预拌混凝土或其他工业化产品",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         }
       ],
@@ -113,26 +113,26 @@ export default {
   },
   computed: {
     ...mapGetters({
-      constructScore: 'construct',
-      eId: 'eId'
+      constructScore: "construct",
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
-    this.score = this.constructScore._3_2_7
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
+    this.score = this.constructScore._3_2_7;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', {
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", {
       score: this.score,
-      phase: 'construct',
-      aspect: '_3_2_7'
-    })
+      phase: "construct",
+      aspect: "_3_2_7"
+    });
   },
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
 
-    handleLock (index) {
-      this.score[index].locked = !this.score[index].locked
+    handleLock(index) {
+      this.score[index].locked = !this.score[index].locked;
     }
   }
 };

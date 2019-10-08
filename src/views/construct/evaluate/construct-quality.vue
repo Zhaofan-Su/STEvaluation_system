@@ -55,16 +55,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
+import { mapGetters } from "vuex";
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
 export default {
   name: "ConstructQuality",
   components: {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -72,8 +72,8 @@ export default {
           title: "",
           aspect:
             "全部主控项目的构件连接部位均进行实体抽样检测，检测结果符合设计要求",
-          max_score: "4",
-          score: "0",
+          max_score: 3,
+          score: 0,
           evaluation_index: ""
         },
         {
@@ -81,8 +81,8 @@ export default {
           title: "",
           aspect:
             "按国家现行有关标准的规定进行了工程质量验收，并且达到国家现行有关装配式结构工程验收标准的合格要求",
-          max_score: "3",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
@@ -90,8 +90,8 @@ export default {
           title: "",
           aspect:
             "构件、灌浆料强度检测报告、主要材料及配件的质量证明文件、进场验收记录，资料齐全、详实、可靠",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
@@ -99,8 +99,8 @@ export default {
           title: "",
           aspect:
             "构件安装施工记录、钢筋连接施工检验记录、钢结构建筑的主体结构连接螺栓或焊接节点检验记录，资料齐全、详实、可靠",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
@@ -108,16 +108,16 @@ export default {
           title: "",
           aspect:
             "后浇混凝土部位、后装封闭构件施工前的隐蔽工程检查验收文件，资料齐全、详实、可靠",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 6,
           title: "",
           aspect: "装配式结构分项工程质量验收文件，资料齐全、详实、可靠",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         }
       ],
@@ -126,26 +126,26 @@ export default {
   },
   computed: {
     ...mapGetters({
-      constructScore: 'construct',
-      eId: 'eId'
+      constructScore: "construct",
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
-    this.score = this.constructScore._3_2_5
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
+    this.score = this.constructScore._3_2_5;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', {
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", {
       score: this.score,
-      phase: 'construct',
-      aspect: '_3_2_5'
-    })
+      phase: "construct",
+      aspect: "_3_2_5"
+    });
   },
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
 
-    handleLock (index) {
-      this.score[index].locked = !this.score[index].locked
+    handleLock(index) {
+      this.score[index].locked = !this.score[index].locked;
     }
   }
 };

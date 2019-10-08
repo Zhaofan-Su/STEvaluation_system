@@ -68,26 +68,26 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
+import { mapGetters } from "vuex";
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
 export default {
   name: "Workers",
   components: {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
           id: 1,
           title: "",
           aspect: "单位建筑面积人工用量减少比例",
-          max_score: "10",
-          second_score: "8",
-          third_score: "5",
-          forth_score: "3",
+          max_score: 6,
+          second_score: 5,
+          third_score: 4,
+          forth_score: 3,
           score: 0,
           evaluation_index: ""
         }
@@ -97,26 +97,25 @@ export default {
   },
   computed: {
     ...mapGetters({
-      constructScore: 'construct',
-      eId: 'eId'
+      constructScore: "construct",
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
-    this.score = this.constructScore._3_2_10
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
+    this.score = this.constructScore._3_2_10;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', {
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", {
       score: this.score,
-      phase: 'construct',
-      aspect: '_3_2_10'
-    })
+      phase: "construct",
+      aspect: "_3_2_10"
+    });
   },
   // 最后提交的时候再计算每一个选项的得分
   methods: {
-
-    handleLock (index) {
-      this.score[index].locked = !this.score[index].locked
+    handleLock(index) {
+      this.score[index].locked = !this.score[index].locked;
     }
   }
 };

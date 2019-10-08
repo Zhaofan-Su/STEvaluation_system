@@ -43,16 +43,16 @@
 </template>
 
 <script>
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
-import { mapGetters } from 'vuex'
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
+import { mapGetters } from "vuex";
 export default {
   name: "UsageBasic",
   components: {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -84,24 +84,23 @@ export default {
   },
   computed: {
     ...mapGetters({
-      usageScore: 'usage',
-      eId: 'eId'
+      usageScore: "usage",
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
-    this.score = this.usageScore.basic
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
+    this.score = this.usageScore.basic;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', {
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", {
       score: this.score,
-      phase: 'usage',
-      aspect: 'basic'
-    })
+      phase: "usage",
+      aspect: "basic"
+    });
   },
   methods: {
-
-    handleLock (index) {
+    handleLock(index) {
       this.score[index].locked = !this.score[index].locked;
     }
   }

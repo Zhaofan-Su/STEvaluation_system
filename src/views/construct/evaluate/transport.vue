@@ -55,16 +55,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
+import { mapGetters } from "vuex";
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
 export default {
   name: "Transport",
   components: {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -72,8 +72,8 @@ export default {
           title: "",
           aspect:
             "参评项目具备合理运输管理组织方案，内容包括运输时间、次序、运输路线、固定要求、堆放支垫及成品保护措施，且减少二次倒运和现场堆放",
-          max_score: "3",
-          score: "0",
+          max_score: 3,
+          score: 0,
           evaluation_index: ""
         },
         {
@@ -81,16 +81,16 @@ export default {
           title: "",
           aspect:
             "构建运输和临时存放过程中具有专门的质量安全保证措施，对尺寸较大、形状特殊的大型预制构件的运输和存放措施具体、明确",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         },
         {
           id: 3,
           title: "",
           aspect: "构建运输进场具有交接验收记录",
-          max_score: "2",
-          score: "0",
+          max_score: 2,
+          score: 0,
           evaluation_index: ""
         }
       ],
@@ -99,26 +99,26 @@ export default {
   },
   computed: {
     ...mapGetters({
-      constructScore: 'construct',
-      eId: 'eId'
+      constructScore: "construct",
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
-    this.score = this.constructScore._3_2_2
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
+    this.score = this.constructScore._3_2_2;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', {
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", {
       score: this.score,
-      phase: 'construct',
-      aspect: '_3_2_2'
-    })
+      phase: "construct",
+      aspect: "_3_2_2"
+    });
   },
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
 
-    handleLock (index) {
-      this.score[index].locked = !this.score[index].locked
+    handleLock(index) {
+      this.score[index].locked = !this.score[index].locked;
     }
   }
 };

@@ -43,14 +43,14 @@
 </template>
 
 <script>
-import Lock from '@/components/Lock'
-import EvaluationStd from '@/components/EvaluationStd'
-import { mapGetters } from 'vuex'
+import Lock from "@/components/Lock";
+import EvaluationStd from "@/components/EvaluationStd";
+import { mapGetters } from "vuex";
 
 export default {
   name: "ConstructBasic",
   components: { Lock, EvaluationStd },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -93,23 +93,23 @@ export default {
   },
   computed: {
     ...mapGetters({
-      constructScore: 'construct',
-      eId: 'eId'
+      constructScore: "construct",
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHitstory', this.eId)
-    this.score = this.constructScore.basic
+  created() {
+    this.$store.dispatch("score/getHistory", this.eId);
+    this.score = this.constructScore.basic;
   },
-  beforeDestroy () {
-    this.$store.dispatch('score/updateScore', {
+  beforeDestroy() {
+    this.$store.dispatch("score/updateScore", {
       score: this.score,
-      phase: 'construct',
-      aspect: 'basic'
-    })
+      phase: "construct",
+      aspect: "basic"
+    });
   },
   methods: {
-    handleLock (index) {
+    handleLock(index) {
       this.score[index].locked = !this.score[index].locked;
     }
   }

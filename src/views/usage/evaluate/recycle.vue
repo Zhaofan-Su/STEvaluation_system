@@ -95,6 +95,21 @@
         </el-form>
       </el-card>
     </el-card>
+
+    <div id="choose">
+      <el-button-group>
+        <router-link to="/usage/evaluate/material-select">
+          <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
+        </router-link>
+
+        <router-link to>
+          <el-button type="primary" :disabled="true">
+            下一项
+            <i class="el-icon-arrow-right el-icon--right"></i>
+          </el-button>
+        </router-link>
+      </el-button-group>
+    </div>
   </div>
 </template>
 
@@ -107,7 +122,8 @@ export default {
         {
           id: 1,
           title: "",
-          aspect: "公共建筑中可变换功能的室内空间采用可重复使用的隔断（墙）比例",
+          aspect:
+            "公共建筑中可变换功能的室内空间采用可重复使用的隔断（墙）比例",
           max_score: "5",
           score: "0",
           description: "",
@@ -150,7 +166,7 @@ export default {
           evaluation_index: "",
           description: "",
           locked: false,
-          popOverShow: false,
+          popOverShow: false
         },
         {
           id: 5,
@@ -216,6 +232,10 @@ export default {
     text-align: center;
   }
 
+  #choose {
+    text-align: center;
+    margin: 20px auto;
+  }
   .evaluation-item {
     width: 60%;
     margin: 10px auto;
