@@ -5,7 +5,7 @@ import {
 
 
 const state = {
-  evaluate: true,
+  evaluate: false,
   eId: '',
   info: {
     projectName: '',
@@ -111,7 +111,6 @@ const actions = {
     commit,
     state
   }, newProject) {
-    console.log(newProject)
     Object.keys(newProject).forEach(key => {
       state[key] = newProject[key]
     })
@@ -148,11 +147,11 @@ const actions = {
   },
 
 
-  // evaluate({
-  //   commit
-  // }, evaluateState) {
-  //   commit('SET_EVALUATE', evaluateState)
-  // },
+  evaluate({
+    commit
+  }, evaluateState) {
+    commit('SET_EVALUATE', evaluateState)
+  },
 
 
 }

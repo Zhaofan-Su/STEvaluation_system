@@ -2,7 +2,8 @@ import {
   stat
 } from "fs"
 import {
-  getHistory
+  getHistory,
+  updateScore
 } from '@/api/projects'
 
 const state = {
@@ -551,15 +552,13 @@ const state = {
 
 const mutations = {
 
-  SET_SCORE: (state, score, phase, aspect) => {
-    state[phase][aspect] = score
-    // state[phase].sum = sum
+  SET_SCORE: (state, obj) => {
+    state[obj.phase][obj.aspect] = obj.score
+    if (obj.sum !== null) {
+      state[obj.phase].sum = obj.sum
+    }
   },
 
-  SET_DETAIL: (state, score, sum, phase, aspect) => {
-    state[phase][aspect] = score
-    state[phase].sum = sum
-  },
   SET_SCORE_DB: (state, score) => {
     Object.keys(score).forEach(key => {
       state[key] = score[key]
@@ -570,33 +569,49 @@ const mutations = {
 const actions = {
 
   updateScore({
-    commit
-  }, score, sum, phase, aspect) {
-    commit('SET_SCORE', score, sum, phase, aspect)
+    commit,
+    state,
+    rootState
+  }, obj) {
+    commit('SET_SCORE', obj)
+    return new Promise((resolve, reject) => {
+      updateScore({
+        userId: rootState.user.userId,
+        eId: rootState.project.eId,
+        score: state
+      }).then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+
   },
 
-  updateScore({
-    commit
-  }, score, phase, aspect) {
-    commit('SET_SCORE', score, phase, aspect)
-  },
+  // updateScore({
+  //   commit
+  // }, score, phase, aspect, sum) {
+  //   commit('SET_SCORE', score, phase, aspect)
+  // },
 
 
   getHistory({
     commit,
-    state
+    rootState
   }, eId) {
     return new Promise((resolve, reject) => {
       getHistory({
-        userId: state.userId,
+        userId: rootState.user.userId,
         eId: eId
       }).then(response => {
-        console.log(response)
         if (response.value !== null) {
           commit('SET_SCORE_DB', response.value)
+          commit('project/SET_EID', eId)
         }
         resolve()
       }).catch(error => {
+        // !!!!此处要进行处理
+        // this.$router.push('/myprojects')
         reject(error)
       })
     })

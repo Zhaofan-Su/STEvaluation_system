@@ -24,6 +24,21 @@
         />
       </div>
     </el-card>
+
+    <div id="choose">
+      <el-button-group>
+        <router-link to="/construct/evaluate/workers">
+          <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
+        </router-link>
+
+        <router-link to="/usage/evaluate/aircondition">
+          <el-button type="primary">
+            下一项
+            <i class="el-icon-arrow-right el-icon--right"></i>
+          </el-button>
+        </router-link>
+      </el-button-group>
+    </div>
   </div>
 </template>
 
@@ -69,14 +84,20 @@ export default {
   },
   computed: {
     ...mapGetters({
-      usageScore: 'usage'
+      usageScore: 'usage',
+      eId: 'eId'
     })
   },
   created () {
+    this.$store.dispatch('score/getHistory', this.eId)
     this.score = this.usageScore.basic
   },
   beforeDestroy () {
-    this.$store.dispatch('score/updateScore', this.score, 'usage', 'basic')
+    this.$store.dispatch('score/updateScore', {
+      score: this.score,
+      phase: 'usage',
+      aspect: 'basic'
+    })
   },
   methods: {
 
@@ -92,6 +113,10 @@ export default {
     text-align: center;
   }
 
+  #choose {
+    text-align: center;
+    margin: 20px auto;
+  }
   .evaluation-item {
     width: 60%;
     margin: 10px auto;

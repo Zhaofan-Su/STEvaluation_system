@@ -37,3 +37,11 @@ export function getHistory(data) {
     params: data
   })
 }
+
+export function updateScore(data) {
+  return request({
+    url: 'evaluation/questionnaire',
+    method: 'PUT',
+    data
+  })
+}

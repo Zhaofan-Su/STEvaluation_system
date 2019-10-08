@@ -36,6 +36,21 @@
         </el-form>
       </el-card>
     </el-card>
+
+    <div id="choose">
+      <el-button-group>
+        <router-link to="/construct/evaluate/concept">
+          <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
+        </router-link>
+
+        <router-link to="/construct/evaluate/transport">
+          <el-button type="primary">
+            下一项
+            <i class="el-icon-arrow-right el-icon--right"></i>
+          </el-button>
+        </router-link>
+      </el-button-group>
+    </div>
   </div>
 </template>
 
@@ -108,14 +123,20 @@ export default {
   },
   computed: {
     ...mapGetters({
-      constructScore: 'construct'
+      constructScore: 'construct',
+      eId: 'eId'
     })
   },
   created () {
+    this.$store.dispatch('score/getHistory', this.eId)
     this.score = this.constructScore._3_2_1
   },
   beforeDestroy () {
-    this.$store.dispatch('score/updateScore', this.score, 'construct', '_3_2_1')
+    this.$store.dispatch('score/updateScore', {
+      score: this.score,
+      phase: 'construct',
+      aspect: '_3_2_1'
+    })
   },
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
@@ -131,7 +152,10 @@ export default {
   h2 {
     text-align: center;
   }
-
+  #choose {
+    text-align: center;
+    margin: 20px auto;
+  }
   .evaluation-item {
     width: 60%;
     margin: 10px auto;

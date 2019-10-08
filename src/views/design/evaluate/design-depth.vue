@@ -44,6 +44,21 @@
         </el-form>
       </el-card>
     </el-card>
+
+    <div id="choose">
+      <el-button-group>
+        <router-link to="/design/evaluate/intergration-tech">
+          <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
+        </router-link>
+
+        <router-link to="/design/evaluate/information-tech">
+          <el-button type="primary">
+            下一项
+            <i class="el-icon-arrow-right el-icon--right"></i>
+          </el-button>
+        </router-link>
+      </el-button-group>
+    </div>
   </div>
 </template>
 
@@ -58,7 +73,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data() {
+  data () {
     return {
       items: [
         {
@@ -134,22 +149,28 @@ export default {
   },
   computed: {
     ...mapGetters({
-      designScore: "design"
+      designScore: "design",
+      eId: 'eId'
     })
   },
-  created() {
+  created () {
+    this.$store.dispatch('score/getHistory', this.eId)
     this.score = this.designScore._2_2_6;
   },
-  beforeDestroy() {
-    this.$store.dispatch("score/updateScore", this.score, "design", "_2_2_6");
+  beforeDestroy () {
+    this.$store.dispatch("score/updateScore", {
+      score: this.score,
+      phase: "design",
+      aspect: "_2_2_6"
+    });
   },
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
 
-    handleLock(index) {
+    handleLock (index) {
       this.score[index].locked = !this.score[index].locked;
     },
-    addScore(index, whether) {
+    addScore (index, whether) {
       if (whether) {
         this.score[index].score = this.items[index].max_score;
       } else {
@@ -164,7 +185,10 @@ export default {
   h2 {
     text-align: center;
   }
-
+  #choose {
+    text-align: center;
+    margin: 20px auto;
+  }
   .evaluation-item {
     width: 60%;
     margin: 10px auto;

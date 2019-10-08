@@ -104,7 +104,7 @@
 <script>
 export default {
   name: "Aircondition",
-  data() {
+  data () {
     return {
       items: [
         {
@@ -181,16 +181,20 @@ export default {
       ]
     };
   },
+  created () {
+    // this.$store.dispatch('score/getHistory', this.eId)
+    // this.score = this.usageScore._4_2_1
+  },
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
-    handleClose() {
+    handleClose () {
       this.$confirm("确认关闭?")
         .then(_ => {
           done();
         })
-        .catch(_ => {});
+        .catch(_ => { });
     },
-    handleLock(item) {
+    handleLock (item) {
       item.popOverShow = !item.popOverShow;
       item.locked = !item.locked;
       setTimeout(() => {

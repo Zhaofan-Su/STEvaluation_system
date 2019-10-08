@@ -24,6 +24,17 @@
         />
       </div>
     </el-card>
+    <div id="choose">
+      <el-button-group>
+        <el-button type="primary" icon="el-icon-arrow-left" :disabled="true">上一项</el-button>
+        <router-link to="/design/evaluate/standard">
+          <el-button type="primary">
+            下一项
+            <i class="el-icon-arrow-right el-icon--right"></i>
+          </el-button>
+        </router-link>
+      </el-button-group>
+    </div>
   </div>
 </template>
 
@@ -31,7 +42,6 @@
 import Lock from "@/components/Lock";
 import EvaluationStd from "@/components/EvaluationStd";
 import { mapGetters } from "vuex";
-// import { getHistory } from "@/api/projects";
 
 export default {
   name: "DesignBasic",
@@ -39,7 +49,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data() {
+  data () {
     return {
       items: [
         {
@@ -70,26 +80,23 @@ export default {
   computed: {
     ...mapGetters({
       designScore: "design",
-      project: "project"
+      project: "project",
+      eId: 'eId'
     })
   },
-  created() {
-    // this.getHistory();
+  created () {
+    this.$store.dispatch('score/getHistory', this.eId)
     this.score = this.designScore["basic"];
   },
-  beforeDestroy() {
-    this.$store.dispatch("score/updateScore", this.score, "design", "basic");
+  beforeDestroy () {
+    this.$store.dispatch("score/updateScore", {
+      score: this.score,
+      phase: 'design',
+      aspect: 'basic'
+    });
   },
   methods: {
-    // getHistory() {
-    //   getHistory({
-    //     userId: this.$store.getters.userId,
-    //     eId: this.$store.getters.eId
-    //   })
-    //     .then(() => {})
-    //     .catch(() => {});
-    // },
-    handleLock(index) {
+    handleLock (index) {
       this.score[index].locked = !this.score[index].locked;
     }
   }
@@ -101,6 +108,10 @@ export default {
     text-align: center;
   }
 
+  #choose {
+    text-align: center;
+    margin: 20px auto;
+  }
   .evaluation-item {
     width: 60%;
     margin: 10px auto;

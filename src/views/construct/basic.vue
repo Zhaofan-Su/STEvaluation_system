@@ -24,6 +24,21 @@
         />
       </div>
     </el-card>
+
+    <div id="choose">
+      <el-button-group>
+        <router-link to="/design/evaluate/information-tech">
+          <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
+        </router-link>
+
+        <router-link to="/construct/evaluate/concept">
+          <el-button type="primary">
+            下一项
+            <i class="el-icon-arrow-right el-icon--right"></i>
+          </el-button>
+        </router-link>
+      </el-button-group>
+    </div>
   </div>
 </template>
 
@@ -78,17 +93,22 @@ export default {
   },
   computed: {
     ...mapGetters({
-      constructScore: 'construct'
+      constructScore: 'construct',
+      eId: 'eId'
     })
   },
   created () {
+    this.$store.dispatch('score/getHitstory', this.eId)
     this.score = this.constructScore.basic
   },
   beforeDestroy () {
-    this.$store.dispatch('score/updateScore', this.score, 'construct', 'basic')
+    this.$store.dispatch('score/updateScore', {
+      score: this.score,
+      phase: 'construct',
+      aspect: 'basic'
+    })
   },
   methods: {
-
     handleLock (index) {
       this.score[index].locked = !this.score[index].locked;
     }
@@ -101,6 +121,10 @@ export default {
     text-align: center;
   }
 
+  #choose {
+    text-align: center;
+    margin: 20px auto;
+  }
   .evaluation-item {
     width: 60%;
     margin: 10px auto;

@@ -46,6 +46,21 @@
         </el-form>
       </el-card>
     </el-card>
+
+    <div id="choose">
+      <el-button-group>
+        <router-link to="/design/evaluate/standard">
+          <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
+        </router-link>
+
+        <router-link to="/design/evaluate/component-std">
+          <el-button type="primary">
+            下一项
+            <i class="el-icon-arrow-right el-icon--right"></i>
+          </el-button>
+        </router-link>
+      </el-button-group>
+    </div>
   </div>
 </template>
 
@@ -61,7 +76,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data() {
+  data () {
     var checkNum = (rule, value, callback) => {
       if (!checkNum) {
         return callback(new Error("预制率不能为空"));
@@ -123,22 +138,27 @@ export default {
   },
   computed: {
     ...mapGetters({
-      desginSocre: "design"
+      desginSocre: "design",
+      eId: 'eId'
     })
   },
-  created() {
+  created () {
+    this.$store.dispatch('score/getHistory', this.eId)
     this.score = this.desginSocre._2_2_2;
-    // this.sum = this.desginSocre.sum;
   },
-  beforeDestroy() {
-    this.$store.dispatch("score/updateScore", this.score, "design", "_2_2_2");
+  beforeDestroy () {
+    this.$store.dispatch("score/updateScore", {
+      score: this.score,
+      phase: "design",
+      aspect: "_2_2_2"
+    });
   },
   // 最后提交的时候再计算每一个选项的得分
   methods: {
-    handleLock(index) {
+    handleLock (index) {
       this.score[index].locked = !this.score[index].locked;
     },
-    changeScore(index) {
+    changeScore (index) {
       let value = this.score[index].indicator;
       if (value >= 80) {
         this.score[index].score = this.items[index].max_score;
@@ -156,7 +176,10 @@ export default {
   h2 {
     text-align: center;
   }
-
+  #choose {
+    text-align: center;
+    margin: 20px auto;
+  }
   .evaluation-item {
     width: 60%;
     margin: 10px auto;

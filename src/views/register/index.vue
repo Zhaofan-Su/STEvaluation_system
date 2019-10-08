@@ -84,6 +84,25 @@ import { register } from '@/api/user'
 export default {
   name: "Register",
   data () {
+    var checkMobile = (rule, value, callback) => {
+      const mobileReg = /^1[3|4|5|7|8][0-9]{9}$/
+      if (value === "") {
+        return callback(new Error("请输入电话号码"))
+      }
+      setTimeout(() => {
+        if (!Number.isInteger(+value)) {
+          callback(new Error('请输入数字值'))
+        }
+        else {
+          if (mobileReg.test(value)) {
+            callback()
+          }
+          else {
+            callback(new Error('电话号码格式不正确'))
+          }
+        }
+      }, 700)
+    }
     var checkPwd = (rule, value, callback) => {
       if (value === "") {
         return callback(new Error("请输入密码"))
@@ -115,6 +134,9 @@ export default {
       capsTooltip: false,
       loading: false,
       rules: {
+        mobile: [
+          { validator: checkMobile, trigger: 'blur' }
+        ],
         password: [
           { validator: checkPwd, trigger: 'blur' }
         ],

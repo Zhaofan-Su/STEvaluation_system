@@ -30,7 +30,6 @@
       style="width:100%"
     >
       <el-table-column label="项目名称" prop="projectName" width="120px" align="center">
-        <!-- <router-link to="/"></router-link> -->
         <template slot-scope="scope">
           <span>{{ scope.row.info.projectName }}</span>
         </template>
@@ -53,13 +52,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="项目建筑面积/m^2" prop="area" width="110px" align="center">
+      <el-table-column label="项目建筑面积/m^2" prop="area" width="140px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.info.area }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="建筑主体高度/m" prop="height" width="110px" align="center">
+      <el-table-column label="建筑主体高度/m" prop="height" width="130px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.info.height }}</span>
         </template>
@@ -123,7 +122,7 @@ export default {
     Pagination
   },
   directives: { waves },
-  data() {
+  data () {
     return {
       tableKey: 1,
       list: [],
@@ -140,22 +139,21 @@ export default {
   computed: {
     ...mapGetters(["userId"])
   },
-  created() {
+  created () {
     this.getList(this.userId);
   },
   methods: {
-    async getList(userId) {
+    async getList (userId) {
       const response = await getProjectsByUser(userId);
       this.list = response.value.reverse();
-      console.log(this.list);
     },
-    onSearch() {
+    onSearch () {
       this.$message({
         message: "搜索功能暂未开放！",
         type: "primary"
       });
     },
-    toEdit(row) {
+    toEdit (row) {
       this.$store
         .dispatch("score/getHistory", row.eId)
         .then(() => {
@@ -168,11 +166,9 @@ export default {
           this.$store
             .dispatch("project/changeProject", newProject)
             .then(() => {
-              console.log("成功");
               this.$router.push("/projectInfo");
             })
             .catch(error => {
-              console.log("失败");
               console.log(error);
             });
         })
@@ -183,7 +179,7 @@ export default {
           });
         });
     },
-    toPdf() {}
+    toPdf () { }
   }
 };
 </script>
