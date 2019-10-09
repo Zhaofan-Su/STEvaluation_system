@@ -53,3 +53,11 @@ export function getReport(eId) {
     params: eId
   })
 }
+
+export function updateProjectInfo(data) {
+  return request({
+    url: 'evaluationInfo',
+    method: 'POST',
+    data
+  })
+}

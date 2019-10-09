@@ -1,6 +1,7 @@
 import {
   createProject,
   submitProject,
+  updateProjectInfo
 } from '@/api/projects'
 
 
@@ -90,7 +91,10 @@ const actions = {
         commit('SET_EVALUATE', true)
         commit('SET_CREATETIME', newProject.createTime)
         commit('SET_CREATOR', newProject.creator)
-        dispatch('updateProject', newProject)
+        // dispatch('updateProjectInfo', newProject)
+        commit('SET_PROJECTINFO', newProject.info)
+        commit('SET_RWSTATE', newProject.RWState)
+        commit('SET_SENDTO', newProject.sendTo)
         commit('SET_STATUS', 'pending')
         resolve()
       }).catch(error => {
@@ -99,12 +103,31 @@ const actions = {
     })
   },
 
-  updateProject({
-    commit
-  }, newProject) {
-    commit('SET_PROJECTINFO', newProject.info)
-    commit('SET_RWSTATE', newProject.RWState)
-    commit('SET_SENDTO', newProject.sendTo)
+  updateProjectInfo({
+    commit,
+    state
+  }, updatingProject) {
+    const {
+      info,
+      RWState,
+      sendTo
+    } = updatingProject
+    return new Promise((resolve, reject) => {
+      updateProjectInfo({
+        eId: state.eId,
+        info: info,
+        rwState: RWState,
+        sendTo: sendTo
+      }).then(response => {
+        commit('SET_PROJECTINFO', updatingProject.info)
+        commit('SET_RWSTATE', updatingProject.RWState)
+        commit('SET_SENDTO', updatingProject.sendTo)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+
   },
 
   changeProject({

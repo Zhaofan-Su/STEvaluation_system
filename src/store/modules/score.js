@@ -1,7 +1,4 @@
 import {
-  stat
-} from "fs"
-import {
   getHistory,
   updateScore
 } from '@/api/projects'
@@ -560,9 +557,13 @@ const mutations = {
   },
 
   SET_SCORE_DB: (state, score) => {
-    Object.keys(score).forEach(key => {
-      state[key] = score[key]
-    })
+    if (score !== null) {
+      Object.keys(score).forEach(key => {
+        state[key] = score[key]
+      })
+    } else {
+      state = null
+    }
   }
 }
 
@@ -575,6 +576,7 @@ const actions = {
   }, obj) {
     commit('SET_SCORE', obj)
     return new Promise((resolve, reject) => {
+      console.log(state)
       updateScore({
         userId: rootState.user.userId,
         eId: rootState.project.eId,
@@ -605,7 +607,7 @@ const actions = {
         eId: eId
       }).then(response => {
         if (response.value !== null) {
-          commit('SET_SCORE_DB', response.value)
+          commit('SET_SCORE_DB', response.value.score)
         }
         resolve()
       }).catch(error => {
@@ -619,7 +621,7 @@ const actions = {
   clearScore({
     commit
   }) {
-    commit('SET_SCORE', '')
+    commit('SET_SCORE_DB', null)
   }
 }
 export default {

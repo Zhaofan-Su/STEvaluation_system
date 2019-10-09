@@ -57,8 +57,8 @@
         </el-form-item>-->
         <el-form-item label="是否公开" prop="RWState">
           <el-radio-group v-model="RWState" :disabled="locked">
-            <el-radio :label="1">是</el-radio>
-            <el-radio :label="0">否</el-radio>
+            <el-radio label="public">是</el-radio>
+            <el-radio label="private">否</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="评价人员">
@@ -86,12 +86,12 @@ import { mapGetters } from "vuex";
 export default {
   name: "ProjectInfo",
   // components: { Lock },
-  data () {
+  data() {
     return {
       locked: false,
       form: {},
       // endTime: "",
-      RWState: 0,
+      RWState: "",
       sendTo: [],
       rules: {
         projectName: [
@@ -114,14 +114,13 @@ export default {
       project: "project"
     })
   },
-  created () {
+  created() {
     this.form = this.project.info;
-    // this.endTime = this.project.endTime;
     this.RWState = this.project.RWState;
     this.sendTo = this.project.sendTo;
   },
   methods: {
-    onSave () {
+    onSave() {
       // 用户所填信息先保存到网页
       // if (this.endTime == "") {
       //   this.endTime = new Date("10000", "0", 0);
@@ -129,24 +128,22 @@ export default {
       let updating = {
         evaluate: true,
         info: this.form,
-        createTime: this.project.createTime,
-        creator: this.project.creator,
+        // createTime: this.project.createTime,
+        // creator: this.project.creator,
         // endTime: this.endTime.toJSON(),
         RWState: this.RWState,
         sendTo: this.sendTo
       };
-      this.$store.dispatch("project/updateProject", updating).then(() => {
+      this.$store.dispatch("project/updateProjectInfo", updating).then(() => {
         this.$message({
           message: "项目信息保存成功",
           type: "success"
         });
         setTimeout(() => {
-          this.$router.push('design/basic')
-        }, 500)
-
-      })
+          this.$router.push("design/basic");
+        }, 500);
+      });
       // this.locked = true
-
     }
   }
 };

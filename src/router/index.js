@@ -94,23 +94,7 @@ export const constantRoutes = [{
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
-export const asyncRoutes = [
-  // {
-  //   path: '/peoples',
-  //   component: Layout,
-  //   children: [{
-  //     path: '',
-  //     component: () => import('@/views/peoples/index'),
-  //     meta: {
-  //       name: 'Peoples',
-  //       title: '用户管理',
-  //       icon: 'peoples',
-  //       roles: ['admin'],
-  //       noCache: true
-  //     }
-  //   }]
-  // }, 
-  {
+export const asyncRoutes = [{
     path: '/projects',
     component: Layout,
     children: [{
@@ -150,23 +134,25 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/pdf/index',
     children: [{
-      path: 'index',
-      component: () => import('@/views/pdf/index'),
-      meta: {
-        name: 'pdf',
-        title: '报告预览及下载',
-        icon: 'pdf'
+        path: 'index',
+        component: () => import('@/views/pdf/index'),
+        meta: {
+          name: 'pdf',
+          title: '报告预览及下载',
+          icon: 'pdf'
+        },
       },
-    }]
+      {
+        path: `/reportPreview/:id`,
+        component: () => import('@/views/pdf/download'),
+        meta: {
+          title: '下载'
+        },
+        hidden: true
+      }
+    ]
   },
-  {
-    path: '/pdf/download',
-    component: () => import('@/views/pdf/download'),
-    meta: {
-      title: '下载'
-    },
-    hidden: true
-  }
+
 ]
 
 const createRouter = () => new Router({
