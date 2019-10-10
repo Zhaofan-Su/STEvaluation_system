@@ -33,7 +33,8 @@ const getters = {
   creator: state => state.project.creator,
   RWState: state => state.project.RWState,
   sendTo: state => state.project.sendTo,
-  // score: state => state.project.score
+
+  score: state => state.score,
   design: state => state.score.design,
   construct: state => state.score.construct,
   usage: state => state.score.usage

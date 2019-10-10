@@ -76,7 +76,7 @@
 <script>
 import waves from "@/directive/waves";
 import Pagination from "@/components/Pagination";
-import { getProjectsByUser, getReport } from "@/api/projects";
+import { getProjectsByUser } from "@/api/projects";
 
 import { mapState, mapGetters } from "vuex";
 
@@ -117,9 +117,7 @@ export default {
       });
     },
     toPdf(row) {
-      getReport(row.eId).then(response => {
-        this.$router.push(`/reportPreview/${row.eId}`);
-      });
+      this.$router.push(`/reportPreview/${row.eId}`);
     }
   }
 };

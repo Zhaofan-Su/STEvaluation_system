@@ -46,14 +46,6 @@ export function updateScore(data) {
   })
 }
 
-export function getReport(eId) {
-  return request({
-    url: `/evaluation/report/`,
-    method: 'GET',
-    params: eId
-  })
-}
-
 export function updateProjectInfo(data) {
   return request({
     url: 'evaluationInfo',

@@ -156,7 +156,8 @@ export default {
       "roles",
       "evaluate",
       "userId",
-      "projectInfo"
+      "projectInfo",
+      "score"
     ])
   },
   methods: {
@@ -228,10 +229,12 @@ export default {
           type: "warning"
         })
           .then(() => {
+            console.log(this.score);
             let project = {
               userId: this.userId,
               eId: this.$store.getters.project.eId,
               info: this.$store.getters.project.info,
+              score: this.score,
               endTime: new Date().toJSON()
             };
             submitProject(project)

@@ -574,9 +574,10 @@ const actions = {
     state,
     rootState
   }, obj) {
+    console.log(obj)
+    console.log(state)
     commit('SET_SCORE', obj)
     return new Promise((resolve, reject) => {
-      console.log(state)
       updateScore({
         userId: rootState.user.userId,
         eId: rootState.project.eId,
@@ -599,7 +600,7 @@ const actions = {
 
   getHistory({
     commit,
-    rootState
+    rootState,
   }, eId) {
     return new Promise((resolve, reject) => {
       getHistory({
@@ -607,6 +608,10 @@ const actions = {
         eId: eId
       }).then(response => {
         if (response.value !== null) {
+          commit('project/SET_EID', eId, {
+            root: true
+          })
+          console.log(response.value.score)
           commit('SET_SCORE_DB', response.value.score)
         }
         resolve()

@@ -132,13 +132,14 @@ const actions = {
 
   changeProject({
     commit,
-    state
+    state,
   }, newProject) {
     Object.keys(newProject).forEach(key => {
       state[key] = newProject[key]
     })
     commit('SET_EVALUATE', true)
   },
+
   submitProject({
     commit
   }, project) {
