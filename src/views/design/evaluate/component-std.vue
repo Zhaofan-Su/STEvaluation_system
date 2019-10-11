@@ -143,11 +143,11 @@ export default {
     })
   },
   created() {
-    this.$store.dispatch("score/getHistory", this.eId);
+    this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.desginSocre._2_2_3;
   },
   beforeDestroy() {
-    this.$store.dispatch("score/updateScore", {
+    this.$store.dispatch("project/updateScore", {
       score: this.score,
       phase: "design",
       aspect: "_2_2_3"

@@ -31,8 +31,16 @@
         <el-form ref="form" :model="i" label-width="100px">
           <el-form-item label="是否满足">
             <el-radio-group v-model="score[index].children_question[_index].satisfy">
-              <el-radio :label="true" :disabled="score[index].locked">是</el-radio>
-              <el-radio :label="false" :disabled="score[index].locked">否</el-radio>
+              <el-radio
+                :label="true"
+                :disabled="score[index].locked"
+                @change="addScore(index, true)"
+              >是</el-radio>
+              <el-radio
+                :label="false"
+                :disabled="score[index].locked"
+                @change="addScore(index, true)"
+              >否</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item v-if="!score[index].children_question[_index].satisfy" label="不满足简述">
@@ -151,11 +159,11 @@ export default {
     })
   },
   created() {
-    this.$store.dispatch("score/getHistory", this.eId);
+    this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.constructScore._3_2_9;
   },
   beforeDestroy() {
-    this.$store.dispatch("score/updateScore", {
+    this.$store.dispatch("project/updateScore", {
       score: this.score,
       phase: "construct",
       aspect: "_3_2_9"

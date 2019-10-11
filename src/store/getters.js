@@ -34,10 +34,10 @@ const getters = {
   RWState: state => state.project.RWState,
   sendTo: state => state.project.sendTo,
 
-  score: state => state.score,
-  design: state => state.score.design,
-  construct: state => state.score.construct,
-  usage: state => state.score.usage
+  score: state => state.project.score,
+  design: state => state.project.score.design,
+  construct: state => state.project.score.construct,
+  usage: state => state.project.score.usage
 
 }
 export default getters

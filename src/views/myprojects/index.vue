@@ -112,7 +112,7 @@
 <script>
 import waves from "@/directive/waves";
 import Pagination from "@/components/Pagination";
-import { getProjectsByUser, getReport } from "@/api/projects";
+import { getProjectsByUser } from "@/api/projects";
 
 import { mapState, mapGetters } from "vuex";
 
@@ -155,7 +155,7 @@ export default {
     },
     toEdit(row) {
       this.$store
-        .dispatch("score/getHistory", row.eId)
+        .dispatch("project/getHistory", row.eId)
         .then(() => {
           let newProject = {
             eId: row.eId,
@@ -180,9 +180,7 @@ export default {
         });
     },
     toPdf(row) {
-      getReport(row.eId).then(response => {
-        console.log(response);
-      });
+      this.$router.push(`/reportPreview/${row.eId}`);
     }
   }
 };

@@ -113,7 +113,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -159,18 +159,18 @@ export default {
   computed: {
     ...mapGetters({
       designScore: "design",
-      eId: 'eId'
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
+  created() {
+    this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.designScore._2_2_5;
   },
-  beforeDestroy () {
+  beforeDestroy() {
     // this.score.forEach(element => {
     //   this.sum += element.score;
     // });
-    this.$store.dispatch("score/updateScore", {
+    this.$store.dispatch("project/updateScore", {
       score: this.score,
       phase: "design",
       aspect: "_2_2_5"
@@ -179,15 +179,15 @@ export default {
   methods: {
     // 这个项目判断得分的时候，要注意第一个问题，是互斥的
 
-    handleLock (index) {
+    handleLock(index) {
       this.score[index].locked = !this.score[index].locked;
     },
-    addScore (index, whether) {
+    addScore(index, whether) {
       if (whether) {
         this.score[index].score = this.items[index].max_score;
       }
     },
-    changeOption (index) {
+    changeOption(index) {
       console.log(index);
       for (let i = 0; i < 3; i++) {
         if (i === index) {

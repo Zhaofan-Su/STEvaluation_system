@@ -71,7 +71,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -134,16 +134,16 @@ export default {
   computed: {
     ...mapGetters({
       constructScore: "construct",
-      eId: 'eId'
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
+  created() {
+    this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.constructScore._3_2_0;
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.$store.dispatch(
-      "score/updateScore",
+      "project/updateScore",
       this.score,
       "construct",
       "_3_2_0"
@@ -152,10 +152,10 @@ export default {
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
 
-    handleLock (index) {
+    handleLock(index) {
       this.score[index].locked = !this.score[index].locked;
     },
-    addScore (index, whether) {
+    addScore(index, whether) {
       if (whether) {
         this.score[index].score = this.items[index].max_score;
       } else {

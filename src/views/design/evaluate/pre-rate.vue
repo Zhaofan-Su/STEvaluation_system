@@ -78,9 +78,10 @@ export default {
   },
   data() {
     var checkNum = (rule, value, callback) => {
-      if (!checkNum) {
+      if (value === "") {
         return callback(new Error("预制率不能为空"));
       }
+      console.log(value, Number.isInteger(value));
       setTimeout(() => {
         if (!Number.isInteger(value)) {
           callback(new Error("请输入数字"));
@@ -91,7 +92,7 @@ export default {
             callback();
           }
         }
-      }, 500);
+      }, 700);
     };
     return {
       items: [
@@ -126,8 +127,6 @@ export default {
       rules: {
         indicator: [
           {
-            required: true,
-            type: "number",
             validator: checkNum,
             trigger: "blur"
           }
@@ -138,16 +137,16 @@ export default {
   },
   computed: {
     ...mapGetters({
-      desginSocre: "design",
+      designScore: "design",
       eId: "eId"
     })
   },
   created() {
-    this.$store.dispatch("score/getHistory", this.eId);
-    this.score = this.desginSocre._2_2_2;
+    this.$store.dispatch("project/getHistory", this.eId);
+    this.score = this.designScore._2_2_2;
   },
   beforeDestroy() {
-    this.$store.dispatch("score/updateScore", {
+    this.$store.dispatch("project/updateScore", {
       score: this.score,
       phase: "design",
       aspect: "_2_2_2"

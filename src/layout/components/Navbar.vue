@@ -217,17 +217,21 @@ export default {
           // 对话框消失
           this.dialogVisible = false;
           // 信息拿到本地
-          this.$store.dispatch("project/updateProject", newCase);
+          this.$store.dispatch("project/updateProjectInfo", newCase);
         }
       });
     },
     submitProject() {
       if (this.$store.getters.project.eId !== "") {
-        this.$confirm("确定提交评估单？", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
+        this.$confirm(
+          "项目提交之后不可再进行更改！\n确定提交评估单？",
+          "提示",
+          {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          }
+        )
           .then(() => {
             console.log(this.score);
             let project = {
@@ -254,7 +258,7 @@ export default {
           })
           .catch(error => {
             this.$message({
-              message: error.message,
+              message: "提交已取消",
               type: "info"
             });
           });

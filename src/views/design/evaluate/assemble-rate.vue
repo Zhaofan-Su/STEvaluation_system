@@ -137,12 +137,12 @@ export default {
   },
   // 最后提交的时候再计算每一个选项的得分
   created() {
-    this.$store.dispatch("score/getHistory", this.eId);
+    this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.designScore._2_2_4;
     // this.sum = this.designScore.sum;
   },
   beforeDestroy() {
-    this.$store.dispatch("score/updateScore", {
+    this.$store.dispatch("project/updateScore", {
       score: this.score,
       phase: "design",
       aspect: "_2_2_4"

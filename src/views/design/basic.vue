@@ -49,7 +49,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -81,22 +81,22 @@ export default {
     ...mapGetters({
       designScore: "design",
       project: "project",
-      eId: 'eId'
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
+  created() {
+    this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.designScore["basic"];
   },
-  beforeDestroy () {
-    this.$store.dispatch("score/updateScore", {
+  beforeDestroy() {
+    this.$store.dispatch("project/updateScore", {
       score: this.score,
-      phase: 'design',
-      aspect: 'basic'
+      phase: "design",
+      aspect: "basic"
     });
   },
   methods: {
-    handleLock (index) {
+    handleLock(index) {
       this.score[index].locked = !this.score[index].locked;
     }
   }

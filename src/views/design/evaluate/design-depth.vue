@@ -73,7 +73,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -150,15 +150,15 @@ export default {
   computed: {
     ...mapGetters({
       designScore: "design",
-      eId: 'eId'
+      eId: "eId"
     })
   },
-  created () {
-    this.$store.dispatch('score/getHistory', this.eId)
+  created() {
+    this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.designScore._2_2_6;
   },
-  beforeDestroy () {
-    this.$store.dispatch("score/updateScore", {
+  beforeDestroy() {
+    this.$store.dispatch("project/updateScore", {
       score: this.score,
       phase: "design",
       aspect: "_2_2_6"
@@ -167,10 +167,10 @@ export default {
   methods: {
     // 计算分数的时候，第一项可能要先获取项目资料
 
-    handleLock (index) {
+    handleLock(index) {
       this.score[index].locked = !this.score[index].locked;
     },
-    addScore (index, whether) {
+    addScore(index, whether) {
       if (whether) {
         this.score[index].score = this.items[index].max_score;
       } else {
