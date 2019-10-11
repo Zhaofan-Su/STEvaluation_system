@@ -77,7 +77,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data() {
+  data () {
     return {
       items: [
         {
@@ -136,12 +136,12 @@ export default {
     })
   },
   // 最后提交的时候再计算每一个选项的得分
-  created() {
+  created () {
     this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.designScore._2_2_4;
     // this.sum = this.designScore.sum;
   },
-  beforeDestroy() {
+  beforeDestroy () {
     this.$store.dispatch("project/updateScore", {
       score: this.score,
       phase: "design",
@@ -149,10 +149,10 @@ export default {
     });
   },
   methods: {
-    handleLock(index) {
+    handleLock (index) {
       this.score[index].locked = !this.score[index].locked;
     },
-    changeScore(index) {
+    changeScore (index) {
       let value = this.score[index].indicator;
       if (value >= 80) {
         this.score[index].score = this.items[index].max_score;
@@ -163,6 +163,8 @@ export default {
       } else if (value >= 50) {
         this.score[index].score = this.items[index].third_score;
         // this.sum += this.items[index].third_score;
+      } else {
+        this.score[index].score = 0
       }
     }
   }

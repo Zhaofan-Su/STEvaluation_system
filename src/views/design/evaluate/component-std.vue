@@ -76,7 +76,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data() {
+  data () {
     var checkNum = (rule, value, callback) => {
       if (!checkNum) {
         return callback(new Error("输入的比例不能为空"));
@@ -142,11 +142,11 @@ export default {
       eId: "eId"
     })
   },
-  created() {
+  created () {
     this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.desginSocre._2_2_3;
   },
-  beforeDestroy() {
+  beforeDestroy () {
     this.$store.dispatch("project/updateScore", {
       score: this.score,
       phase: "design",
@@ -155,10 +155,10 @@ export default {
   },
   // 最后提交的时候再计算每一个选项的得分
   methods: {
-    handleLock(index) {
+    handleLock (index) {
       this.score[index].locked = !this.score[index].locked;
     },
-    changeScore(index) {
+    changeScore (index) {
       let value = this.score[index].indicator;
       if (value >= 80) {
         this.score[index].score = this.items[index].max_score;
@@ -169,6 +169,8 @@ export default {
       } else if (value >= 50) {
         this.score[index].score = this.items[index].third_score;
         // this.sum += this.items[index].third_score;
+      } else {
+        this.score[index].score = 0
       }
     }
   }

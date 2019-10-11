@@ -34,12 +34,12 @@
               <el-radio
                 :label="true"
                 :disabled="score[index].locked"
-                @change="addScore(index, true)"
+                @change="addScore(index, _index, true)"
               >是</el-radio>
               <el-radio
                 :label="false"
                 :disabled="score[index].locked"
-                @change="addScore(index, true)"
+                @change="addScore(index, _index,true)"
               >否</el-radio>
             </el-radio-group>
           </el-form-item>
@@ -81,7 +81,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data() {
+  data () {
     return {
       items: [
         {
@@ -158,11 +158,11 @@ export default {
       eId: "eId"
     })
   },
-  created() {
+  created () {
     this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.constructScore._3_2_9;
   },
-  beforeDestroy() {
+  beforeDestroy () {
     this.$store.dispatch("project/updateScore", {
       score: this.score,
       phase: "construct",
@@ -170,8 +170,15 @@ export default {
     });
   },
   methods: {
-    handleLock(index) {
+    handleLock (index) {
       this.score[index].locked = !this.score[index].locked;
+    },
+    addScore (index, _index, whether) {
+      if (whether) {
+        this.score[index].children_question[_index].score = this.items[index].children_question[_index].max_score;
+      } else {
+        this.score[index].children_question[_index].score = 0
+      }
     }
   }
 };

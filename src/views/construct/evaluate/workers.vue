@@ -25,21 +25,21 @@
         </div>
         <el-form ref="form" :model="item" label-width="100px">
           <el-form-item label="工人减少比例">
-            <el-input v-model="score[index].indicator" style="width:40%" placeholder="请输入工人减少比例" />
+            <el-input
+              v-model="score[index].indicator"
+              style="width:40%"
+              placeholder="请输入工人减少比例"
+              @blur="changeScore(index)"
+            />
           </el-form-item>
           <el-form-item label="不满足简述">
             <el-input v-model="score[index].description" label="不满足简述" type="textarea" />
           </el-form-item>
           <el-form-item v-if="item.id<=3" label="得分">
-            <!-- <el-radio-group v-model="i.score">
-              <el-radio :label="10" :disabled="item.locked">预制率≥80%</el-radio>
-              <el-radio :label="8" :disabled="item.locked">65%≤预制率&lt;80%</el-radio>
-              <el-radio :label="5" :disabled="item.locked">50%≤预制率&lt;65%</el-radio>
-            </el-radio-group>-->
-            <span v-if="score[index].indicator>=0.5">{{ item.max_score }}&nbsp;&nbsp;分</span>
-            <span v-else-if="score[index].indicator>=0.4">{{ item.second_score }}&nbsp;&nbsp;分</span>
-            <span v-else-if="score[index].indicator>=0.2">{{ item.third_score }}&nbsp;&nbsp;分</span>
-            <span v-else-if="score[index].indicator>=0.1">{{ item.forth_score }}&nbsp;&nbsp;分</span>
+            <span v-if="score[index].indicator>=50">{{ item.max_score }}&nbsp;&nbsp;分</span>
+            <span v-else-if="score[index].indicator>=40">{{ item.second_score }}&nbsp;&nbsp;分</span>
+            <span v-else-if="score[index].indicator>=20">{{ item.third_score }}&nbsp;&nbsp;分</span>
+            <span v-else-if="score[index].indicator>=10">{{ item.forth_score }}&nbsp;&nbsp;分</span>
             <span v-else>0&nbsp;&nbsp;分</span>
           </el-form-item>
           <el-form-item v-else label="得分">
@@ -77,7 +77,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data() {
+  data () {
     return {
       items: [
         {
@@ -101,11 +101,11 @@ export default {
       eId: "eId"
     })
   },
-  created() {
+  created () {
     this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.constructScore._3_2_10;
   },
-  beforeDestroy() {
+  beforeDestroy () {
     this.$store.dispatch("project/updateScore", {
       score: this.score,
       phase: "construct",
@@ -114,8 +114,22 @@ export default {
   },
   // 最后提交的时候再计算每一个选项的得分
   methods: {
-    handleLock(index) {
+    handleLock (index) {
       this.score[index].locked = !this.score[index].locked;
+    },
+    changeScore (index) {
+      let value = this.score[index].indicator
+      if (value >= 50) {
+        this.score[index].score = 6
+      } else if (value >= 40) {
+        this.score[index].score = 5
+      } else if (value >= 20) {
+        this.score[index].score = 4
+      } else if (value >= 10) {
+        this.score[index].score = 3
+      } else {
+        this.score[index].score = 0
+      }
     }
   }
 };

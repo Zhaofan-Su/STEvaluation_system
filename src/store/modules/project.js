@@ -348,206 +348,253 @@ const state = {
       _3_2_1: [{
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }],
       _3_2_2: [{
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }],
       _3_2_3: [{
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }],
       _3_2_4: [{
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }],
       _3_2_5: [{
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }],
       _3_2_6: [{
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }],
       _3_2_7: [{
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }],
       _3_2_8: [{
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }, {
         satisfy: null,
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }],
       _3_2_9: [{
         children_question: [{
           satisfy: null,
-          description: ''
+          description: '',
+          score: 0
         }],
         locked: false
       }, {
         children_question: [{
           satisfy: null,
-          description: ''
+          description: '',
+          score: 0
         }],
-        locked: false
+        locked: false,
       }, {
         children_question: [{
           satisfy: null,
-          description: ''
+          description: '',
+          score: 0
         }, {
           satisfy: null,
-          description: ''
+          description: '',
+          score: 0
         }, {
           satisfy: null,
-          description: ''
+          description: '',
+          score: 0
         }],
         locked: false
       }, {
         children_question: [{
           satisfy: null,
-          description: ''
+          description: '',
+          score: 0
         }],
         locked: false
       }],
       _3_2_10: [{
         indicator: '',
         description: '',
-        locked: false
+        locked: false,
+        score: 0
       }],
       sum: 0
     },

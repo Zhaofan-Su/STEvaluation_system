@@ -113,7 +113,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data() {
+  data () {
     return {
       items: [
         {
@@ -162,11 +162,11 @@ export default {
       eId: "eId"
     })
   },
-  created() {
+  created () {
     this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.designScore._2_2_5;
   },
-  beforeDestroy() {
+  beforeDestroy () {
     // this.score.forEach(element => {
     //   this.sum += element.score;
     // });
@@ -179,28 +179,28 @@ export default {
   methods: {
     // 这个项目判断得分的时候，要注意第一个问题，是互斥的
 
-    handleLock(index) {
+    handleLock (index) {
       this.score[index].locked = !this.score[index].locked;
     },
-    addScore(index, whether) {
+    addScore (index, whether) {
       if (whether) {
         this.score[index].score = this.items[index].max_score;
       }
     },
-    changeOption(index) {
-      console.log(index);
+    changeOption (index) {
       for (let i = 0; i < 3; i++) {
         if (i === index) {
           this.score[0].options[i].satisfy = true;
           this.score[0].options[i].subscore = this.items[0].options[
             i
           ].max_score;
+          this.score[0].score = this.items[0].options[i].max_score
         } else {
           this.score[0].options[i].satisfy = false;
           this.score[0].options[i].subscore = 0;
+          this.score[0].score = 0
         }
       }
-      console.log(this.score[0].score);
     }
   }
 };
