@@ -22,35 +22,35 @@
       <el-card v-if="index==0" shadow="never" class="children-question">
         <el-form ref="form" :model="item" label-width="100px">
           <el-radio-group v-model="score[index].score">
-            <div class="vertical">
-              <el-radio
-                :label="4"
-                :disabled="score[index].locked"
-                class="vertical"
-                @change="changeOption(0)"
-              >&nbsp;{{ item.options[0].aspect }}</el-radio>
-            </div>
+            <!-- <div class="vertical"> -->
+            <el-radio
+              :label="4"
+              :disabled="score[index].locked"
+              class="vertical"
+              @change="changeOption(0)"
+            >&nbsp;{{ item.options[0].aspect }}</el-radio>
+            <!-- </div> -->
 
-            <div>
-              <el-radio
-                :label="2"
-                :disabled="score[index].locked"
-                class="vertical"
-                @change="changeOption(1)"
-              >
-                采用预制结构墙板、保温
-                <span style="color:red">或</span>外饰面一体化外维护系统，满足结构、保温、防渗、装饰要求
-              </el-radio>
-            </div>
+            <!-- <div> -->
+            <el-radio
+              :label="2"
+              :disabled="score[index].locked"
+              class="vertical"
+              @change="changeOption(1)"
+            >
+              采用预制结构墙板、保温
+              <span style="color:red">或</span>外饰面一体化外维护系统，满足结构、保温、防渗、装饰要求
+            </el-radio>
+            <!-- </div> -->
 
-            <div class="vertical">
-              <el-radio
-                :label="0"
-                :disabled="score[index].locked"
-                class="vertical"
-                @change="changeOption(2)"
-              >&nbsp;{{ item.options[2].aspect }}</el-radio>
-            </div>
+            <!-- <div class="vertical"> -->
+            <el-radio
+              :label="0"
+              :disabled="score[index].locked"
+              class="vertical"
+              @change="changeOption(2)"
+            >&nbsp;{{ item.options[2].aspect }}</el-radio>
+            <!-- </div> -->
           </el-radio-group>
           <el-form-item />
           <el-form-item label="不满足简述">
@@ -177,8 +177,6 @@ export default {
     });
   },
   methods: {
-    // 这个项目判断得分的时候，要注意第一个问题，是互斥的
-
     handleLock (index) {
       this.score[index].locked = !this.score[index].locked;
     },
@@ -194,11 +192,9 @@ export default {
           this.score[0].options[i].subscore = this.items[0].options[
             i
           ].max_score;
-          this.score[0].score = this.items[0].options[i].max_score
         } else {
           this.score[0].options[i].satisfy = false;
           this.score[0].options[i].subscore = 0;
-          this.score[0].score = 0
         }
       }
     }

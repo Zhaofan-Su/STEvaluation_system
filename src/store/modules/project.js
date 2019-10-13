@@ -317,32 +317,39 @@ const state = {
       _3_2_0: [{
           satisfy: null,
           description: '',
-          locked: false
+          locked: false,
+          score: 0
         },
         {
           satisfy: null,
           description: '',
-          locked: false
+          locked: false,
+          score: 0
         }, {
           satisfy: null,
           description: '',
-          locked: false
+          locked: false,
+          score: 0
         }, {
           satisfy: null,
           description: '',
-          locked: false
+          locked: false,
+          score: 0
         }, {
           satisfy: null,
           description: '',
-          locked: false
+          locked: false,
+          score: 0
         }, {
           satisfy: null,
           description: '',
-          locked: false
+          locked: false,
+          score: 0
         }, {
           satisfy: null,
           description: '',
-          locked: false
+          locked: false,
+          score: 0
         }
       ],
       _3_2_1: [{
@@ -927,30 +934,30 @@ const actions = {
           {
             children_question: [{
                 satisfy: null,
-                discription: '',
-                score: 0
+                score: 0,
+                discription: ''
               },
               {
                 satisfy: null,
-                discription: '',
-                score: 0
+                score: 0,
+                discription: ''
               }
             ],
             locked: false
           }
         ],
         _2_2_2: [{
-          indicator: '',
+          indicator: null,
           description: "",
           locked: false,
           score: 0
         }, {
-          indicator: '',
+          indicator: null,
           description: "",
           locked: false,
           score: 0
         }, {
-          indicator: '',
+          indicator: null,
           description: "",
           locked: false,
           score: 0
@@ -1010,7 +1017,7 @@ const actions = {
             satisfy: null,
             subscore: 0
           }, {
-            satisfy: '',
+            satisfy: null,
             subscore: 0
           }],
           score: 0,
@@ -1028,82 +1035,93 @@ const actions = {
           locked: false
         }],
         _2_2_6: [{
-          satisfy: null,
-          description: '',
-          locked: false,
-          score: 0
-        }, {
-          satisfy: null,
-          description: '',
-          locked: false,
-          score: 0
-        }, {
-          satisfy: null,
-          description: '',
-          locked: false,
-          score: 0
-        }, {
-          satisfy: null,
-          description: '',
-          locked: false,
-          score: 0
-        }, {
-          satisfy: null,
-          description: '',
-          locked: false,
-          score: 0
-        }, {
-          satisfy: null,
-          description: '',
-          locked: false,
-          score: 0
-        }, {
-          satisfy: null,
-          description: '',
-          locked: false,
-          score: 0
-        }, {
-          satisfy: null,
-          description: '',
-          locked: false,
-          score: 0
-        }, {
-          satisfy: null,
-          description: '',
-          locked: false,
-          score: 0
-        }],
+            satisfy: null,
+            description: '',
+            locked: false,
+            score: 0
+          },
+          {
+            satisfy: null,
+            description: '',
+            locked: false,
+            score: 0
+          },
+          {
+            satisfy: null,
+            description: '',
+            locked: false,
+            score: 0
+          },
+          {
+            satisfy: null,
+            description: '',
+            locked: false,
+            score: 0
+          }, {
+            satisfy: null,
+            description: '',
+            locked: false,
+            score: 0
+          }, {
+            satisfy: null,
+            description: '',
+            locked: false,
+            score: 0
+          }, {
+            satisfy: null,
+            description: '',
+            locked: false,
+            score: 0
+          }, {
+            satisfy: null,
+            description: '',
+            locked: false,
+            score: 0
+          }, {
+            satisfy: null,
+            description: '',
+            locked: false,
+            score: 0
+          }
+        ],
         _2_2_7: [{
           satisfy: null,
           description: '',
-          locked: false,
-          score: 0
+          locked: false
         }, {
           satisfy: null,
           description: '',
-          locked: false,
-          score: 0
+          locked: false
         }, {
           satisfy: null,
           description: '',
-          locked: false,
-          score: 0
+          locked: false
         }],
         _2_2_8: [{
           satisfy: null,
           description: '',
-          locked: false,
-          score: 0
+          locked: false
         }, {
           satisfy: null,
           description: '',
-          locked: false,
-          score: 0
+          locked: false
         }, {
           satisfy: null,
           description: '',
-          locked: false,
-          score: 0
+          locked: false
+        }],
+        _2_2_9: [{
+          satisfy: null,
+          description: '',
+          locked: false
+        }, {
+          satisfy: null,
+          description: '',
+          locked: false
+        }, {
+          satisfy: null,
+          description: '',
+          locked: false
         }],
         sum: 0
       },
@@ -1389,7 +1407,7 @@ const actions = {
             description: '',
             score: 0
           }],
-          locked: false
+          locked: false,
         }, {
           children_question: [{
             satisfy: null,

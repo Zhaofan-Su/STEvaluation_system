@@ -23,14 +23,16 @@
         <div slot="header" class="children-header">
           <div>{{ item.aspect }}.（{{ item.max_score }}分）</div>
         </div>
-        <el-form ref="form" :model="item" label-width="100px">
-          <el-form-item label="工人减少比例">
+        <el-form ref="form" :model="item" :rules="rules" label-width="100px">
+          <el-form-item label="工人减少比例" prop="indicator">
             <el-input
               v-model="score[index].indicator"
               style="width:40%"
               placeholder="请输入工人减少比例"
               @blur="changeScore(index)"
-            />
+            >
+              <template slot="suffix">%</template>
+            </el-input>
           </el-form-item>
           <el-form-item label="不满足简述">
             <el-input v-model="score[index].description" label="不满足简述" type="textarea" />
@@ -78,6 +80,22 @@ export default {
     EvaluationStd
   },
   data () {
+    var checkNum = (rule, value, callback) => {
+      if (!checkNum) {
+        return callback(new Error("输入的比例不能为空"));
+      }
+      setTimeout(() => {
+        if (!Number.isInteger(value)) {
+          callback(new Error("请输入数字"));
+        } else {
+          if (value < 0 || value > 100) {
+            callback(new Error("请输入范围0--100的数字"));
+          } else {
+            callback();
+          }
+        }
+      }, 500);
+    };
     return {
       items: [
         {
@@ -92,6 +110,11 @@ export default {
           evaluation_index: ""
         }
       ],
+      rules: {
+        indicator: [
+          { required: true, validator: checkNum, trigger: "blur" }
+        ]
+      },
       score: []
     };
   },

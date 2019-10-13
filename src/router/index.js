@@ -144,14 +144,19 @@ export const asyncRoutes = [{
       },
       {
         path: `/reportPreview/:id`,
-        component: () => import('@/views/pdf/download'),
+        component: () => import('@/views/pdf/preview'),
         meta: {
-          title: '下载'
+          title: '预览'
         },
         hidden: true
       }
     ]
   },
+  {
+    path: '/reportDownload',
+    component: () => import('@/views/pdf/download'),
+    hidden: true
+  }
 
 ]
 

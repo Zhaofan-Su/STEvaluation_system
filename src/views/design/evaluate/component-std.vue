@@ -127,7 +127,6 @@ export default {
         indicator: [
           {
             required: true,
-            type: "number",
             validator: checkNum,
             trigger: "blur"
           }
