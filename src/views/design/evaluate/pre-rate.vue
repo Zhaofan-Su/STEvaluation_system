@@ -23,7 +23,7 @@
         <div slot="header" class="children-header">
           <div>{{ item.aspect }}.（{{ item.max_score }}分）</div>
         </div>
-        <el-form ref="form" :model="item" label-width="100px" :rules="rules">
+        <el-form ref="forms" :model="score[index]" label-width="100px" :rules="rules[index]">
           <el-form-item label="预制率" prop="indicator">
             <el-input
               v-model="score[index].indicator"
@@ -49,16 +49,20 @@
 
     <div id="choose">
       <el-button-group>
-        <router-link to="/design/evaluate/standard">
-          <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
-        </router-link>
+        <!-- <router-link to="/design/evaluate/standard"> -->
+        <el-button
+          type="primary"
+          icon="el-icon-arrow-left"
+          @click="validate('/design/evaluate/standard')"
+        >上一项</el-button>
+        <!-- </router-link> -->
 
-        <router-link to="/design/evaluate/component-std">
-          <el-button type="primary">
-            下一项
-            <i class="el-icon-arrow-right el-icon--right"></i>
-          </el-button>
-        </router-link>
+        <!-- <router-link to="/design/evaluate/component-std"> -->
+        <el-button type="primary" @click="validate('/design/evaluate/component-std')">
+          下一项
+          <i class="el-icon-arrow-right el-icon--right"></i>
+        </el-button>
+        <!-- </router-link> -->
       </el-button-group>
     </div>
   </div>
@@ -77,23 +81,6 @@ export default {
     EvaluationStd
   },
   data () {
-    var checkNum = (rule, value, callback) => {
-      if (value === "") {
-        return callback(new Error("预制率不能为空"));
-      }
-      console.log(value, Number.isInteger(value));
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error("请输入数字"));
-        } else {
-          if (value < 0 || value > 100) {
-            callback(new Error("请输入范围0--100的数字"));
-          } else {
-            callback();
-          }
-        }
-      }, 700);
-    };
     return {
       items: [
         {
@@ -103,7 +90,8 @@ export default {
           max_score: 6,
           second_score: 4,
           third_score: 3,
-          evaluation_index: ""
+          evaluation_index: "",
+          domain: 'indicator'
         },
         {
           id: 2,
@@ -112,7 +100,8 @@ export default {
           max_score: 6,
           second_score: 4,
           third_score: 2,
-          evaluation_index: ""
+          evaluation_index: "",
+          domain: 'indicator'
         },
         {
           id: 3,
@@ -121,17 +110,11 @@ export default {
           max_score: 6,
           second_score: 3,
           third_score: 2,
-          evaluation_index: ""
+          evaluation_index: "",
+          domain: 'indicator'
         }
       ],
-      rules: {
-        indicator: [
-          {
-            validator: checkNum,
-            trigger: "blur"
-          }
-        ]
-      },
+      rules: [],
       score: []
     };
   },
@@ -142,6 +125,32 @@ export default {
     })
   },
   created () {
+    for (var i = 0; i < this.items.length; i++) {
+      this.rules.push({
+        indicator: [
+          {
+            validator: (rule, value, callback) => {
+              // if (value === "") {
+              //   return callback(new Error("预制率不能为空"));
+              // }
+              setTimeout(() => {
+                if (parseFloat(value).toString === "NaN") {
+                  callback(new Error("请输入数字"));
+                } else {
+                  if (value < 0 || value > 100) {
+                    callback(new Error("请输入范围0--100的数字"));
+                  } else {
+                    callback();
+                  }
+                }
+              }, 700);
+            },
+            trigger: 'blur'
+          }
+        ]
+      })
+    }
+
     this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.designScore._2_2_2;
   },
@@ -167,6 +176,23 @@ export default {
         this.score[index].score = this.items[index].third_score;
       } else {
         this.score[index].score = 0
+      }
+    },
+    validate (path) {
+      var validNum = 0
+      for (var i = 0; i < this.items.length; i++) {
+        this.$refs.forms[i].validate((valid) => {
+          if (valid) {
+            validNum++
+          }
+        })
+      }
+      if (validNum === this.items.length) {
+        this.$router.push(path)
+        return true
+      }
+      else {
+        return true
       }
     }
   }

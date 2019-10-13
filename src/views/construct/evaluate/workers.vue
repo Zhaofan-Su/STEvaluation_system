@@ -23,7 +23,7 @@
         <div slot="header" class="children-header">
           <div>{{ item.aspect }}.（{{ item.max_score }}分）</div>
         </div>
-        <el-form ref="form" :model="item" :rules="rules" label-width="100px">
+        <el-form ref="forms" :model="score[index]" :rules="rules[index]" label-width="100px">
           <el-form-item label="工人减少比例" prop="indicator">
             <el-input
               v-model="score[index].indicator"
@@ -54,16 +54,20 @@
 
     <div id="choose">
       <el-button-group>
-        <router-link to="/construct/evaluate/save-protection">
-          <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
-        </router-link>
+        <!-- <router-link to="/construct/evaluate/save-protection"> -->
+        <el-button
+          type="primary"
+          icon="el-icon-arrow-left"
+          @click="validate('/construct/evaluate/save-protection')"
+        >上一项</el-button>
+        <!-- </router-link> -->
 
-        <router-link to="/usage/basic">
-          <el-button type="primary">
-            下一项
-            <i class="el-icon-arrow-right el-icon--right"></i>
-          </el-button>
-        </router-link>
+        <!-- <router-link to="/usage/basic"> -->
+        <el-button type="primary">
+          下一项
+          <i class="el-icon-arrow-right el-icon--right" @click="validate('/usage/basic')"></i>
+        </el-button>
+        <!-- </router-link> -->
       </el-button-group>
     </div>
   </div>
@@ -80,22 +84,6 @@ export default {
     EvaluationStd
   },
   data () {
-    var checkNum = (rule, value, callback) => {
-      if (!checkNum) {
-        return callback(new Error("输入的比例不能为空"));
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error("请输入数字"));
-        } else {
-          if (value < 0 || value > 100) {
-            callback(new Error("请输入范围0--100的数字"));
-          } else {
-            callback();
-          }
-        }
-      }, 500);
-    };
     return {
       items: [
         {
@@ -110,11 +98,7 @@ export default {
           evaluation_index: ""
         }
       ],
-      rules: {
-        indicator: [
-          { required: true, validator: checkNum, trigger: "blur" }
-        ]
-      },
+      rules: [],
       score: []
     };
   },
@@ -125,6 +109,32 @@ export default {
     })
   },
   created () {
+    for (var i = 0; i < this.items.length; i++) {
+      this.rules.push({
+        indicator: [
+          {
+            validator: (rule, value, callback) => {
+              // if (value === "") {
+              //   return callback(new Error("预制率不能为空"));
+              // }
+              setTimeout(() => {
+                if (parseFloat(value).toString === "NaN") {
+                  callback(new Error("请输入数字"));
+                } else {
+                  if (value < 0 || value > 100) {
+                    callback(new Error("请输入范围0--100的数字"));
+                  } else {
+                    callback();
+                  }
+                }
+              }, 700);
+            },
+            trigger: 'blur'
+          }
+        ]
+      })
+    }
+
     this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.constructScore._3_2_10;
   },
@@ -152,6 +162,23 @@ export default {
         this.score[index].score = 3
       } else {
         this.score[index].score = 0
+      }
+    },
+    validate (path) {
+      var validNum = 0
+      for (var i = 0; i < this.items.length; i++) {
+        this.$refs.forms[i].validate((valid) => {
+          if (valid) {
+            validNum++
+          }
+        })
+      }
+      if (validNum === this.items.length) {
+        this.$router.push(path)
+        return true
+      }
+      else {
+        return true
       }
     }
   }
