@@ -97,7 +97,6 @@
         </template>
       </el-table-column>
     </el-table>
-
     <pagination
       v-show="total>0"
       :total="total"
@@ -127,12 +126,13 @@ export default {
       tableKey: 1,
       list: [],
       total: 0,
-      listLoading: false,
+      listLoading: true,
       listQuery: {
         page: 1,
-        limit: 20,
+        limit: 10,
         projectName: undefined,
-        type: undefined
+        type: undefined,
+        sort: "+id"
       }
     };
   },
@@ -140,12 +140,27 @@ export default {
     ...mapGetters(["userId"])
   },
   created() {
-    this.getList(this.userId);
+    this.getList();
   },
   methods: {
-    async getList(userId) {
-      const response = await getProjectsByUser(userId);
-      this.list = response.value.reverse();
+    async getList() {
+      this.listLoading = true;
+      const response = await getProjectsByUser(this.userId);
+      let results = response.value.reverse();
+      this.total = results.length;
+      // 分页器实现
+      let currentPage = this.listQuery.page;
+      let limit = this.listQuery.limit;
+      if (this.total === 1) {
+        this.list = results;
+      } else {
+        this.list = results.slice(
+          (currentPage - 1) * limit,
+          currentPage * limit < this.total ? currentPage * limit - 1 : -1
+        );
+      }
+
+      this.listLoading = false;
     },
     onSearch() {
       this.$message({
@@ -188,7 +203,9 @@ export default {
 
 <style lang="scss" scoped>
 .app-container {
+  padding: 15px 20px;
   .filter-container {
+    padding: 0;
     .filter-item {
       vertical-align: bottom;
     }

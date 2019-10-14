@@ -1,8 +1,13 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.mobile" placeholder="用户电话" style="width:200px" />
-      <el-select v-model="listQuery.userType" placeholder="用户类型">
+      <el-input
+        class="filter-item"
+        v-model="listQuery.mobile"
+        placeholder="用户电话"
+        style="width:200px"
+      />
+      <el-select class="filter-item" v-model="listQuery.userType" placeholder="用户类型">
         <el-option label="管理员" value="0" />
         <el-option label="内部人员" value="1" />
         <el-option label="外部人员" value="2" />
@@ -16,7 +21,7 @@
         @click="onSearch"
       >搜索</el-button>
 
-      <el-button type="primary" @click="createUser">新增用户</el-button>
+      <el-button class="filter-item" type="primary" @click="createUser">新增用户</el-button>
     </div>
 
     <div class="userTable">
@@ -25,12 +30,12 @@
         fit
         highlight-current-row
         style="width:100%"
-        :header-cell-style="{background:'#eef1f6'}"
+        v-loading="listLoading"
       >
         <el-table-column prop="username" label="用户名" align="center" width="150"></el-table-column>
-        <el-table-column prop="realname" label="真实姓名" align="center" width="120"></el-table-column>
-        <el-table-column prop="mobile" label="电话" align="header-center" width="180"></el-table-column>
-        <el-table-column label="用户角色" align="cneter" width="100">
+        <el-table-column prop="realname" label="真实姓名" align="center" width="200"></el-table-column>
+        <el-table-column prop="mobile" label="电话" align="head-center" width="180"></el-table-column>
+        <el-table-column label="用户角色" align="center" width="100">
           <template slot-scope="scope">{{roleMap[scope.row.role]}}</template>
         </el-table-column>
         <el-table-column label="操作" align="center">
@@ -40,7 +45,15 @@
           </template>
         </el-table-column>
       </el-table>
+      <pagination
+        v-show="total>0"
+        :total="total"
+        :page.sync="listQuery.page"
+        :limit.sync="listQuery.limit"
+        @pagination="getUsers"
+      />
     </div>
+
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'修改用户角色':'新增用户'" center>
       <el-form v-model="choosedUser" label-width="100px">
         <el-form-item label="用户名">
@@ -52,13 +65,25 @@
             :disabled="dialogType==='edit'?true:false"
             placeholder="请输入真实姓名"
           />-->
-          <el-input v-model="choosedUser.realname" :disabled="disabled" placeholder="请输入真实姓名" />
+          <el-input
+            v-model="choosedUser.realname"
+            :disabled="disabled"
+            :placeholder="choosedUser.realname"
+          />
         </el-form-item>
         <el-form-item v-if="dialogType==='add'" label="密码">
-          <el-input v-model="choosedUser.password" :disabled="disabled" placeholder="请输入密码" />
+          <el-input
+            v-model="choosedUser.password"
+            :disabled="disabled"
+            :placeholder="choosedUser.password"
+          />
         </el-form-item>
         <el-form-item label="电话号码">
-          <el-input v-model="choosedUser.mobile" :disabled="disabled" placeholder="请输入电话号码" />
+          <el-input
+            v-model="choosedUser.mobile"
+            :disabled="disabled"
+            :placeholder="choosedUser.mobile"
+          />
         </el-form-item>
         <el-form-item label="用户角色">
           <el-radio-group v-model="choosedUser.role">
@@ -78,10 +103,12 @@
 <script>
 import { async } from "q";
 import waves from "@/directive/waves";
-import { getUsers } from "@/api/user";
+import { getUsers, changeRole } from "@/api/user";
+import Pagination from "@/components/Pagination";
+
 export default {
   name: "Peoples",
-  components: {},
+  components: { Pagination },
   directives: { waves },
   data() {
     return {
@@ -102,9 +129,11 @@ export default {
       disabled: false,
       dialogType: "",
       tableData: [],
+      total: 0,
+      listLoading: true,
       listQuery: {
         page: 1,
-        limit: 20,
+        limit: 10,
         mobile: undefined,
         userType: undefined
       }
@@ -124,12 +153,31 @@ export default {
   },
   methods: {
     async getUsers() {
+      this.listLoading = true;
       const res = await getUsers();
-      let list = [];
+      let users = [];
+      let admins = [];
       for (var key in res.value) {
-        list.push(res.value[key]);
+        if (res.value[key].role === 0) {
+          admins.push(res.value[key]);
+        } else {
+          users.push(res.value[key]);
+        }
       }
-      this.tableData = list.reverse();
+      var results = users.concat(admins).reverse();
+      this.total = results.length;
+      // 分页器实现
+      let currentPage = this.listQuery.page;
+      let limit = this.listQuery.limit;
+      if (this.total === 1) {
+        this.tableData = results;
+      } else {
+        this.tableData = results.slice(
+          (currentPage - 1) * limit,
+          currentPage * limit < this.total ? currentPage * limit - 1 : -1
+        );
+      }
+      this.listLoading = false;
     },
     onSearch() {},
     createUser() {
@@ -139,6 +187,7 @@ export default {
     changeRole({ $index, row }) {
       this.dialogType = "edit";
       this.dialogVisible = true;
+      this.choosedUser = this.tableData[$index];
     },
     deleteUser({ $index, row }) {
       this.$confirm("确认删除用户？", "警告", {
@@ -161,7 +210,27 @@ export default {
     confirmUser() {
       // put到数据库里, 得到返回数据之后，更新一下id
       if (this.dialogType === "edit") {
-        this.tableData.splice($index, 1, this.choosedUser);
+        changeRole({
+          userId: this.choosedUser.id,
+          role: this.choosedUser.role
+        })
+          .then(response => {
+            this.$message({
+              message: "修改用户权限成功",
+              type: "success"
+            });
+            for (var index = 0; index < this.tableData.length; index++) {
+              if (this.tableData[index].id === this.choosedUser.id) {
+                this.tableData.splice(index, 1, this.choosedUser);
+              }
+            }
+          })
+          .catch(error => {
+            this.$message({
+              message: error,
+              type: "wrong"
+            });
+          });
       } else {
         this.tableData.push(this.choosedUser);
       }
@@ -174,12 +243,12 @@ export default {
 
 <style lang="scss" scoped>
 .app-container {
-  .userTable {
-    text-align: center;
-    // >>> .el-table {
-    //   margin: 30px auto;
-    // }
+  .filter-container {
+    .filter-item {
+      vertical-align: bottom;
+    }
   }
+
   .dialog-button {
     text-align: center;
   }

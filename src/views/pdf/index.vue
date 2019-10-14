@@ -91,10 +91,10 @@ export default {
       tableKey: 1,
       list: [],
       total: 0,
-      listLoading: false,
+      listLoading: true,
       listQuery: {
         page: 1,
-        limit: 20,
+        limit: 10,
         projectName: undefined,
         type: undefined
       }
@@ -104,17 +104,32 @@ export default {
     ...mapGetters(["userId"])
   },
   created() {
-    this.getList(this.userId);
+    this.getList();
   },
   methods: {
-    async getList(userId) {
-      const response = await getProjectsByUser(userId);
-      let results = response.value.reverse();
-      results.forEach(ele => {
+    async getList() {
+      this.listLoading = true;
+      const response = await getProjectsByUser(this.userId);
+      let responseData = response.value.reverse();
+      let results = [];
+      responseData.forEach(ele => {
         if (ele.state === "finished") {
-          this.list.push(ele);
+          results.push(ele);
         }
       });
+      this.total = results.length;
+      // 分页器实现
+      let currentPage = this.listQuery.page;
+      let limit = this.listQuery.limit;
+      if (this.total === 1) {
+        this.list = results;
+      } else {
+        this.list = results.slice(
+          (currentPage - 1) * limit,
+          currentPage * limit < this.total ? currentPage * limit - 1 : -1
+        );
+      }
+      this.listLoading = false;
     },
     toPdf(row) {
       this.$router.push(`/reportPreview/${row.eId}`);

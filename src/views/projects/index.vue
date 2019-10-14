@@ -2,7 +2,12 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.projectName" class="filter-item" placeholder="项目名称" style="width: 200px" />
+      <el-input
+        v-model="listQuery.projectName"
+        class="filter-item"
+        placeholder="项目名称"
+        style="width: 200px"
+      />
       <el-select v-model="listQuery.type" class="filter-item" placeholder="建筑类型">
         <el-option label="居住建筑" value="living" />
         <el-option label="公共建筑" value="public" />
@@ -95,6 +100,12 @@
           <el-tag v-else type="warning">未完成</el-tag>
         </template>
       </el-table-column>
+
+      <el-table-column label="操作" align="center" v-if="role===0">
+        <template slot-scope="scope">
+          <el-button type="danger" @click="remove(scope.eId)" plain>删除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination
@@ -111,7 +122,7 @@
 <script>
 import waves from "@/directive/waves";
 import Pagination from "@/components/Pagination";
-import { getAllProjects } from "@/api/projects";
+import { getAllProjects, deleteProject } from "@/api/projects";
 import { mapStat, mapState, mapGetters } from "vuex";
 
 export default {
@@ -125,25 +136,36 @@ export default {
       tableKey: 1,
       list: [],
       total: 0,
-      listLoading: false,
+      listLoading: true,
       listQuery: {
         page: 1,
-        limit: 20,
+        limit: 10,
         projectName: undefined,
         type: undefined
       }
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters(["role"])
+  },
   created() {
     this.getList();
+    console.log(this.role);
   },
   methods: {
     async getList() {
       this.listLoading = true;
       getAllProjects().then(response => {
-        this.list = response.value.reverse();
-        console.log(this.list);
+        var results = response.value.reverse();
+        this.total = results.length;
+        // 分页器实现
+        let currentPage = this.listQuery.page;
+        let limit = this.listQuery.limit;
+        this.list = results.slice(
+          (currentPage - 1) * limit,
+          currentPage * limit < this.total ? currentPage * limit - 1 : -1
+        );
+
         this.listLoading = false;
       });
     },
@@ -152,6 +174,26 @@ export default {
         message: "搜索功能暂未开放！",
         type: "primary"
       });
+    },
+    remove(eId) {
+      this.$confirm("确认删除此项目？")
+        .then(_ => {
+          deleteProject(eId)
+            .then(response => {
+              this.$message({
+                message: "成功删除项目",
+                type: "success"
+              });
+              this.getList();
+            })
+            .catch(error => {
+              this.$message({
+                message: error,
+                type: "wrong"
+              });
+            });
+        })
+        .catch(_ => {});
     }
   }
 };

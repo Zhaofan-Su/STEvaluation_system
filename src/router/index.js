@@ -110,6 +110,21 @@ export const asyncRoutes = [{
     }]
   },
   {
+    path: '/peoples',
+    component: Layout,
+    children: [{
+      path: '',
+      component: () => import('@/views/peoples/index'),
+      meta: {
+        name: 'Peoples',
+        title: '用户管理',
+        icon: 'peoples',
+        roles: ['admin'],
+        noCache: true
+      }
+    }]
+  },
+  {
     path: '/projectInfo',
     component: Layout,
     name: 'ProjectInfo',

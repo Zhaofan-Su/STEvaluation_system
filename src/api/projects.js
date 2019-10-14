@@ -53,3 +53,10 @@ export function updateProjectInfo(data) {
     data
   })
 }
+
+export function deleteProject(eId) {
+  return request({
+    url: `evaluation/${eId}`,
+    method: 'GET'
+  })
+}
