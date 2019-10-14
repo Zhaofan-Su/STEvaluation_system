@@ -103,7 +103,7 @@
 <script>
 import { async } from "q";
 import waves from "@/directive/waves";
-import { getUsers, changeRole } from "@/api/user";
+import { getUsers, changeRole, addUser, deleteUser } from "@/api/user";
 import Pagination from "@/components/Pagination";
 
 export default {
@@ -196,12 +196,12 @@ export default {
         type: "warning"
       })
         .then(async () => {
-          // await deleteUser()远程数据库删除数据
-          // this.tableData.splice($index, 1)
-          // this.$message({
-          //   type: 'success',
-          //   message: '删除成功！'
-          // })
+          await deleteUser(row.id);
+          this.tableData.splice($index, 1);
+          this.$message({
+            type: "success",
+            message: "删除成功！"
+          });
         })
         .catch(err => {
           console.log(err);
@@ -226,13 +226,20 @@ export default {
             }
           })
           .catch(error => {
-            this.$message({
-              message: error,
-              type: "wrong"
-            });
+            console.log(error);
           });
       } else {
-        this.tableData.push(this.choosedUser);
+        addUser(this.choosedUser)
+          .then(response => {
+            this.$message({
+              message: "成功创建用户",
+              type: "success"
+            });
+            this.tableData.push(this.choosedUser);
+          })
+          .catch(error => {
+            console.log(error);
+          });
       }
       this.dialogType = "";
       this.dialogVisible = false;

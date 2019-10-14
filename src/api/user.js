@@ -85,3 +85,42 @@ export function changeRole(data) {
     ]
   })
 }
+
+export function addUser(data) {
+  return request({
+    url: 'user/admin',
+    method: 'post',
+    data,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    },
+    transformRequest: [
+      data => {
+        let params = ''
+        for (var index in data) {
+          params += index + '=' + data[index] + '&'
+        }
+        return params
+      }
+    ]
+  })
+}
+
+export function deleteUser(userId) {
+  return request({
+    url: `user/${userId}`,
+    method: 'delete',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    },
+    transformRequest: [
+      data => {
+        let params = ''
+        for (var index in data) {
+          params += index + '=' + data[index] + '&'
+        }
+        return params
+      }
+    ]
+  })
+}

@@ -23,43 +23,55 @@
       <template v-if="device!=='mobile'">
         <el-tooltip effect="dark" content="提交项目" placement="bottom">
           <div id="submit" class="right-menu-item hover-effect">
-            <i class="el-icon-upload" @click="submitProject" />
+            <svg-icon icon-class="upload" @click="submitProject" />
           </div>
         </el-tooltip>
         <el-tooltip effect="dark" content="新建项目" placement="bottom">
           <div id="newProject" class="right-menu-item hover-effect" @click="handleNewProject">
-            <i class="el-icon-document-add" />
+            <!-- <i class="el-icon-document-add" /> -->
+
+            <svg-icon icon-class="newProject" />
+          </div>
+        </el-tooltip>
+
+        <el-tooltip effect="dark" content="注销" placement="bottom">
+          <div id="logout" class="right-menu-item hover-effect" @click="logout">
+            <!-- <i class="el-icon-document-add" /> -->
+
+            <svg-icon icon-class="logout" />
           </div>
         </el-tooltip>
       </template>
 
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
-        <div class="avatar-wrapper">
-          <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" /> -->
-          <i class="user-avatar el-icon-user" />
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu slot="dropdown">
-          <!-- <el-dropdown-item to="/">
+      <!-- <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click"> -->
+      <!-- <div class="avatar-wrapper"> -->
+      <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" /> -->
+      <!-- <i class="user-avatar el-icon-user" /> -->
+      <!-- <svg-icon icon-class="myself" /> -->
+      <!-- <i class="el-icon-caret-bottom" /> -->
+      <!-- <svg-icon icon-class="dropdown" /> -->
+      <!-- </div> -->
+      <!-- <el-dropdown-menu slot="dropdown"> -->
+      <!-- <el-dropdown-item to="/">
             <el-dropdown-item>首页</el-dropdown-item>
           </el-dropdown-item>
           <router-link to="/profile/index">
             <el-dropdown-item>用户中心</el-dropdown-item>
-          </router-link>-->
-          <!-- <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
+      </router-link>-->
+      <!-- <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
             <el-dropdown-item>Github</el-dropdown-item>
           </a>
           <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
             <el-dropdown-item>Docs</el-dropdown-item>
-          </a>-->
-          <el-dropdown-item>
+      </a>-->
+      <!-- <el-dropdown-item> -->
+      <!-- <span style="display:block;" @click="logout">注销</span> -->
+      <!-- </el-dropdown-item> -->
+      <!-- <el-dropdown-item divided>
             <span style="display:block;" @click="logout">注销</span>
-          </el-dropdown-item>
-          <!-- <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">注销</span>
-          </el-dropdown-item>-->
-        </el-dropdown-menu>
-      </el-dropdown>
+      </el-dropdown-item>-->
+      <!-- </el-dropdown-menu> -->
+      <!-- </el-dropdown> -->
     </div>
 
     <el-dialog
@@ -315,7 +327,7 @@ export default {
     float: right;
     height: 100%;
     line-height: 50px;
-
+    margin-right: 8px;
     &:focus {
       outline: none;
     }
@@ -324,7 +336,7 @@ export default {
       display: inline-block;
       padding: 0 8px;
       height: 100%;
-      font-size: 35px;
+      font-size: 20px;
       color: #5a5e66;
       vertical-align: text-bottom;
 
