@@ -78,22 +78,30 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center">
+      <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button
-            v-if="scope.row.state!=='finished'"
-            type="primary"
-            plain
-            :disabled="scope.row.state==='finished'?true:false"
-            @click="toEdit(scope.row)"
-          >编辑</el-button>
-          <el-button
-            v-if="scope.row.state==='finished'"
-            type="success"
-            plain
-            :disabled="scope.row.state==='finished'?false:true"
-            @click="toPdf(scope.row)"
-          >预览</el-button>
+          <el-tooltip content="编辑" effect="light" placement="bottom">
+            <el-button
+              v-if="scope.row.state!=='finished'"
+              type="primary"
+              plain
+              @click="toEdit(scope.row)"
+              size="small"
+              icon="el-icon-edit"
+              circle
+            ></el-button>
+          </el-tooltip>
+          <el-tooltip content="预览报告" effect="light" placement="bottom">
+            <el-button
+              v-if="scope.row.state==='finished'"
+              type="success"
+              plain
+              @click="toPdf(scope.row)"
+              size="small"
+              icon="el-icon-document-checked"
+              circle
+            ></el-button>
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>

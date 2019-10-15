@@ -52,12 +52,16 @@
 
       <el-table-column align="center">
         <template slot-scope="scope">
-          <el-button
-            type="success"
-            plain
-            :disabled="scope.row.state==='finished'?false:true"
-            @click="toPdf(scope.row)"
-          >预览</el-button>
+          <el-tooltip content="预览报告" effect="light" placement="bottom">
+            <el-button
+              type="success"
+              plain
+              @click="toPdf(scope.row)"
+              circle
+              icon="el-icon-document-checked"
+              size="small"
+            ></el-button>
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>

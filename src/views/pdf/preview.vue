@@ -1,7 +1,9 @@
 <template>
   <div>
     <div>
-      <el-button @click="print" class="print" type="primary">打印</el-button>
+      <el-tooltip content="下载报告" effect="dark" placement="bottom">
+        <el-button @click="print" class="print" type="primary" icon="el-icon-download" circle></el-button>
+      </el-tooltip>
     </div>
 
     <detail :eId="this.$route.params.id"></detail>
@@ -9,33 +11,32 @@
 </template>
 
 <script>
-import detail from './detail'
+import detail from "./detail";
 export default {
-  name: 'preview',
+  name: "preview",
   components: {
     detail
   },
-  data () {
-    return {
-    }
+  data() {
+    return {};
   },
   methods: {
-    print () {
+    print() {
       // this.$router.push(`/reportDownload/${this.$route.params.id}`)
       let printHtml = this.$router.resolve({
-        path: '/reportDownload',
+        path: "/reportDownload",
         query: { id: this.$route.params.id }
-      })
-      window.open(printHtml.href, '_blank')
+      });
+      window.open(printHtml.href, "_blank");
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .print {
   position: fixed;
-  right: 0px;
+  right: 30px;
   top: 80px;
 }
 </style>

@@ -103,7 +103,16 @@
 
       <el-table-column label="操作" align="center" v-if="role===0">
         <template slot-scope="scope">
-          <el-button type="danger" @click="remove(scope.eId)" plain>删除</el-button>
+          <el-tooltip content="删除" effect="light" placement="bottom">
+            <el-button
+              type="danger"
+              @click="remove(scope.eId)"
+              plain
+              size="small"
+              icon="el-icon-delete"
+              circle
+            ></el-button>
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
@@ -150,7 +159,6 @@ export default {
   },
   created() {
     this.getList();
-    console.log(this.role);
   },
   methods: {
     async getList() {
@@ -201,7 +209,9 @@ export default {
 
 <style lang="scss" scoped>
 .app-container {
+  padding: 15px 20px;
   .filter-container {
+    padding: 0;
     .filter-item {
       vertical-align: bottom;
     }

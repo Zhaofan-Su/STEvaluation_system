@@ -327,7 +327,7 @@ export default {
     float: right;
     height: 100%;
     line-height: 50px;
-    margin-right: 8px;
+    margin-right: 15px;
     &:focus {
       outline: none;
     }
