@@ -72,82 +72,79 @@
       <el-button
         :loading="loading"
         type="primary"
-        style="width:100%;margin-bottom:30px"
+        style="width:100%;margin-bottom:15px"
         @click.native.prevent="handleRegister"
       >注册</el-button>
+      <div>
+        <router-link to="/login">
+          <el-button type="text">账号密码登录</el-button>
+        </router-link>
+      </div>
     </el-form>
   </div>
 </template>
 
 <script>
-import { register } from '@/api/user'
+import { register } from "@/api/user";
 export default {
   name: "Register",
-  data () {
+  data() {
     var checkMobile = (rule, value, callback) => {
-      const mobileReg = /^1[3|4|5|7|8][0-9]{9}$/
+      const mobileReg = /^1[3|4|5|7|8][0-9]{9}$/;
       if (value === "") {
-        return callback(new Error("请输入电话号码"))
+        return callback(new Error("请输入电话号码"));
       }
       setTimeout(() => {
         if (!Number.isInteger(+value)) {
-          callback(new Error('请输入数字值'))
-        }
-        else {
+          callback(new Error("请输入数字值"));
+        } else {
           if (mobileReg.test(value)) {
-            callback()
-          }
-          else {
-            callback(new Error('电话号码格式不正确'))
+            callback();
+          } else {
+            callback(new Error("电话号码格式不正确"));
           }
         }
-      }, 700)
-    }
+      }, 700);
+    };
     var checkPwd = (rule, value, callback) => {
       if (value === "") {
-        return callback(new Error("请输入密码"))
+        return callback(new Error("请输入密码"));
       } else {
         if (this.registerForm.confirmPwd !== "") {
-          this.$refs.registerForm.validateField('confirm')
+          this.$refs.registerForm.validateField("confirm");
         }
-        callback()
+        callback();
       }
-    }
+    };
     var confirmPwd = (rule, value, callback) => {
       if (value === "") {
-        return callback(new Error("请再次输入密码"))
+        return callback(new Error("请再次输入密码"));
       } else if (value !== this.registerForm.password) {
-        return callback(new Error("两次输入的密码不一致"))
+        return callback(new Error("两次输入的密码不一致"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
       registerForm: {
         username: "",
         realname: "",
         mobile: "",
         password: "",
-        confirmPwd: "",
+        confirmPwd: ""
       },
       passwordType: "password",
       capsTooltip: false,
       loading: false,
       rules: {
-        mobile: [
-          { validator: checkMobile, trigger: 'blur' }
-        ],
-        password: [
-          { validator: checkPwd, trigger: 'blur' }
-        ],
-        confirm: [
-          { validator: confirmPwd, trigger: 'blur' }
-        ]
+        // mobile: [{ validator: checkMobile, trigger: "blur" }],
+        password: [{ validator: checkPwd, trigger: "blur" }],
+        confirm: [{ validator: confirmPwd, trigger: "blur" }]
       }
     };
   },
   methods: {
-    checkCapslock ({ shiftKey, key } = {}) {
+    checkCapslock({ shiftKey, key } = {}) {
       if (key && key.length === 1) {
         if (
           (shiftKey && (key >= "a" && key <= "z")) ||
@@ -162,7 +159,7 @@ export default {
         this.capsTooltip = false;
       }
     },
-    showPwd () {
+    showPwd() {
       if (this.passwordType === "password") {
         this.passwordType = "";
       } else {
@@ -172,7 +169,7 @@ export default {
         this.$refs.password.focus();
       });
     },
-    handleRegister () {
+    handleRegister() {
       this.$refs.registerForm.validate(valid => {
         if (valid) {
           var newUser = {
@@ -180,25 +177,25 @@ export default {
             realname: this.registerForm.realname,
             mobile: this.registerForm.mobile,
             password: this.registerForm.password
-          }
+          };
           return new Promise((resolve, reject) => {
             register(newUser).then(response => {
               this.$message({
                 message: "注册成功！",
-                type: 'success'
-              })
-              this.$router.push("/")
-              this.loading = false
-              resolve()
-            })
+                type: "success"
+              });
+              this.$router.push("/");
+              this.loading = false;
+              resolve();
+            });
           }).catch(err => {
-            console.log(err)
-            reject(err)
-          })
+            console.log(err);
+            reject(err);
+          });
         } else {
-          this.loading = true
+          // this.loading = true;
         }
-      })
+      });
     }
   }
 };

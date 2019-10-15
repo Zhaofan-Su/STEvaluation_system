@@ -70,26 +70,24 @@
 import { mapState } from "vuex";
 export default {
   name: "Login",
-  data () {
+  data() {
     var checkMobile = (rule, value, callback) => {
-      const mobileReg = /^1[3|4|5|7|8][0-9]{9}$/
+      const mobileReg = /^1[3|4|5|7|8][0-9]{9}$/;
       if (value === "") {
-        return callback(new Error("请输入电话号码"))
+        return callback(new Error("请输入电话号码"));
       }
       setTimeout(() => {
         if (!Number.isInteger(+value)) {
-          callback(new Error('请输入数字值'))
-        }
-        else {
+          callback(new Error("请输入数字值"));
+        } else {
           if (mobileReg.test(value)) {
-            callback()
-          }
-          else {
-            callback(new Error('电话号码格式不正确'))
+            callback();
+          } else {
+            callback(new Error("电话号码格式不正确"));
           }
         }
-      }, 700)
-    }
+      }, 700);
+    };
 
     return {
       loginForm: {
@@ -100,9 +98,7 @@ export default {
         // mobile: [
         //   { validator: checkMobile, trigger: "blur" }
         // ],
-        password: [
-          { required: true, message: '密码不能为空', trigger: "blur" }
-        ]
+        password: [{ required: true, message: "密码不能为空", trigger: "blur" }]
       },
       passwordType: "password",
       capsTooltip: false,
@@ -114,7 +110,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function (route) {
+      handler: function(route) {
         const query = route.query;
         if (query) {
           this.redirect = query.redirect;
@@ -125,7 +121,7 @@ export default {
     }
   },
   methods: {
-    checkCapslock ({ shiftKey, key } = {}) {
+    checkCapslock({ shiftKey, key } = {}) {
       if (key && key.length === 1) {
         if (
           (shiftKey && (key >= "a" && key <= "z")) ||
@@ -140,7 +136,7 @@ export default {
         this.capsTooltip = false;
       }
     },
-    showPwd () {
+    showPwd() {
       if (this.passwordType === "password") {
         this.passwordType = "";
       } else {
@@ -150,15 +146,14 @@ export default {
         this.$refs.password.focus();
       });
     },
-    handleLogin () {
+    handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
           this.$store
             .dispatch("user/login", this.loginForm)
             .then(() => {
-           
-              this.$router.push('/')
+              this.$router.push("/");
               this.loading = false;
             })
             .catch(() => {
@@ -170,10 +165,10 @@ export default {
         }
       });
     },
-    handleRegister () {
+    handleRegister() {
       this.$router.push("/register");
     },
-    getOtherQuery (query) {
+    getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {
         if (cur !== "redirect") {
           acc[cur] = query[cur];

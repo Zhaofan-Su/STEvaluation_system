@@ -86,18 +86,16 @@
     </el-card>
 
     <div id="choose">
-      <el-button-group>
-        <router-link to="/design/evaluate/assemble-rate">
-          <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
-        </router-link>
+      <router-link to="/design/evaluate/assemble-rate">
+        <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
+      </router-link>
 
-        <router-link to="/design/evaluate/design-depth">
-          <el-button type="primary">
-            下一项
-            <i class="el-icon-arrow-right el-icon--right"></i>
-          </el-button>
-        </router-link>
-      </el-button-group>
+      <router-link to="/design/evaluate/design-depth">
+        <el-button type="primary" style="margin-left:20px">
+          下一项
+          <i class="el-icon-arrow-right el-icon--right"></i>
+        </el-button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -113,7 +111,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -162,11 +160,11 @@ export default {
       eId: "eId"
     })
   },
-  created () {
+  created() {
     this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.designScore._2_2_5;
   },
-  beforeDestroy () {
+  beforeDestroy() {
     // this.score.forEach(element => {
     //   this.sum += element.score;
     // });
@@ -177,15 +175,15 @@ export default {
     });
   },
   methods: {
-    handleLock (index) {
+    handleLock(index) {
       this.score[index].locked = !this.score[index].locked;
     },
-    addScore (index, whether) {
+    addScore(index, whether) {
       if (whether) {
         this.score[index].score = this.items[index].max_score;
       }
     },
-    changeOption (index) {
+    changeOption(index) {
       for (let i = 0; i < 3; i++) {
         if (i === index) {
           this.score[0].options[i].satisfy = true;

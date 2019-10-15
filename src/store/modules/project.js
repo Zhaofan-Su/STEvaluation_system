@@ -802,6 +802,25 @@ const actions = {
   }) {
     commit('SET_EVALUATE', false)
     commit('SET_EID', '')
+    const newInfo = {
+      projectName: '',
+      province: '',
+      city: '',
+      type: '',
+      area: '',
+      height: '',
+      construct: '',
+      design: '',
+      build: '',
+      structType: ''
+    }
+    commit('SET_PROJECTINFO', newInfo)
+    commit('SET_CREATETIME', '')
+    commit('SET_ENDTIME', '')
+    commit('SET_CREATOR', '')
+    commit('SET_RWSTATE', 0)
+    commit('SET_SENDTO', [])
+    commit('SET_STATUS', '')
     dispatch('clearScore')
   },
 

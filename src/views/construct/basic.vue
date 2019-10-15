@@ -2,42 +2,40 @@
   <div class="app-container">
     <h2>建造阶段</h2>
     <el-card v-for="(item, index) in items" :key="item.id" class="evaluation-item" shadow="hover">
-      <div slot="header">
+      <div slot="header" class="clearfix">
         <span class="number">3.1.{{ item.id }}.</span>&nbsp;
-        <span>{{ item.aspect }}</span>
+        <span class="title">{{ item.aspect }}</span>
+        <div class="options">
+          <evaluationStd
+            :_aspect="item.aspect"
+            :_evaluatioon_index="item.evaluation_index"
+            class="evaluation"
+          />
+          <lock
+            :_locked="score[index].locked"
+            :_popOverShow="false"
+            v-on:click.native="handleLock(index)"
+            class="lock"
+          />
+        </div>
       </div>
       <el-radio-group v-model="score[index].satisfy">
         <el-radio :label="true" :disabled="score[index].locked">达标</el-radio>
         <el-radio :label="false" :disabled="score[index].locked">不达标</el-radio>
       </el-radio-group>
-      <div class="options">
-        <evaluationStd
-          :_aspect="item.aspect"
-          :_evaluatioon_index="item.evaluation_index"
-          class="evaluation"
-        />
-        <lock
-          :_locked="score[index].locked"
-          :_popOverShow="false"
-          v-on:click.native="handleLock(index)"
-          class="lock"
-        />
-      </div>
     </el-card>
 
     <div id="choose">
-      <el-button-group>
-        <router-link to="/design/evaluate/information-tech">
-          <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
-        </router-link>
+      <router-link to="/design/evaluate/information-tech">
+        <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
+      </router-link>
 
-        <router-link to="/construct/evaluate/concept">
-          <el-button type="primary">
-            下一项
-            <i class="el-icon-arrow-right el-icon--right"></i>
-          </el-button>
-        </router-link>
-      </el-button-group>
+      <router-link to="/construct/evaluate/concept">
+        <el-button type="primary" style="margin-left:20px">
+          下一项
+          <i class="el-icon-arrow-right el-icon--right"></i>
+        </el-button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -129,15 +127,42 @@ export default {
     width: 60%;
     margin: 10px auto;
 
-    .number {
-      font-weight: bold;
+    >>> .el-card__header {
+      padding: 10px 20px;
     }
-    .options {
-      margin: 20px 5px 10px 0;
-      float: right;
-      .evaluation,
-      .lock {
+    .clearfix:before,
+    .clearfix:after {
+      display: table;
+      content: "";
+    }
+    .clearfix:after {
+      clear: both;
+    }
+    .clearfix {
+      overflow: hidden;
+      position: relative;
+      height: 36px;
+      .number {
+        font-weight: bold;
+        position: absolute;
+        top: 0px;
+        vertical-align: bottom;
+      }
+      .title {
+        position: absolute;
+        top: 0px;
+        left: 50px;
+        vertical-align: bottom;
         display: inline-block;
+        margin-right: 80px;
+      }
+      .options {
+        float: right;
+        top: 0;
+        .lock,
+        .evaluation {
+          display: inline-block;
+        }
       }
     }
   }

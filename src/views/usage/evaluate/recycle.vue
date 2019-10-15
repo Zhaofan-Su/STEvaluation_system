@@ -97,18 +97,16 @@
     </el-card>
 
     <div id="choose">
-      <el-button-group>
-        <router-link to="/usage/evaluate/material-select">
-          <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
-        </router-link>
+      <router-link to="/usage/evaluate/material-select">
+        <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
+      </router-link>
 
-        <router-link to>
-          <el-button type="primary" :disabled="true">
-            下一项
-            <i class="el-icon-arrow-right el-icon--right"></i>
-          </el-button>
-        </router-link>
-      </el-button-group>
+      <router-link to>
+        <el-button type="primary" :disabled="true" style="margin-left:20px">
+          下一项
+          <i class="el-icon-arrow-right el-icon--right"></i>
+        </el-button>
+      </router-link>
     </div>
   </div>
 </template>

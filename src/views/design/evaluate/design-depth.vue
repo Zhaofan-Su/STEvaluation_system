@@ -46,18 +46,16 @@
     </el-card>
 
     <div id="choose">
-      <el-button-group>
-        <router-link to="/design/evaluate/intergration-tech">
-          <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
-        </router-link>
+      <router-link to="/design/evaluate/intergration-tech">
+        <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
+      </router-link>
 
-        <router-link to="/design/evaluate/intergrate-decoration">
-          <el-button type="primary">
-            下一项
-            <i class="el-icon-arrow-right el-icon--right"></i>
-          </el-button>
-        </router-link>
-      </el-button-group>
+      <router-link to="/design/evaluate/intergrate-decoration">
+        <el-button type="primary" style="margin-left:20px">
+          下一项
+          <i class="el-icon-arrow-right el-icon--right"></i>
+        </el-button>
+      </router-link>
     </div>
   </div>
 </template>

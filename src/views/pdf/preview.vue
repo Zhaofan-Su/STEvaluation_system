@@ -36,7 +36,9 @@ export default {
 <style lang="scss" scoped>
 .print {
   position: fixed;
-  right: 30px;
-  top: 80px;
+  right: 40px;
+  bottom: 40px;
+  padding: 15px;
+  font-size: 1.2em;
 }
 </style>

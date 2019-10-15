@@ -74,8 +74,13 @@
       />
     </div>
 
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'修改用户角色':'新增用户'" center>
-      <el-form v-model="choosedUser" label-width="100px" :rules="rules" ref="choosedUser">
+    <el-dialog
+      class="handleUser"
+      :visible.sync="dialogVisible"
+      :title="dialogType==='edit'?'修改用户角色':'新增用户'"
+      center
+    >
+      <el-form v-model="choosedUser" label-width="100px" ref="choosedUser">
         <el-form-item label="用户名">
           <el-input v-model="choosedUser.username" :disabled="disabled" placeholder="请输入用户名" />
         </el-form-item>
@@ -108,7 +113,7 @@
         </el-form-item>
       </el-form>
       <div class="dialog-button">
-        <el-button type="danger" @click="dialogVisible=!dialogVisible">取消</el-button>
+        <el-button type="danger" @click="dialogVisible=!dialogVisible;clearChoosedUser()">取消</el-button>
         <el-button type="primary" @click="confirmUser">确认</el-button>
       </div>
     </el-dialog>
@@ -173,13 +178,12 @@ export default {
       rules: {
         mobile: [
           {
-            validate: checkMobile,
+            // validate: checkMobile,
             required: true,
-            trigger: "blur",
-            message: "电话不能为空"
+            trigger: "blur"
           }
         ],
-        role: [{ required: true, trigger: "blur", message: "用户权限不能为空" }]
+        role: [{ required: true, trigger: "blur", message: "请选择用户权限" }]
       }
     };
   },
@@ -255,47 +259,98 @@ export default {
     },
     confirmUser() {
       // put到数据库里, 得到返回数据之后，更新一下id
-      this.$refs.choosedUser.validate(valid => {
-        if (valid) {
-          if (this.dialogType === "edit") {
-            changeRole({
-              userId: this.choosedUser.id,
-              role: this.choosedUser.role
-            })
-              .then(response => {
-                this.$message({
-                  message: "修改用户权限成功",
-                  type: "success"
-                });
-                for (var index = 0; index < this.tableData.length; index++) {
-                  if (this.tableData[index].id === this.choosedUser.id) {
-                    this.tableData.splice(index, 1, this.choosedUser);
-                  }
-                }
-              })
-              .catch(error => {
-                console.log(error);
-              });
-          } else {
-            addUser(this.choosedUser)
-              .then(response => {
-                this.$message({
-                  message: "成功创建用户",
-                  type: "success"
-                });
-                this.choosedUser.id = response.value.id;
-                this.tableData.splice(1, 0, this.choosedUser);
-              })
-              .catch(error => {
-                console.log(error);
-              });
-          }
-          this.dialogType = "";
-          this.dialogVisible = false;
-        } else {
-          return false;
-        }
-      });
+      // this.$refs.choosedUser.validate(valid => {
+      //   if (valid) {
+      //     if (this.dialogType === "edit") {
+      //       changeRole({
+      //         userId: this.choosedUser.id,
+      //         role: this.choosedUser.role
+      //       })
+      //         .then(response => {
+      //           this.$message({
+      //             message: "修改用户权限成功",
+      //             type: "success"
+      //           });
+      //           for (var index = 0; index < this.tableData.length; index++) {
+      //             if (this.tableData[index].id === this.choosedUser.id) {
+      //               this.tableData.splice(index, 1, this.choosedUser);
+      //             }
+      //           }
+      //         })
+      //         .catch(error => {
+      //           this.clearChoosedUser();
+      //           console.log(error);
+      //         });
+      //     } else {
+      //       addUser(this.choosedUser)
+      //         .then(response => {
+      //           this.$message({
+      //             message: "成功创建用户",
+      //             type: "success"
+      //           });
+      //           this.choosedUser.id = response.value.id;
+      //           this.tableData.splice(1, 0, this.choosedUser);
+      //         })
+      //         .catch(error => {
+      //           this.clearChoosedUser();
+      //           console.log(error);
+      //         });
+      //     }
+      //     this.dialogType = "";
+      //     this.dialogVisible = false;
+      //   } else {
+      //     this.clearChoosedUser();
+      //   }
+      // });
+      if (this.dialogType === "edit") {
+        changeRole({
+          userId: this.choosedUser.id,
+          role: this.choosedUser.role
+        })
+          .then(response => {
+            this.$message({
+              message: "修改用户权限成功",
+              type: "success"
+            });
+            for (var index = 0; index < this.tableData.length; index++) {
+              if (this.tableData[index].id === this.choosedUser.id) {
+                this.tableData.splice(index, 1, this.choosedUser);
+              }
+            }
+          })
+          .catch(error => {
+            this.clearChoosedUser();
+            console.log(error);
+          });
+        this.dialogType = "";
+        this.dialogVisible = false;
+      } else {
+        addUser(this.choosedUser)
+          .then(response => {
+            this.$message({
+              message: "成功创建用户",
+              type: "success"
+            });
+            this.choosedUser.id = response.value.id;
+            this.tableData.splice(1, 0, this.choosedUser);
+            this.dialogType = "";
+            this.dialogVisible = false;
+          })
+          .catch(error => {
+            // this.clearChoosedUser();
+            console.log(error);
+          });
+      }
+    },
+    clearChoosedUser() {
+      this.choosedUser = {
+        id: "",
+        username: "",
+        realname: "",
+        mobile: "",
+        password: "",
+        role: ""
+      };
     }
   }
 };
@@ -311,6 +366,10 @@ export default {
     }
   }
 
+  .handleUser {
+    width: 70%;
+    margin: auto auto;
+  }
   .dialog-button {
     text-align: center;
   }

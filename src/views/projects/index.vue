@@ -106,7 +106,7 @@
           <el-tooltip content="删除" effect="light" placement="bottom">
             <el-button
               type="danger"
-              @click="remove(scope.eId)"
+              @click="remove(scope)"
               plain
               size="small"
               icon="el-icon-delete"
@@ -183,11 +183,12 @@ export default {
         type: "primary"
       });
     },
-    remove(eId) {
+    remove({ $index, row }) {
       this.$confirm("确认删除此项目？")
         .then(_ => {
-          deleteProject(eId)
+          deleteProject(row.eId)
             .then(response => {
+              this.list.splice($index, 1);
               this.$message({
                 message: "成功删除项目",
                 type: "success"

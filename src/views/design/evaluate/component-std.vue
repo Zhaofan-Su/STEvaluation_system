@@ -48,25 +48,18 @@
     </el-card>
 
     <div id="choose">
-      <el-button-group>
-        <!-- <router-link to="/design/evaluate/pre-rate"> -->
-        <el-button
-          type="primary"
-          icon="el-icon-arrow-left"
-          @click="validate('/design/evaluate/pre-rate')"
-        >上一项</el-button>
-        <!-- </router-link> -->
-
-        <!-- <router-link to="/design/evaluate/assemble-rate"> -->
-        <el-button type="primary">
-          下一项
-          <i
-            class="el-icon-arrow-right el-icon--right"
-            @click="validate('/design/evaluate/assemble-rate')"
-          ></i>
-        </el-button>
-        <!-- </router-link> -->
-      </el-button-group>
+      <el-button
+        type="primary"
+        icon="el-icon-arrow-left"
+        @click="validate('/design/evaluate/pre-rate')"
+      >上一项</el-button>
+      <el-button type="primary" style="margin-left:20px">
+        下一项
+        <i
+          class="el-icon-arrow-right el-icon--right"
+          @click="validate('/design/evaluate/assemble-rate')"
+        ></i>
+      </el-button>
     </div>
   </div>
 </template>
@@ -83,7 +76,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -124,7 +117,7 @@ export default {
       eId: "eId"
     })
   },
-  created () {
+  created() {
     for (var i = 0; i < this.items.length; i++) {
       this.rules.push({
         indicator: [
@@ -145,16 +138,16 @@ export default {
                 }
               }, 700);
             },
-            trigger: 'blur'
+            trigger: "blur"
           }
         ]
-      })
+      });
     }
 
     this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.desginSocre._2_2_3;
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.$store.dispatch("project/updateScore", {
       score: this.score,
       phase: "design",
@@ -163,10 +156,10 @@ export default {
   },
   // 最后提交的时候再计算每一个选项的得分
   methods: {
-    handleLock (index) {
+    handleLock(index) {
       this.score[index].locked = !this.score[index].locked;
     },
-    changeScore (index) {
+    changeScore(index) {
       let value = this.score[index].indicator;
       if (value >= 80) {
         this.score[index].score = this.items[index].max_score;
@@ -178,25 +171,19 @@ export default {
         this.score[index].score = this.items[index].third_score;
         // this.sum += this.items[index].third_score;
       } else {
-        this.score[index].score = 0
+        this.score[index].score = 0;
       }
     },
-    validate (path) {
-      var validNum = 0
+    validate(path) {
       for (var i = 0; i < this.items.length; i++) {
-        this.$refs.forms[i].validate((valid) => {
-          if (valid) {
-            validNum++
+        this.$refs.forms[i].validate(valid => {
+          if (!valid) {
+            return false;
           }
-        })
+        });
       }
-      if (validNum === this.items.length) {
-        this.$router.push(path)
-        return true
-      }
-      else {
-        return true
-      }
+      this.$router.push(path);
+      return true;
     }
   }
 };

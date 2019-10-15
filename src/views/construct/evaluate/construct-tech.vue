@@ -46,18 +46,16 @@
     </el-card>
 
     <div id="choose">
-      <el-button-group>
-        <router-link to="/construct/evaluate/org-manage">
-          <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
-        </router-link>
+      <router-link to="/construct/evaluate/org-manage">
+        <el-button type="primary" icon="el-icon-arrow-left">上一项</el-button>
+      </router-link>
 
-        <router-link to="/construct/evaluate/construct-quality">
-          <el-button type="primary">
-            下一项
-            <i class="el-icon-arrow-right el-icon--right"></i>
-          </el-button>
-        </router-link>
-      </el-button-group>
+      <router-link to="/construct/evaluate/construct-quality">
+        <el-button type="primary" style="margin-left:20px">
+          下一项
+          <i class="el-icon-arrow-right el-icon--right"></i>
+        </el-button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -72,7 +70,7 @@ export default {
     Lock,
     EvaluationStd
   },
-  data () {
+  data() {
     return {
       items: [
         {
@@ -151,11 +149,11 @@ export default {
       eId: "eId"
     })
   },
-  created () {
+  created() {
     this.$store.dispatch("project/getHistory", this.eId);
     this.score = this.constructScore._3_2_4;
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.$store.dispatch("project/updateScore", {
       score: this.score,
       phase: "construct",
@@ -163,10 +161,10 @@ export default {
     });
   },
   methods: {
-    handleLock (index) {
+    handleLock(index) {
       this.score[index].locked = !this.score[index].locked;
     },
-    addScore (index, whether) {
+    addScore(index, whether) {
       if (whether) {
         this.score[index].score = this.items[index].max_score;
       } else {

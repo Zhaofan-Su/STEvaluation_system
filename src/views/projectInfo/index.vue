@@ -55,12 +55,12 @@
             :disabled="locked"
           ></el-date-picker>
         </el-form-item>-->
-        <el-form-item label="是否公开" prop="RWState">
+        <!-- <el-form-item label="是否公开" prop="RWState">
           <el-radio-group v-model="RWState" :disabled="locked">
             <el-radio label="public">是</el-radio>
             <el-radio label="private">否</el-radio>
           </el-radio-group>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="评价人员">
           <el-select v-model="sendTo" multiple placeholder="请选择参评人员" :disabled="locked">
             <el-option

@@ -90,7 +90,7 @@
             <template slot="suffix">m^2</template>
           </el-input>
         </el-form-item>
-        <el-form-item label="建筑主题高度" prop="height">
+        <el-form-item label="建筑主体高度" prop="height">
           <el-input v-model.number="form.height" type="text" style="width: 200px">
             <template slot="suffix">m</template>
           </el-input>
@@ -102,12 +102,12 @@
             <el-radio label="厂房" />
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="是否公开">
+        <!-- <el-form-item label="是否公开">
           <el-radio-group v-model="form.RWState">
             <el-radio :label="1">是</el-radio>
             <el-radio :label="0">否</el-radio>
           </el-radio-group>
-        </el-form-item>
+        </el-form-item>-->
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="createProject">新建项目</el-button>
@@ -177,8 +177,11 @@ export default {
       this.$store.dispatch("app/toggleSideBar");
     },
     async logout() {
-      await this.$store.dispatch("user/logout");
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+      this.$confirm("确定退出系统？").then(_ => {
+        this.$store.dispatch("user/logout").then(_ => {
+          this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+        });
+      });
     },
     handleNewProject() {
       this.dialogVisible = true;
@@ -191,6 +194,13 @@ export default {
           this.createProject();
         })
         .catch(_ => {
+          this.form = {
+            projectName: "",
+            province: "",
+            area: "",
+            height: "",
+            RWState: 0
+          };
           this.dialogVisible = false;
         });
     },
