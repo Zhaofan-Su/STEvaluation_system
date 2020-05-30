@@ -155,7 +155,9 @@ export default {
       this.listLoading = true;
       const response = await getProjectsByUser(this.userId);
       let results = response.value.reverse();
+      console.log(results);
       this.total = results.length;
+      console.log(this.total);
       // 分页器实现
       let currentPage = this.listQuery.page;
       let limit = this.listQuery.limit;
@@ -164,7 +166,9 @@ export default {
       } else {
         this.list = results.slice(
           (currentPage - 1) * limit,
-          currentPage * limit < this.total ? currentPage * limit - 1 : -1
+          currentPage * limit < this.total
+            ? currentPage * limit
+            : results.length
         );
       }
 

@@ -57,12 +57,13 @@
         icon="el-icon-arrow-left"
         @click="validate('/design/evaluate/component-std')"
       >上一项</el-button>
-      <el-button type="primary" style="margin-left:20px">
+      <el-button
+        type="primary"
+        style="margin-left:20px"
+        @click="validate('/design/evaluate/intergration-tech')"
+      >
         下一项
-        <i
-          class="el-icon-arrow-right el-icon--right"
-          @click="validate('/design/evaluate/intergration-tech')"
-        ></i>
+        <i class="el-icon-arrow-right el-icon--right"></i>
       </el-button>
     </div>
   </div>

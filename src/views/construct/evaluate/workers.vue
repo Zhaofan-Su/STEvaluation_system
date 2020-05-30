@@ -62,9 +62,9 @@
       <!-- </router-link> -->
 
       <!-- <router-link to="/usage/basic"> -->
-      <el-button type="primary" style="margin-left:20px">
+      <el-button type="primary" style="margin-left:20px " @click="validate('/usage/basic')">
         下一项
-        <i class="el-icon-arrow-right el-icon--right" @click="validate('/usage/basic')"></i>
+        <i class="el-icon-arrow-right el-icon--right"></i>
       </el-button>
     </div>
   </div>

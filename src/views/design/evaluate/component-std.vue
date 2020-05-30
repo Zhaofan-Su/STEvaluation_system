@@ -53,12 +53,13 @@
         icon="el-icon-arrow-left"
         @click="validate('/design/evaluate/pre-rate')"
       >上一项</el-button>
-      <el-button type="primary" style="margin-left:20px">
+      <el-button
+        type="primary"
+        style="margin-left:20px"
+        @click="validate('/design/evaluate/assemble-rate')"
+      >
         下一项
-        <i
-          class="el-icon-arrow-right el-icon--right"
-          @click="validate('/design/evaluate/assemble-rate')"
-        ></i>
+        <i class="el-icon-arrow-right el-icon--right"></i>
       </el-button>
     </div>
   </div>
@@ -123,9 +124,6 @@ export default {
         indicator: [
           {
             validator: (rule, value, callback) => {
-              // if (value === "") {
-              //   return callback(new Error("预制率不能为空"));
-              // }
               setTimeout(() => {
                 if (parseFloat(value).toString === "NaN") {
                   callback(new Error("请输入数字"));
